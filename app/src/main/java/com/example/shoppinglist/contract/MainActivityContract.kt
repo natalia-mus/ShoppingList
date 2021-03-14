@@ -6,7 +6,7 @@ import com.example.shoppinglist.model.Product
 interface MainActivityContract {
 
     interface MainActivityModel {
-        fun fetchDataFromDB()                        // pobierze dane z DB
+        fun fetchDataFromDB()                       // pobierze dane z DB
         fun returnData(): List<Product>             // przekaże dane do presentera
     }
 
@@ -17,8 +17,9 @@ interface MainActivityContract {
     }
 
     interface MainActivityView {
-        //fun initView()                            // zainicjuje widok
+        fun initView()                              // zainicjuje widok
         fun showData()                              // zaktualizuje wyświetlane elementy
         fun createDB(): DBHelper                    // utworzy bazę danych
     }
+
 }

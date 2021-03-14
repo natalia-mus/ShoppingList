@@ -9,9 +9,9 @@ class MainActivityPresenter(_view: MainActivityContract.MainActivityView) :
     private val view = _view
     private val model = MainActivityModel(view.createDB())
 
-    /*init {
+    init {
         view.initView()
-    }*/
+    }
 
     override fun fetchData() = model.fetchDataFromDB()
 
