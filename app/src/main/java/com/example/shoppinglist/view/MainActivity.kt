@@ -1,7 +1,6 @@
 package com.example.shoppinglist.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.contract.MainActivityContract
@@ -20,17 +19,15 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
         presenter.returnData()
     }
 
-    override fun initView() {
+    /*override fun initView() {
         //presenter.returnData()
-        Log.e("MainActivity", "initView")
-    }
+        //Log.e("MainActivity", "initView")
+    }*/
 
-    override fun createDB(): DBHelper {
-        return DBHelper(this)
-    }
+    override fun createDB(): DBHelper = DBHelper(this)
 
     override fun showData() {
-        presenter.returnData()
+        //Adapter
     }
 
 }

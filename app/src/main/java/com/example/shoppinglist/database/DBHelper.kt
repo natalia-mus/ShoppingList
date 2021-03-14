@@ -3,8 +3,6 @@ package com.example.shoppinglist.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import com.example.shoppinglist.core.App
 import com.example.shoppinglist.model.Product
 
 object TableInfo {
@@ -27,20 +25,6 @@ object BasicSQLCommands {
 
 class DBHelper(context: Context) :
     SQLiteOpenHelper(context, TableInfo.DATABASE_NAME, null, TableInfo.DATABASE_VERSION) {
-
-    ///////////////////////////////////////////
-    /*companion object {
-        var instance: DBHelper? = null
-
-        @Synchronized
-        fun getInstance(context: Context): DBHelper {
-            if (instance == null) {
-                instance = DBHelper(context.applicationContext)
-            }
-            return instance as DBHelper
-        }
-    }*/
-    ////////////////////////////////////////////
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(BasicSQLCommands.CREATE_TABLE)
@@ -72,15 +56,4 @@ class DBHelper(context: Context) :
         return products
     }
 
-
-
-
-    fun test() {
-        Log.e("funkcja", "funkcja")
-    }
 }
-
-/////////////////////////////////
-/*val Context.database: DBHelper
-    get() = DBHelper.getInstance(applicationContext)*/
-/////////////////////////////////
