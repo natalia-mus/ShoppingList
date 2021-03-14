@@ -33,4 +33,5 @@ class ProductAdapter(val context: Context, val products: List<Product>) :
         val productAmount = view.product_amount
         val productPriority = view.product_priority
     }
+
 }
