@@ -4,18 +4,15 @@ import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.core.App
 import com.example.shoppinglist.database.DBHelper
 
-class MainActivityModel() : MainActivityContract.MainActivityModel {
+class MainActivityModel(_dataBase: DBHelper) : MainActivityContract.MainActivityModel {
 
-    lateinit var dataBase: DBHelper
+    private val dataBase = _dataBase
     private var data: List<Product> = emptyList()
 
-    /*init {
-        dataBase = DBHelper(App.context)
-    }*/
-
     override fun fetchDataFromDB() {
-        dataBase = DBHelper(App.context)
-        data = dataBase.getAllProducts()
+        /*dataBase = DBHelper(App.context)
+        data = dataBase.getAllProducts()*/
+        dataBase.test()
     }
 
     override fun returnData() = data

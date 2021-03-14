@@ -3,6 +3,8 @@ package com.example.shoppinglist.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
+import com.example.shoppinglist.core.App
 import com.example.shoppinglist.model.Product
 
 object TableInfo {
@@ -30,6 +32,7 @@ class DBHelper(context: Context) :
     /*companion object {
         var instance: DBHelper? = null
 
+        @Synchronized
         fun getInstance(context: Context): DBHelper {
             if (instance == null) {
                 instance = DBHelper(context.applicationContext)
@@ -67,6 +70,13 @@ class DBHelper(context: Context) :
 
         db.close()
         return products
+    }
+
+
+
+
+    fun test() {
+        Log.e("funkcja", "funkcja")
     }
 }
 

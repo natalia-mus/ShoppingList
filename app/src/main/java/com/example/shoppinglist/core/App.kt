@@ -5,13 +5,13 @@ import kotlin.properties.Delegates
 
 class App : Application() {
 
-    companion object {
+    /*companion object {
         var context: App by Delegates.notNull()
     }
 
     override fun onCreate() {
         super.onCreate()
         context = this
-    }
+    }*/
 
 }

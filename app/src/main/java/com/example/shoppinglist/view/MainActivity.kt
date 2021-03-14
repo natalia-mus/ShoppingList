@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.contract.MainActivityContract
+import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.presenter.MainActivityPresenter
 
 class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView {
@@ -22,6 +23,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
     override fun initView() {
         //presenter.returnData()
         Log.e("MainActivity", "initView")
+    }
+
+    override fun createDB(): DBHelper {
+        return DBHelper(this)
     }
 
     override fun showData() {

@@ -1,5 +1,6 @@
 package com.example.shoppinglist.contract
 
+import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.model.Product
 
 interface MainActivityContract {
@@ -18,5 +19,6 @@ interface MainActivityContract {
     interface MainActivityView {
         fun initView()                  // zainicjuje widok
         fun showData()                  // zaktualizuje wyświetlane elementy
+        fun createDB(): DBHelper        // utworzy bazę danych
     }
 }
