@@ -2,4 +2,9 @@
     <string name="app_name">ShoppingList</string>
     <string name="product_amount">amount:</string>
     <string name="product_priority">priority:</string>
+    <string name="add_product_name">product name</string>
+    <string name="add_product_amount">product amount</string>
+    <string name="add_product_priority">priority</string>
+    <string name="add_product_button_save">SAVE</string>
+    <string name="add_product_button_cancel">CANCEL</string>
 </resources>
