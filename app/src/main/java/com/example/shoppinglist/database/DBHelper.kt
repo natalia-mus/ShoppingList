@@ -26,6 +26,17 @@ object BasicSQLCommands {
 class DBHelper(context: Context) :
     SQLiteOpenHelper(context, TableInfo.DATABASE_NAME, null, TableInfo.DATABASE_VERSION) {
 
+    companion object {
+        var instance: DBHelper? = null
+
+        fun getInstance(context: Context): DBHelper {
+            if (instance == null) {
+                instance = DBHelper(context.applicationContext)
+            }
+            return instance as DBHelper
+        }
+    }
+
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(BasicSQLCommands.CREATE_TABLE)
     }

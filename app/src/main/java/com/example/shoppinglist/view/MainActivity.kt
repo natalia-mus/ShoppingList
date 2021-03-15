@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView {
 
-    lateinit var presenter: MainActivityPresenter
+    private lateinit var presenter: MainActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
         Log.e("MainActivity", "initView()")
     }
 
-    override fun createDB(): DBHelper = DBHelper(this)
+    override fun DBinstance(): DBHelper {
+        val db = DBHelper.getInstance(this)
+        Log.e("DBinstance MainActivity", db.toString())
+        return DBHelper.getInstance(this)
+    }
 
     override fun showData() {
         presenter.fetchData()

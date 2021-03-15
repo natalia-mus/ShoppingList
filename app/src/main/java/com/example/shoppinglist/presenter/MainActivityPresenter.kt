@@ -7,7 +7,7 @@ class MainActivityPresenter(_view: MainActivityContract.MainActivityView) :
     MainActivityContract.MainActivityPresenter {
 
     private val view = _view
-    private val model = MainActivityModel(view.createDB())
+    private val model = MainActivityModel(view.DBinstance())
 
     init {
         view.initView()
