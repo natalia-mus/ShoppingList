@@ -1,7 +1,10 @@
 package com.example.shoppinglist.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
@@ -35,6 +38,17 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
 
         shopping_list.layoutManager = LinearLayoutManager(this)
         shopping_list.adapter = ProductAdapter(this, data)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val intent = Intent(this, AddProductActivity::class.java)
+        startActivity(intent)
+        return super.onOptionsItemSelected(item)
     }
 
 }

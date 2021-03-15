@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,7 +8,10 @@
         android:id="@+id/add_product_name_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/add_product_amount_section"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -17,10 +19,10 @@
             android:id="@+id/add_product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/add_product_name"
             android:textSize="26sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="product name" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/add_product_name_label"
@@ -38,7 +40,10 @@
         android:id="@+id/add_product_amount_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/add_product_priority_section"
         app:layout_constraintTop_toBottomOf="@+id/add_product_name_section">
 
@@ -46,10 +51,10 @@
             android:id="@+id/add_product_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/add_product_amount"
             android:textSize="26sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="product amount" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/add_product_amount_label"
@@ -67,7 +72,10 @@
         android:id="@+id/add_product_priority_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/add_product_buttons_section"
         app:layout_constraintTop_toBottomOf="@+id/add_product_amount_section">
 
@@ -75,11 +83,11 @@
             android:id="@+id/add_product_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/add_product_priority"
             android:inputType="number"
             android:textSize="26sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="product priority" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/add_product_priority_label"
@@ -115,7 +123,7 @@
             android:id="@+id/add_product_button_cancel"
             android:layout_width="140dp"
             android:layout_height="80dp"
-            android:text="@string/add_product_button_cancel"
+            android:text="@android:string/cancel"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/add_product_button_save"
