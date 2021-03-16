@@ -44,7 +44,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
         val data = presenter.returnData()
 
         shopping_list.layoutManager = LinearLayoutManager(this)
-        shopping_list.adapter = ProductAdapter(this, data)
+        shopping_list.adapter = ProductAdapter(this, this, data)
+    }
+
+    override fun deleteItem(id: Int) {
+        presenter.deleteItem(id)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

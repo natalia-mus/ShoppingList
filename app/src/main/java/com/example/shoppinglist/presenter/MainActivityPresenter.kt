@@ -19,4 +19,6 @@ class MainActivityPresenter(_view: MainActivityContract.MainActivityView) :
 
     override fun showData() = view.showData()
 
+    override fun deleteItem(id: Int) = model.deleteItemFromDB(id)
+
 }

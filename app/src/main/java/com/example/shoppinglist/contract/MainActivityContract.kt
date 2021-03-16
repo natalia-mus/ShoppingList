@@ -8,18 +8,21 @@ interface MainActivityContract {
     interface MainActivityModel {
         fun fetchDataFromDB()                       // pobierze dane z DB
         fun returnData(): List<Product>             // przekaże dane do presentera
+        fun deleteItemFromDB(id: Int)
     }
 
     interface MainActivityPresenter {
         fun fetchData()                             // odbierze dane z modelu
         fun returnData(): List<Product>             // przekaże dane widokowi
         fun showData()                              // wywoła funkcję odpowiadającą za wyświetlanie danych
+        fun deleteItem(id: Int)
     }
 
     interface MainActivityView {
         fun initView()                              // zainicjuje widok
-        fun showData()                              // zaktualizuje wyświetlane elementy
         fun DBinstance(): DBHelper?                 // zwróci instancję do bazy danych
+        fun showData()                              // zaktualizuje wyświetlane elementy
+        fun deleteItem(id: Int)
     }
 
 }
