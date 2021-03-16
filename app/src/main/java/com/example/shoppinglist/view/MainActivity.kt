@@ -26,13 +26,16 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
         presenter.showData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.showData()
+    }
+
     override fun initView() {
         Log.e("MainActivity", "initView()")
     }
 
     override fun DBinstance(): DBHelper {
-        val db = DBHelper.getInstance(this)
-        Log.e("DBinstance MainActivity", db.toString())
         return DBHelper.getInstance(this)
     }
 

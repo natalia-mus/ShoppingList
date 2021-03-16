@@ -2,7 +2,6 @@ package com.example.shoppinglist.presenter
 
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.AddProductActivityModel
-import com.example.shoppinglist.model.Product
 
 class AddProductActivityPresenter(_view: AddProductActivityContract.AddProductActivityView) :
     AddProductActivityContract.AddProductActivityPresenter {
@@ -14,11 +13,8 @@ class AddProductActivityPresenter(_view: AddProductActivityContract.AddProductAc
         view.initView()
     }
 
-    override fun saveData(product: Product) {
-
+    override fun saveData(name: String, amount: String, priority: Int) {
+        model.saveData(name, amount, priority)
     }
 
-    override fun test() {
-        model.test()
-    }
 }

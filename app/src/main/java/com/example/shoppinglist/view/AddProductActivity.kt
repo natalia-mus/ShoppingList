@@ -1,6 +1,7 @@
 package com.example.shoppinglist.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.contract.AddProductActivityContract
@@ -16,7 +17,6 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         setContentView(R.layout.activity_add_product)
 
         presenter = AddProductActivityPresenter(this)
-        presenter.test()
     }
 
     override fun initView() {
@@ -25,8 +25,30 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         }
 
         add_product_button_save.setOnClickListener() {
-            // TODO
+            val name = add_product_name.text.toString()
+            val amount = add_product_amount.text.toString()
+            val priority = add_product_priority.text.toString()
+
+            if (checkData(name, priority)) {
+                presenter.saveData(name, amount, priority.toInt())
+                finish()
+            }
         }
+    }
+
+    private fun checkData(name: String, priority: String): Boolean {
+        var result = true
+
+        if (name.isNotEmpty() && priority.isNotEmpty()) {
+            result = true
+        } else if (name.isEmpty()) {
+            Toast.makeText(this, "Product name can not be empty.", Toast.LENGTH_SHORT).show()
+            result = false
+        } else if (priority.isEmpty()) {
+            Toast.makeText(this, "Priority can not be empty.", Toast.LENGTH_SHORT).show()
+            result = false
+        }
+        return result
     }
 
 }
