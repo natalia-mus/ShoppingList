@@ -1,5 +1,6 @@
 package com.example.shoppinglist.database
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -7,7 +8,7 @@ import com.example.shoppinglist.model.Product
 
 object TableInfo {
     const val DATABASE_NAME = "shopping_list.db"
-    const val DATABASE_VERSION = 1
+    const val DATABASE_VERSION = 4
     const val TABLE_NAME = "shopping_list"
     const val COLUMN_ID = "id"
     const val COLUMN_NAME = "name"
@@ -16,15 +17,29 @@ object TableInfo {
 }
 
 object BasicSQLCommands {
+
     const val CREATE_TABLE =
         "CREATE TABLE ${TableInfo.TABLE_NAME} (${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, ${TableInfo.COLUMN_NAME} TEXT NOT NULL, ${TableInfo.COLUMN_AMOUNT} TEXT, ${TableInfo.COLUMN_PRIORITY} INT NOT NULL)"
+
     const val DELETE_TABLE = "DROP TABLE IF EXISTS ${TableInfo.TABLE_NAME}"
+
     const val GET_ALL_PRODUCTS =
         "SELECT * FROM ${TableInfo.TABLE_NAME} ORDER BY ${TableInfo.COLUMN_PRIORITY}"
 }
 
 class DBHelper(context: Context) :
     SQLiteOpenHelper(context, TableInfo.DATABASE_NAME, null, TableInfo.DATABASE_VERSION) {
+
+    companion object {
+        var instance: DBHelper? = null
+
+        fun getInstance(context: Context): DBHelper {
+            if (instance == null) {
+                instance = DBHelper(context.applicationContext)
+            }
+            return instance as DBHelper
+        }
+    }
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(BasicSQLCommands.CREATE_TABLE)
@@ -52,8 +67,20 @@ class DBHelper(context: Context) :
             } while (cursor.moveToNext())
         }
 
+        cursor.close()
         db.close()
         return products
+    }
+
+    fun addProduct(name: String, amount: String, priority: Int) {
+        val product = ContentValues()
+        product.put(TableInfo.COLUMN_NAME, name)
+        product.put(TableInfo.COLUMN_AMOUNT, amount)
+        product.put(TableInfo.COLUMN_PRIORITY, priority)
+
+        val db = this.writableDatabase
+        db.insert(TableInfo.TABLE_NAME, null, product)
+        db.close()
     }
 
 }

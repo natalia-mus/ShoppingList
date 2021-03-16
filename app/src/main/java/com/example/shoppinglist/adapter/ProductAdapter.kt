@@ -27,10 +27,12 @@ class ProductAdapter(val context: Context, val products: List<Product>) :
 
     override fun getItemCount() = products.size
 
+
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val productName = view.product_name
         val productAmount = view.product_amount
         val productPriority = view.product_priority
     }
+
 }

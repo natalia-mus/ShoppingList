@@ -19,7 +19,7 @@ interface MainActivityContract {
     interface MainActivityView {
         fun initView()                              // zainicjuje widok
         fun showData()                              // zaktualizuje wyświetlane elementy
-        fun createDB(): DBHelper                    // utworzy bazę danych
+        fun DBinstance(): DBHelper?                 // zwróci instancję do bazy danych
     }
 
 }
