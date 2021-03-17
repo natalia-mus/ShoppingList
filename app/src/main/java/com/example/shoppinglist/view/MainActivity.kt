@@ -62,9 +62,4 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
         return super.onOptionsItemSelected(item)
     }
 
-    /*override fun showDialog() {
-        val dialog = DeleteItemDialog(this)
-        dialog.show()
-    }*/
-
 }

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppinglist.DeleteItemDialog
+import com.example.shoppinglist.view.DeleteItemDialog
 import com.example.shoppinglist.R
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.model.Product

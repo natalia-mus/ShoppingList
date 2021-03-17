@@ -1,8 +1,9 @@
-package com.example.shoppinglist
+package com.example.shoppinglist.view
 
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import com.example.shoppinglist.R
 import com.example.shoppinglist.contract.MainActivityContract
 import kotlinx.android.synthetic.main.delete_item_dialog.*
 
