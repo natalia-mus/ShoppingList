@@ -14,4 +14,8 @@ class MainActivityModel(_dataBase: DBHelper?) : MainActivityContract.MainActivit
 
     override fun returnData() = data
 
+    override fun deleteItemFromDB(id: Int) {
+        dataBase!!.deleteProduct(id)
+    }
+
 }

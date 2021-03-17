@@ -5,11 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoppinglist.view.DeleteItemDialog
 import com.example.shoppinglist.R
+import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.model.Product
 import kotlinx.android.synthetic.main.product_item.view.*
 
-class ProductAdapter(val context: Context, val products: List<Product>) :
+class ProductAdapter(
+    val context: Context,
+    val mainView: MainActivityContract.MainActivityView,
+    val products: List<Product>
+) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -29,6 +35,14 @@ class ProductAdapter(val context: Context, val products: List<Product>) :
 
 
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        init {
+            view.product_button_delete.setOnClickListener() {
+                val productId = products.get(adapterPosition).id
+                val dialog = DeleteItemDialog(context, mainView, productId)
+                dialog.show()
+            }
+        }
 
         val productName = view.product_name
         val productAmount = view.product_amount

@@ -83,4 +83,10 @@ class DBHelper(context: Context) :
         db.close()
     }
 
+    fun deleteProduct(id: Int) {
+        val db = this.writableDatabase
+        db.delete(TableInfo.TABLE_NAME, TableInfo.COLUMN_ID + "=" + id, null)
+        db.close()
+    }
+
 }
