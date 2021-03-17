@@ -23,6 +23,8 @@ interface MainActivityContract {
         fun DBinstance(): DBHelper?                 // zwróci instancję do bazy danych
         fun showData()                              // zaktualizuje wyświetlane elementy
         fun deleteItem(id: Int)
+
+        //fun showDialog()
     }
 
 }

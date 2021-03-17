@@ -1,11 +1,11 @@
 package com.example.shoppinglist.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoppinglist.DeleteItemDialog
 import com.example.shoppinglist.R
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.model.Product
@@ -39,8 +39,8 @@ class ProductAdapter(
         init {
             view.product_button_delete.setOnClickListener() {
                 val productId = products.get(adapterPosition).id
-                Log.e("delete", productId.toString())
-                mainView.deleteItem(productId)
+                val dialog = DeleteItemDialog(context, mainView, productId)
+                dialog.show()
             }
         }
 
