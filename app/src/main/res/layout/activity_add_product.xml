@@ -13,7 +13,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_product_amount_section"
+        app:layout_constraintBottom_toTopOf="@+id/add_product_quantity_section"
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
@@ -41,7 +41,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/add_product_amount_section"
+        android:id="@+id/add_product_quantity_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -52,10 +52,10 @@
         app:layout_constraintTop_toBottomOf="@+id/add_product_name_section">
 
         <EditText
-            android:id="@+id/add_product_amount"
+            android:id="@+id/add_product_quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_product_amount"
+            android:hint="@string/add_product_quantity"
             android:textColor="@color/white"
             android:textColorHint="@color/transparent_white"
             android:textSize="26sp"
@@ -63,15 +63,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/add_product_amount_label"
+            android:id="@+id/add_product_quantity_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="@string/add_product_amount"
+            android:text="@string/add_product_quantity"
             android:textColor="@color/white"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_product_amount" />
+            app:layout_constraintTop_toBottomOf="@+id/add_product_quantity" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -84,7 +84,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/add_product_buttons_section"
-        app:layout_constraintTop_toBottomOf="@+id/add_product_amount_section">
+        app:layout_constraintTop_toBottomOf="@+id/add_product_quantity_section">
 
         <EditText
             android:id="@+id/add_product_priority"

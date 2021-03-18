@@ -26,11 +26,11 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
 
         add_product_button_save.setOnClickListener() {
             val name = add_product_name.text.toString()
-            val amount = add_product_amount.text.toString()
+            val quantity = add_product_quantity.text.toString()
             val priority = add_product_priority.text.toString()
 
             if (checkData(name, priority)) {
-                presenter.saveData(name, amount, priority.toInt())
+                presenter.saveData(name, quantity, priority.toInt())
                 finish()
             }
         }
