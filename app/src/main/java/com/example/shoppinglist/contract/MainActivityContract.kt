@@ -19,10 +19,9 @@ interface MainActivityContract {
     }
 
     interface MainActivityView {
-        fun initView()                              // zainicjuje widok
         fun DBinstance(): DBHelper?                 // zwróci instancję do bazy danych
         fun showData()                              // zaktualizuje wyświetlane elementy
-        fun deleteItem(id: Int)
+        fun deleteItem(id: Int)                     // wywoła usuwanie produktu z bazy
     }
 
 }

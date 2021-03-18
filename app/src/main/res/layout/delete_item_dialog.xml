@@ -39,6 +39,7 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
+            android:backgroundTint="@color/button_red"
             android:text="@string/delete_item_dialog_button_no" />
 
     </LinearLayout>
