@@ -8,18 +8,18 @@ import com.example.shoppinglist.model.Product
 
 object TableInfo {
     const val DATABASE_NAME = "shopping_list.db"
-    const val DATABASE_VERSION = 4
+    const val DATABASE_VERSION = 5
     const val TABLE_NAME = "shopping_list"
     const val COLUMN_ID = "id"
     const val COLUMN_NAME = "name"
-    const val COLUMN_AMOUNT = "amount"
+    const val COLUMN_QUANTITY = "quantity"
     const val COLUMN_PRIORITY = "priority"
 }
 
 object BasicSQLCommands {
 
     const val CREATE_TABLE =
-        "CREATE TABLE ${TableInfo.TABLE_NAME} (${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, ${TableInfo.COLUMN_NAME} TEXT NOT NULL, ${TableInfo.COLUMN_AMOUNT} TEXT, ${TableInfo.COLUMN_PRIORITY} INT NOT NULL)"
+        "CREATE TABLE ${TableInfo.TABLE_NAME} (${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, ${TableInfo.COLUMN_NAME} TEXT NOT NULL, ${TableInfo.COLUMN_QUANTITY} TEXT, ${TableInfo.COLUMN_PRIORITY} INT NOT NULL)"
 
     const val DELETE_TABLE = "DROP TABLE IF EXISTS ${TableInfo.TABLE_NAME}"
 
@@ -59,10 +59,10 @@ class DBHelper(context: Context) :
             do {
                 val id = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ID))
                 val name = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_NAME))
-                val amount = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_AMOUNT))
+                val quantity = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_QUANTITY))
                 val priority = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_PRIORITY))
 
-                val product = Product(id, name, amount, priority)
+                val product = Product(id, name, quantity, priority)
                 products.add(product)
             } while (cursor.moveToNext())
         }
@@ -72,10 +72,10 @@ class DBHelper(context: Context) :
         return products
     }
 
-    fun addProduct(name: String, amount: String, priority: Int) {
+    fun addProduct(name: String, quantity: String, priority: Int) {
         val product = ContentValues()
         product.put(TableInfo.COLUMN_NAME, name)
-        product.put(TableInfo.COLUMN_AMOUNT, amount)
+        product.put(TableInfo.COLUMN_QUANTITY, quantity)
         product.put(TableInfo.COLUMN_PRIORITY, priority)
 
         val db = this.writableDatabase

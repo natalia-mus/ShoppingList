@@ -13,8 +13,8 @@ class AddProductActivityPresenter(_view: AddProductActivityContract.AddProductAc
         view.initView()
     }
 
-    override fun saveData(name: String, amount: String, priority: Int) {
-        model.saveData(name, amount, priority)
+    override fun saveData(name: String, quantity: String, priority: Int) {
+        model.saveData(name, quantity, priority)
     }
 
 }

@@ -7,8 +7,8 @@ class AddProductActivityModel : AddProductActivityContract.AddProductActivityMod
 
     private val dataBase = DBHelper.instance
 
-    override fun saveData(name: String, amount: String, priority: Int) {
-        dataBase!!.addProduct(name, amount, priority)
+    override fun saveData(name: String, quantity: String, priority: Int) {
+        dataBase!!.addProduct(name, quantity, priority)
     }
 
 }

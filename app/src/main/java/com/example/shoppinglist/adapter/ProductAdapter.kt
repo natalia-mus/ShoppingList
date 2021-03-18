@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.shoppinglist.view.DeleteItemDialog
 import com.example.shoppinglist.R
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.model.Product
+import com.example.shoppinglist.view.DeleteItemDialog
 import kotlinx.android.synthetic.main.product_item.view.*
 
 class ProductAdapter(
@@ -27,7 +27,7 @@ class ProductAdapter(
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.productName.text = products[position].name
-        holder.productAmount.text = products[position].amount
+        holder.productQuantity.text = products[position].quantity
         holder.productPriority.text = products[position].priority.toString()
     }
 
@@ -45,7 +45,7 @@ class ProductAdapter(
         }
 
         val productName = view.product_name
-        val productAmount = view.product_amount
+        val productQuantity = view.product_quantity
         val productPriority = view.product_priority
     }
 

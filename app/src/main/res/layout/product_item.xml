@@ -35,7 +35,7 @@
                 tools:text="Name" />
 
             <LinearLayout
-                android:id="@+id/product_amount_section"
+                android:id="@+id/product_quantity_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -45,13 +45,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_amount"
+                    android:text="@string/product_quantity"
                     android:textColor="@color/white"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/product_amount"
+                    android:id="@+id/product_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
