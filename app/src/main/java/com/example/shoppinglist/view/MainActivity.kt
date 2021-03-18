@@ -2,7 +2,6 @@ package com.example.shoppinglist.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -29,10 +28,6 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
     override fun onResume() {
         super.onResume()
         presenter.showData()
-    }
-
-    override fun initView() {
-        Log.e("MainActivity", "initView()")
     }
 
     override fun DBinstance(): DBHelper {
