@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.delete_item_dialog.*
 
 class DeleteItemDialog(
     context: Context,
-    val mainView: MainActivityContract.MainActivityView,
+    private val mainView: MainActivityContract.MainActivityView,
     val id: Int
 ) : AlertDialog(context) {
 

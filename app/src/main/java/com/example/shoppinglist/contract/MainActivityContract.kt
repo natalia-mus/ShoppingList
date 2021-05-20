@@ -6,22 +6,22 @@ import com.example.shoppinglist.model.Product
 interface MainActivityContract {
 
     interface MainActivityModel {
-        fun fetchDataFromDB()                       // pobierze dane z bazy danych
-        fun returnData(): List<Product>             // przekaże dane do presentera
-        fun deleteItemFromDB(id: Int)               // usunie produkt z bazy danych
+        fun fetchDataFromDB()
+        fun returnData(): List<Product>
+        fun deleteItemFromDB(id: Int)
     }
 
     interface MainActivityPresenter {
-        fun fetchData()                             // odbierze dane z modelu
-        fun returnData(): List<Product>             // przekaże dane widokowi
-        fun showData()                              // wywoła funkcję odpowiadającą za wyświetlanie danych
+        fun fetchData()
+        fun returnData(): List<Product>
+        fun showData()
         fun deleteItem(id: Int)
     }
 
     interface MainActivityView {
-        fun DBinstance(): DBHelper?                 // zwróci instancję do bazy danych
-        fun showData()                              // zaktualizuje wyświetlane elementy
-        fun deleteItem(id: Int)                     // wywoła usuwanie produktu z bazy
+        fun DBinstance(): DBHelper?
+        fun showData()
+        fun deleteItem(id: Int)
     }
 
 }

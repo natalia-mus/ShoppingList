@@ -41,11 +41,16 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
 
         if (name.isNotEmpty() && priority.isNotEmpty()) {
             result = true
-        } else if (name.isEmpty()) {
-            Toast.makeText(this, "Product name can not be empty.", Toast.LENGTH_SHORT).show()
-            result = false
-        } else if (priority.isEmpty()) {
-            Toast.makeText(this, "Priority can not be empty.", Toast.LENGTH_SHORT).show()
+        } else if (name.isEmpty() || priority.isEmpty()) {
+            var message = ""
+
+            if (name.isEmpty()) {
+                message = "Product name can not be empty."
+            } else if (priority.isEmpty()) {
+                message = "Priority can not be empty."
+            }
+
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             result = false
         }
         return result
