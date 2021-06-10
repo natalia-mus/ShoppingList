@@ -7,13 +7,13 @@ interface MainActivityContract {
 
     interface MainActivityModel {
         fun fetchDataFromDB()
-        fun returnData(): List<Product>
+        fun returnData(): List<Product>?
         fun deleteItemFromDB(id: Int)
     }
 
     interface MainActivityPresenter {
         fun fetchData()
-        fun returnData(): List<Product>
+        fun returnData(): List<Product>?
         fun showData()
         fun deleteItem(id: Int)
     }
