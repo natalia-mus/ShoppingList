@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
         val data = presenter.returnData()
 
         shopping_list.layoutManager = LinearLayoutManager(this)
-        shopping_list.adapter = ProductAdapter(this, this, data)
+        shopping_list.adapter = data?.let { ProductAdapter(this, this, it) }
     }
 
     override fun deleteItem(id: Int) {
