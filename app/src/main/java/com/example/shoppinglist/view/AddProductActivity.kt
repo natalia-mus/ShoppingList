@@ -45,9 +45,9 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
             var message = ""
 
             if (name.isEmpty()) {
-                message = "Product name can not be empty."
+                message = resources.getString(R.string.product_name_can_not_be_empty)
             } else if (priority.isEmpty()) {
-                message = "Priority can not be empty."
+                message = resources.getString(R.string.priority_can_not_be_empty)
             }
 
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
