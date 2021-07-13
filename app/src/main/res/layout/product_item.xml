@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 tools:text="Name" />
 
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/product_quantity"
                     android:textColor="@color/white"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -56,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textColor="@color/white"
+                    android:textSize="18sp"
                     tools:text="10" />
 
             </LinearLayout>
@@ -72,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/product_priority"
                     android:textColor="@color/white"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -81,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:textColor="@color/white"
+                    android:textSize="18sp"
                     tools:text="1" />
 
             </LinearLayout>
