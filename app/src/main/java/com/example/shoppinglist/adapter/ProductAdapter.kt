@@ -14,7 +14,8 @@ import kotlinx.android.synthetic.main.product_item.view.*
 class ProductAdapter(
     val context: Context,
     val mainView: MainActivityContract.MainActivityView,
-    val products: List<Product>
+    val products: List<Product>,
+    val onItemClickAction: OnItemClickAction
 ) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
@@ -37,8 +38,13 @@ class ProductAdapter(
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         init {
+            view.setOnLongClickListener() {
+                onItemClickAction.onItemLongClicked(products[adapterPosition])
+                return@setOnLongClickListener true
+            }
+
             view.product_button_delete.setOnClickListener() {
-                val productId = products.get(adapterPosition).id
+                val productId = products[adapterPosition].id
                 val dialog = DeleteItemDialog(context, mainView, productId)
                 dialog.show()
             }
@@ -49,4 +55,8 @@ class ProductAdapter(
         val productPriority = view.product_priority
     }
 
+}
+
+interface OnItemClickAction {
+    fun onItemLongClicked(product: Product)
 }

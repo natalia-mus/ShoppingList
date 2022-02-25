@@ -89,4 +89,8 @@ class DBHelper(context: Context) :
         db.close()
     }
 
+    fun editProduct(id: Int) {
+
+    }
+
 }

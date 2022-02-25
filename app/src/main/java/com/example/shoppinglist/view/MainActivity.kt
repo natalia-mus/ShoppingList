@@ -7,13 +7,15 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
+import com.example.shoppinglist.adapter.OnItemClickAction
 import com.example.shoppinglist.adapter.ProductAdapter
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.database.DBHelper
+import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.presenter.MainActivityPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView {
+class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView, OnItemClickAction {
 
     private lateinit var presenter: MainActivityPresenter
 
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
         val data = presenter.returnData()
 
         shopping_list.layoutManager = LinearLayoutManager(this)
-        shopping_list.adapter = data?.let { ProductAdapter(this, this, it) }
+        shopping_list.adapter = data?.let { ProductAdapter(this, this, it, this) }
     }
 
     override fun deleteItem(id: Int) {
@@ -55,6 +57,16 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView 
         val intent = Intent(this, AddProductActivity::class.java)
         startActivity(intent)
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onItemLongClicked(product: Product) {
+        openProductWithEditContext(product)
+    }
+
+    private fun openProductWithEditContext(product: Product) {
+        val intent = Intent(this, AddProductActivity::class.java)
+        intent.putExtra("product", product)
+        startActivity(intent)
     }
 
 }
