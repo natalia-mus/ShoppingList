@@ -20,11 +20,11 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
 
-        checkContext(savedInstanceState)
+        checkContext()
         presenter = AddProductActivityPresenter(this)
     }
 
-    private fun checkContext(bundle: Bundle?) {
+    private fun checkContext() {
         if (intent.hasExtra("product")) {
             openingContext = OpeningContext.EDIT
             product = intent.getSerializableExtra("product") as Product
@@ -45,14 +45,7 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         }
 
         add_product_button_save.setOnClickListener() {
-            val name = add_product_name.text.toString()
-            val quantity = add_product_quantity.text.toString()
-            val priority = add_product_priority.text.toString()
-
-            if (invalidateData(name, priority)) {
-                presenter.saveData(name, quantity, priority.toInt())
-                finish()
-            }
+            onSaveButtonClicked()
         }
     }
 
@@ -74,6 +67,24 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
             result = false
         }
         return result
+    }
+
+    private fun onSaveButtonClicked() {
+        val name = add_product_name.text.toString()
+        val quantity = add_product_quantity.text.toString()
+        val priority = add_product_priority.text.toString()
+
+        if (invalidateData(name, priority)) {
+
+            if (openingContext == OpeningContext.CREATE) {
+                presenter.saveData(name, quantity, priority.toInt())
+                finish()
+
+            } else if (openingContext == OpeningContext.EDIT) {
+                presenter.updateData(product.id, name, quantity, priority.toInt())
+                finish()
+            }
+        }
     }
 
 }

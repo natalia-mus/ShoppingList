@@ -17,4 +17,8 @@ class AddProductActivityPresenter(_view: AddProductActivityContract.AddProductAc
         model.saveData(name, quantity, priority)
     }
 
+    override fun updateData(id: Int, name: String, quantity: String, priority: Int) {
+        model.updateData(id, name, quantity, priority)
+    }
+
 }

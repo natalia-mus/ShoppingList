@@ -11,4 +11,8 @@ class AddProductActivityModel : AddProductActivityContract.AddProductActivityMod
         dataBase?.addProduct(name, quantity, priority)
     }
 
+    override fun updateData(id: Int, name: String, quantity: String, priority: Int) {
+        dataBase?.editProduct(id, name, quantity, priority)
+    }
+
 }

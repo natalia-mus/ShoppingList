@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import androidx.core.content.contentValuesOf
 import com.example.shoppinglist.model.Product
 
 object TableInfo {
@@ -89,8 +90,14 @@ class DBHelper(context: Context) :
         db.close()
     }
 
-    fun editProduct(id: Int) {
-
+    fun editProduct(id: Int, name: String, quantity: String, priority: Int) {
+        val db = this.writableDatabase
+        val values = contentValuesOf()
+        values.put(TableInfo.COLUMN_NAME, name)
+        values.put(TableInfo.COLUMN_QUANTITY, quantity)
+        values.put(TableInfo.COLUMN_PRIORITY, priority)
+        db.update(TableInfo.TABLE_NAME, values, TableInfo.COLUMN_ID + "=" + id, null)
+        db.close()
     }
 
 }
