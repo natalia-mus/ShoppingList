@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
-import com.example.shoppinglist.constants.OpeningContext
+import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.presenter.AddProductActivityPresenter
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_add_product.*
 
 class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddProductActivityView {
 
-    private var openingContext = OpeningContext.CREATE
+    private var savingContext = SavingContext.CREATE
     private lateinit var presenter: AddProductActivityContract.AddProductActivityPresenter
     private lateinit var product: Product
 
@@ -26,7 +26,7 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
 
     private fun checkContext() {
         if (intent.hasExtra("product")) {
-            openingContext = OpeningContext.EDIT
+            savingContext = SavingContext.EDIT
             product = intent.getSerializableExtra("product") as Product
         }
     }
@@ -38,7 +38,7 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
     }
 
     override fun initView() {
-        if (openingContext == OpeningContext.EDIT) prepareProductData(product)
+        if (savingContext == SavingContext.EDIT) prepareProductData(product)
 
         add_product_button_cancel.setOnClickListener() {
             onBackPressed()
@@ -75,15 +75,8 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         val priority = add_product_priority.text.toString()
 
         if (invalidateData(name, priority)) {
-
-            if (openingContext == OpeningContext.CREATE) {
-                presenter.saveData(name, quantity, priority.toInt())
-                finish()
-
-            } else if (openingContext == OpeningContext.EDIT) {
-                presenter.updateData(product.id, name, quantity, priority.toInt())
-                finish()
-            }
+            presenter.saveData(savingContext, product.id, name, quantity, priority.toInt())
+            finish()
         }
     }
 

@@ -1,5 +1,5 @@
 package com.example.shoppinglist.constants
 
-enum class OpeningContext {
+enum class SavingContext {
     CREATE, EDIT
 }
