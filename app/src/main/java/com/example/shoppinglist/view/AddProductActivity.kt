@@ -75,7 +75,9 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         val priority = add_product_priority.text.toString()
 
         if (invalidateData(name, priority)) {
-            presenter.saveData(savingContext, product.id, name, quantity, priority.toInt())
+            var id: Int? = null
+            if (savingContext == SavingContext.EDIT)    id = product.id
+            presenter.saveData(savingContext, id, name, quantity, priority.toInt())
             finish()
         }
     }
