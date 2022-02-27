@@ -9,3 +9,8 @@ Application allows to add new product (its name, quantity and priority) to the d
 ![shopping_list](https://user-images.githubusercontent.com/56269299/111634372-bbf48180-87f6-11eb-9f9f-fd3eb3dca291.png)
 
 In the near future it is planned to allow editing products.
+
+<br/><br/>
+### <b> update: </b>
+ 
+Now editing products is possible - in order to edit item user needs to tap and hold one.
