@@ -3,7 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GITHUB/ShoppingList/app/src/main/res/layout-land/activity_add_product.xml" value="0.1" />
+        <entry key="..\:/GITHUB/ShoppingList/app/src/main/res/layout-land/activity_main.xml" value="0.1" />
+        <entry key="..\:/GITHUB/ShoppingList/app/src/main/res/layout/activity_add_product.xml" value="0.1" />
+        <entry key="..\:/GITHUB/ShoppingList/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/GITHUB/ShoppingList/app/src/main/res/layout/activity_themes.xml" value="0.1" />
         <entry key="..\:/GITHUB/ShoppingList/app/src/main/res/layout/product_item.xml" value="0.1875" />
+        <entry key="..\:/GITHUB/ShoppingList/app/src/main/res/menu/main_menu.xml" value="0.1" />
       </map>
     </option>
   </component>

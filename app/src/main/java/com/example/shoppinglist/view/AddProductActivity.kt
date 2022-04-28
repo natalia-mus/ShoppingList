@@ -1,10 +1,13 @@
 package com.example.shoppinglist.view
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
+import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.constants.SavingContext
+import com.example.shoppinglist.constants.Themes
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.presenter.AddProductActivityPresenter
@@ -20,24 +23,11 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
 
-        checkContext()
         presenter = AddProductActivityPresenter(this)
     }
 
-    private fun checkContext() {
-        if (intent.hasExtra("product")) {
-            savingContext = SavingContext.EDIT
-            product = intent.getSerializableExtra("product") as Product
-        }
-    }
-
-    private fun prepareProductData(product: Product) {
-        add_product_name.setText(product.name)
-        add_product_quantity.setText(product.quantity)
-        add_product_priority.setText(product.priority.toString())
-    }
-
     override fun initView() {
+        checkContext()
         if (savingContext == SavingContext.EDIT) prepareProductData(product)
 
         add_product_button_cancel.setOnClickListener() {
@@ -47,6 +37,49 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         add_product_button_save.setOnClickListener() {
             onSaveButtonClicked()
         }
+    }
+
+    override fun setTheme(theme: Themes) {
+        val orientation = resources.configuration.orientation
+        when (theme) {
+            Themes.GROCERY -> {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
+                    R.drawable.grocery_2_portrait
+                )
+                else add_product_activity_container.setBackgroundResource(R.drawable.grocery_2_landscape)
+            }
+            Themes.MARKETPLACE -> {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
+                    R.drawable.marketplace_2_portrait
+                )
+                else add_product_activity_container.setBackgroundResource(R.drawable.marketplace_2_landscape)
+            }
+            Themes.FASHION -> {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
+                    R.drawable.fashion_2_portrait
+                )
+                else add_product_activity_container.setBackgroundResource(R.drawable.fashion_2_landscape)
+            }
+            Themes.CHRISTMAS -> {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
+                    R.drawable.christmas_2_portrait
+                )
+                else add_product_activity_container.setBackgroundResource(R.drawable.christmas_2_landscape)
+            }
+        }
+    }
+
+    private fun checkContext() {
+        if (intent.hasExtra(Constants.PRODUCT)) {
+            savingContext = SavingContext.EDIT
+            product = intent.getSerializableExtra(Constants.PRODUCT) as Product
+        }
+    }
+
+    private fun prepareProductData(product: Product) {
+        add_product_name.setText(product.name)
+        add_product_quantity.setText(product.quantity)
+        add_product_priority.setText(product.priority.toString())
     }
 
     private fun invalidateData(name: String, priority: String): Boolean {
@@ -75,7 +108,9 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         val priority = add_product_priority.text.toString()
 
         if (invalidateData(name, priority)) {
-            presenter.saveData(savingContext, product.id, name, quantity, priority.toInt())
+            var id: Int? = null
+            if (savingContext == SavingContext.EDIT) id = product.id
+            presenter.saveData(savingContext, id, name, quantity, priority.toInt())
             finish()
         }
     }
