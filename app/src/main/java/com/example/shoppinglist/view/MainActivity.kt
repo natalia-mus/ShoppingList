@@ -1,14 +1,18 @@
 package com.example.shoppinglist.view
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
+import com.example.shoppinglist.Settings
 import com.example.shoppinglist.adapter.OnItemClickAction
 import com.example.shoppinglist.adapter.ProductAdapter
+import com.example.shoppinglist.constants.Constants
+import com.example.shoppinglist.constants.Themes
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.model.Product
@@ -32,7 +36,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         presenter.showData()
     }
 
-    override fun DBinstance(): DBHelper {
+    override fun createDBinstance(): DBHelper {
         return DBHelper.getInstance(this)
     }
 
@@ -54,8 +58,17 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val intent = Intent(this, AddProductActivity::class.java)
-        startActivity(intent)
+        when (item.itemId) {
+            R.id.menu_item_add_product -> {
+                val intent = Intent(this, AddProductActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menu_item_themes -> {
+                val intent = Intent(this, ThemesActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -63,9 +76,35 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         openProductWithEditContext(product)
     }
 
+    override fun initSettings() {
+        Settings.getInstance(this)
+    }
+
+    override fun setTheme(theme: Themes) {
+        val orientation = resources.configuration.orientation
+        when (theme) {
+            Themes.GROCERY -> {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.grocery_1_portrait)
+                else main_activity_container.setBackgroundResource(R.drawable.grocery_1_landscape)
+            }
+            Themes.MARKETPLACE -> {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.marketplace_1_portrait)
+                else main_activity_container.setBackgroundResource(R.drawable.marketplace_1_landscape)
+            }
+            Themes.FASHION -> {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.fashion_1_portrait)
+                else main_activity_container.setBackgroundResource(R.drawable.fashion_1_landscape)
+            }
+            Themes.CHRISTMAS -> {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.christmas_1_portrait)
+                else main_activity_container.setBackgroundResource(R.drawable.christmas_1_landscape)
+            }
+        }
+    }
+
     private fun openProductWithEditContext(product: Product) {
         val intent = Intent(this, AddProductActivity::class.java)
-        intent.putExtra("product", product)
+        intent.putExtra(Constants.PRODUCT, product)
         startActivity(intent)
     }
 

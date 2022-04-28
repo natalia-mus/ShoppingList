@@ -21,6 +21,9 @@
         <activity
             android:name=".view.AddProductActivity"
             android:label="@string/activity_add_product" />
+        <activity
+            android:name=".view.ThemesActivity"
+            android:label="@string/menu_item_themes" />
     </application>
 
 </manifest>
