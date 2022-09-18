@@ -3,6 +3,7 @@ package com.example.shoppinglist.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.R
 import com.example.shoppinglist.constants.Themes
 import com.example.shoppinglist.contract.ThemesActivityContract
@@ -25,87 +26,82 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         selectedTheme = actualTheme
         when (actualTheme) {
             Themes.GROCERY -> {
-                theme_grocery.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
+                theme_grocery.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
                 theme_name_grocery.setTextColor(resources.getColor(R.color.white, null))
             }
             Themes.MARKETPLACE -> {
-                theme_marketplace.setBackgroundColor(
-                    resources.getColor(
-                        R.color.sea_blue_light,
-                        null
-                    )
-                )
+                theme_marketplace.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
                 theme_name_marketplace.setTextColor(resources.getColor(R.color.white, null))
             }
             Themes.FASHION -> {
-                theme_fashion.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
+                theme_fashion.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
                 theme_name_fashion.setTextColor(resources.getColor(R.color.white, null))
             }
             Themes.CHRISTMAS -> {
-                theme_christmas.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
+                theme_christmas.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
                 theme_name_christmas.setTextColor(resources.getColor(R.color.white, null))
             }
         }
 
         theme_grocery.setOnClickListener() {
-            theme_grocery.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
+            theme_grocery.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
             theme_name_grocery.setTextColor(resources.getColor(R.color.white, null))
 
-            theme_marketplace.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_marketplace.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_marketplace.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
-            theme_fashion.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_fashion.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_fashion.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
-            theme_christmas.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_christmas.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_christmas.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
             selectedTheme = Themes.GROCERY
         }
 
         theme_marketplace.setOnClickListener() {
-            theme_grocery.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_grocery.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_grocery.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
-            theme_marketplace.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
+            theme_marketplace.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
             theme_name_marketplace.setTextColor(resources.getColor(R.color.white, null))
 
-            theme_fashion.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_fashion.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_fashion.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
-            theme_christmas.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_christmas.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_christmas.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
             selectedTheme = Themes.MARKETPLACE
         }
 
         theme_fashion.setOnClickListener() {
-            theme_grocery.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_grocery.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_grocery.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
-            theme_marketplace.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_marketplace.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_marketplace.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
-            theme_fashion.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
+            theme_fashion.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
             theme_name_fashion.setTextColor(resources.getColor(R.color.white, null))
 
-            theme_christmas.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_christmas.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_christmas.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
             selectedTheme = Themes.FASHION
         }
 
         theme_christmas.setOnClickListener() {
-            theme_grocery.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_grocery.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_grocery.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
-            theme_marketplace.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_marketplace.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_marketplace.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
-            theme_fashion.setBackgroundColor(resources.getColor(R.color.white, null))
+            theme_fashion.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
             theme_name_fashion.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
 
-            theme_christmas.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
+            theme_christmas.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
             theme_name_christmas.setTextColor(resources.getColor(R.color.white, null))
 
             selectedTheme = Themes.CHRISTMAS
