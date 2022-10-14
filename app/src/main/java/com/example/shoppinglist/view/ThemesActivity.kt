@@ -2,7 +2,10 @@ package com.example.shoppinglist.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.R
 import com.example.shoppinglist.constants.Themes
 import com.example.shoppinglist.contract.ThemesActivityContract
@@ -25,90 +28,33 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         selectedTheme = actualTheme
         when (actualTheme) {
             Themes.GROCERY -> {
-                theme_grocery.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
-                theme_name_grocery.setTextColor(resources.getColor(R.color.white, null))
+                checkOption(Themes.GROCERY, theme_grocery, theme_name_grocery)
             }
             Themes.MARKETPLACE -> {
-                theme_marketplace.setBackgroundColor(
-                    resources.getColor(
-                        R.color.sea_blue_light,
-                        null
-                    )
-                )
-                theme_name_marketplace.setTextColor(resources.getColor(R.color.white, null))
+                checkOption(Themes.MARKETPLACE, theme_marketplace, theme_name_marketplace)
             }
             Themes.FASHION -> {
-                theme_fashion.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
-                theme_name_fashion.setTextColor(resources.getColor(R.color.white, null))
+                checkOption(Themes.FASHION, theme_fashion, theme_name_fashion)
             }
             Themes.CHRISTMAS -> {
-                theme_christmas.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
-                theme_name_christmas.setTextColor(resources.getColor(R.color.white, null))
+                checkOption(Themes.CHRISTMAS, theme_christmas, theme_name_christmas)
             }
         }
 
         theme_grocery.setOnClickListener() {
-            theme_grocery.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
-            theme_name_grocery.setTextColor(resources.getColor(R.color.white, null))
-
-            theme_marketplace.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_marketplace.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            theme_fashion.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_fashion.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            theme_christmas.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_christmas.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            selectedTheme = Themes.GROCERY
+            checkOption(Themes.GROCERY, theme_grocery, theme_name_grocery)
         }
 
         theme_marketplace.setOnClickListener() {
-            theme_grocery.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_grocery.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            theme_marketplace.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
-            theme_name_marketplace.setTextColor(resources.getColor(R.color.white, null))
-
-            theme_fashion.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_fashion.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            theme_christmas.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_christmas.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            selectedTheme = Themes.MARKETPLACE
+            checkOption(Themes.MARKETPLACE, theme_marketplace, theme_name_marketplace)
         }
 
         theme_fashion.setOnClickListener() {
-            theme_grocery.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_grocery.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            theme_marketplace.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_marketplace.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            theme_fashion.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
-            theme_name_fashion.setTextColor(resources.getColor(R.color.white, null))
-
-            theme_christmas.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_christmas.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            selectedTheme = Themes.FASHION
+            checkOption(Themes.FASHION, theme_fashion, theme_name_fashion)
         }
 
         theme_christmas.setOnClickListener() {
-            theme_grocery.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_grocery.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            theme_marketplace.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_marketplace.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            theme_fashion.setBackgroundColor(resources.getColor(R.color.white, null))
-            theme_name_fashion.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
-
-            theme_christmas.setBackgroundColor(resources.getColor(R.color.sea_blue_light, null))
-            theme_name_christmas.setTextColor(resources.getColor(R.color.white, null))
-
-            selectedTheme = Themes.CHRISTMAS
+            checkOption(Themes.CHRISTMAS, theme_christmas, theme_name_christmas)
         }
 
         themes_button_save.setOnClickListener() {
@@ -122,6 +68,22 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         themes_button_cancel.setOnClickListener() {
             onBackPressed()
         }
+    }
+
+    private fun checkOption(theme: Themes, themeLayout: LinearLayout, themeName: TextView) {
+        uncheckOption(theme_grocery, theme_name_grocery)
+        uncheckOption(theme_marketplace, theme_name_marketplace)
+        uncheckOption(theme_fashion, theme_name_fashion)
+        uncheckOption(theme_christmas, theme_name_christmas)
+
+        themeLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
+        themeName.setTextColor(resources.getColor(R.color.white, null))
+        selectedTheme = theme
+    }
+
+    private fun uncheckOption(themeLayout: LinearLayout, themeName: TextView) {
+        themeLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
+        themeName.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
     }
 
 }
