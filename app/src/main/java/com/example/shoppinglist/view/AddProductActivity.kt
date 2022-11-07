@@ -2,8 +2,10 @@ package com.example.shoppinglist.view
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
+import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.constants.Themes
@@ -88,8 +90,20 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
 
         var id: Int? = null
         if (savingContext == SavingContext.EDIT) id = product.id
-        presenter.saveData(savingContext, id, name, quantity, priority)
-        finish()
+
+        val result = presenter.saveData(savingContext, id, name, quantity, priority)
+
+        when (result) {
+            ValidationResult.EMPTY_NAME -> {
+                Toast.makeText(this, getString(R.string.product_name_can_not_be_empty), Toast.LENGTH_LONG).show()
+
+            }
+            ValidationResult.EMPTY_PRIORITY -> {
+                Toast.makeText(this, getString(R.string.priority_can_not_be_empty), Toast.LENGTH_LONG).show()
+
+            }
+            else -> finish()
+        }
     }
 
 }

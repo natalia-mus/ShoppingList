@@ -1,6 +1,8 @@
 package com.example.shoppinglist.model
 
 import com.example.shoppinglist.Settings
+import com.example.shoppinglist.ValidationResult
+import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.constants.Themes
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.database.DBHelper
@@ -13,43 +15,28 @@ class AddProductActivityModel : AddProductActivityContract.AddProductActivityMod
         return Settings.getTheme()
     }
 
-    override fun saveData(name: String, quantity: String, priority: String): Boolean {
-        if (validateData(name, priority)) {
-            dataBase?.addProduct(name, quantity, priority.toInt())
-            return true
+    override fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String): ValidationResult {
+        val validationResult = validateData(name, priority)
 
-        } else return false
+        if (validationResult == ValidationResult.VALID) {
+            if (savingContext == SavingContext.CREATE)  dataBase?.addProduct(name, quantity, priority.toInt())
+            else dataBase?.editProduct(id!!, name, quantity, priority.toInt())
+        }
+        return validationResult
     }
 
-    override fun updateData(id: Int, name: String, quantity: String, priority: String): Boolean {
-        if (validateData(name, priority)) {
-            dataBase?.editProduct(id, name, quantity, priority.toInt())
-            return true
+    private fun validateData(name: String, priority: String): ValidationResult {
+        return when {
+            name.isEmpty() -> {
+                ValidationResult.EMPTY_NAME
 
-        } else return false
-    }
+            }
+            priority.isEmpty() -> {
+                ValidationResult.EMPTY_PRIORITY
 
-    private fun validateData(name: String, priority: String): Boolean {
-        //var result = true
-//        val result: Boolean
-//
-//        if (name.isNotEmpty() && priority.isNotEmpty()) {
-//            result = true
-//
-//        } else if (name.isEmpty() || priority.isEmpty()) {
-////            var message = ""
-////
-////            if (name.isEmpty()) {
-////                message = resources.getString(R.string.product_name_can_not_be_empty)
-////            } else if (priority.isEmpty()) {
-////                message = resources.getString(R.string.priority_can_not_be_empty)
-////            }
-////
-////            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-//            result = false
-//        }
-
-        return name.isNotEmpty() && priority.isNotEmpty()
+            }
+            else -> ValidationResult.VALID
+        }
     }
 
 }
