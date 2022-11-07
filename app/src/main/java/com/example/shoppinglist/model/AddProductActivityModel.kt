@@ -1,6 +1,8 @@
 package com.example.shoppinglist.model
 
 import com.example.shoppinglist.Settings
+import com.example.shoppinglist.ValidationResult
+import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.constants.Themes
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.database.DBHelper
@@ -13,12 +15,28 @@ class AddProductActivityModel : AddProductActivityContract.AddProductActivityMod
         return Settings.getTheme()
     }
 
-    override fun createData(name: String, quantity: String, priority: Int) {
-        dataBase?.addProduct(name, quantity, priority)
+    override fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String): ValidationResult {
+        val validationResult = validateData(name, priority)
+
+        if (validationResult == ValidationResult.VALID) {
+            if (savingContext == SavingContext.CREATE)  dataBase?.addProduct(name, quantity, priority.toInt())
+            else dataBase?.editProduct(id!!, name, quantity, priority.toInt())
+        }
+        return validationResult
     }
 
-    override fun updateData(id: Int, name: String, quantity: String, priority: Int) {
-        dataBase?.editProduct(id, name, quantity, priority)
+    private fun validateData(name: String, priority: String): ValidationResult {
+        return when {
+            name.isEmpty() -> {
+                ValidationResult.EMPTY_NAME
+
+            }
+            priority.isEmpty() -> {
+                ValidationResult.EMPTY_PRIORITY
+
+            }
+            else -> ValidationResult.VALID
+        }
     }
 
 }
