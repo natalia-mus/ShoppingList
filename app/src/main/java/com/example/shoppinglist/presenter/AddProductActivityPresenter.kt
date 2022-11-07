@@ -20,8 +20,8 @@ class AddProductActivityPresenter(_view: AddProductActivityContract.AddProductAc
         return model.getTheme()
     }
 
-    override fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: Int) {
-        if (savingContext == SavingContext.CREATE)  model.createData(name, quantity, priority)
+    override fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String) {
+        if (savingContext == SavingContext.CREATE)  model.saveData(name, quantity, priority)
         else if (savingContext == SavingContext.EDIT)   model.updateData(id!!, name, quantity, priority)
     }
 

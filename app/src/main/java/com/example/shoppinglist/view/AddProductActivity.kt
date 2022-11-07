@@ -2,7 +2,6 @@ package com.example.shoppinglist.view
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.constants.Constants
@@ -82,37 +81,15 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         add_product_priority.setText(product.priority.toString())
     }
 
-    private fun invalidateData(name: String, priority: String): Boolean {
-        var result = true
-
-        if (name.isNotEmpty() && priority.isNotEmpty()) {
-            result = true
-        } else if (name.isEmpty() || priority.isEmpty()) {
-            var message = ""
-
-            if (name.isEmpty()) {
-                message = resources.getString(R.string.product_name_can_not_be_empty)
-            } else if (priority.isEmpty()) {
-                message = resources.getString(R.string.priority_can_not_be_empty)
-            }
-
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-            result = false
-        }
-        return result
-    }
-
     private fun onSaveButtonClicked() {
         val name = add_product_name.text.toString()
         val quantity = add_product_quantity.text.toString()
         val priority = add_product_priority.text.toString()
 
-        if (invalidateData(name, priority)) {
-            var id: Int? = null
-            if (savingContext == SavingContext.EDIT) id = product.id
-            presenter.saveData(savingContext, id, name, quantity, priority.toInt())
-            finish()
-        }
+        var id: Int? = null
+        if (savingContext == SavingContext.EDIT) id = product.id
+        presenter.saveData(savingContext, id, name, quantity, priority)
+        finish()
     }
 
 }
