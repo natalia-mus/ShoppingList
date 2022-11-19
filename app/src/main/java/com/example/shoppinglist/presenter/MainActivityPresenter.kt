@@ -1,6 +1,6 @@
 package com.example.shoppinglist.presenter
 
-import com.example.shoppinglist.constants.Themes
+import com.example.shoppinglist.constants.Theme
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.model.MainActivityModel
 
@@ -15,7 +15,7 @@ class MainActivityPresenter(_view: MainActivityContract.MainActivityView) :
         view.setTheme(getTheme())
     }
 
-    private fun getTheme(): Themes = model.getTheme()
+    private fun getTheme(): Theme = model.getTheme()
 
     override fun fetchData() = model.fetchDataFromDB()
 

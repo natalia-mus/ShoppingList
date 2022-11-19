@@ -12,7 +12,7 @@ import com.example.shoppinglist.Settings
 import com.example.shoppinglist.adapter.OnItemClickAction
 import com.example.shoppinglist.adapter.ProductAdapter
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.constants.Themes
+import com.example.shoppinglist.constants.Theme
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.model.Product
@@ -80,22 +80,22 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         Settings.getInstance(this)
     }
 
-    override fun setTheme(theme: Themes) {
+    override fun setTheme(theme: Theme) {
         val orientation = resources.configuration.orientation
         when (theme) {
-            Themes.GROCERY -> {
+            Theme.GROCERY -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.grocery_1_portrait)
                 else main_activity_container.setBackgroundResource(R.drawable.grocery_1_landscape)
             }
-            Themes.MARKETPLACE -> {
+            Theme.MARKETPLACE -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.marketplace_1_portrait)
                 else main_activity_container.setBackgroundResource(R.drawable.marketplace_1_landscape)
             }
-            Themes.FASHION -> {
+            Theme.FASHION -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.fashion_1_portrait)
                 else main_activity_container.setBackgroundResource(R.drawable.fashion_1_landscape)
             }
-            Themes.CHRISTMAS -> {
+            Theme.CHRISTMAS -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.christmas_1_portrait)
                 else main_activity_container.setBackgroundResource(R.drawable.christmas_1_landscape)
             }

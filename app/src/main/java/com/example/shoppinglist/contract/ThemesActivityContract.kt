@@ -1,19 +1,19 @@
 package com.example.shoppinglist.contract
 
-import com.example.shoppinglist.constants.Themes
+import com.example.shoppinglist.constants.Theme
 
 interface ThemesActivityContract {
 
     interface ThemesActivityModel {
-        fun getActualTheme(): Themes
-        fun setTheme(selectedTheme: Themes)
+        fun getActualTheme(): Theme
+        fun setTheme(selectedTheme: Theme)
     }
 
     interface ThemesActivityPresenter {
-        fun setTheme(selectedTheme: Themes)
+        fun setTheme(selectedTheme: Theme)
     }
 
     interface ThemesActivityView {
-        fun initView(actualTheme: Themes)
+        fun initView(actualTheme: Theme)
     }
 }

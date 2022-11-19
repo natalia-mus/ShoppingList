@@ -36,4 +36,16 @@ class AddProductActivityPresenterTest {
         assertTrue(result == ValidationResult.EMPTY_NAME)
     }
 
+    @Test
+    fun addProductWithEmptyPriority() {
+        val result = presenter.saveData(SavingContext.CREATE, null, "name", "1", "")
+        assertTrue(result == ValidationResult.EMPTY_PRIORITY)
+    }
+
+    @Test
+    fun updateProduct() {
+        val result = presenter.saveData(SavingContext.EDIT, 1, "new name", "2", "2")
+        assertTrue(result == ValidationResult.VALID)
+    }
+
 }

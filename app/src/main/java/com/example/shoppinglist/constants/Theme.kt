@@ -1,5 +1,5 @@
 package com.example.shoppinglist.constants
 
-enum class Themes {
+enum class Theme {
     GROCERY, MARKETPLACE, FASHION, CHRISTMAS
 }
