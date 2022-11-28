@@ -8,9 +8,11 @@ class MainActivityPresenter(_view: MainActivityContract.MainActivityView) :
     MainActivityContract.MainActivityPresenter {
 
     private val view = _view
-    private val model = MainActivityModel(view.createDBinstance())
+    private val model: MainActivityModel
 
     init {
+        view.createDBinstance()
+        model = MainActivityModel()
         view.initSettings()
         view.setTheme(getTheme())
     }

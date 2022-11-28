@@ -5,9 +5,9 @@ import com.example.shoppinglist.constants.Theme
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.database.DBHelper
 
-class MainActivityModel(_dataBase: DBHelper?) : MainActivityContract.MainActivityModel {
+class MainActivityModel() : MainActivityContract.MainActivityModel {
 
-    private val dataBase = _dataBase
+    private val dataBase = DBHelper.instance
     private var data: List<Product>? = emptyList()
 
     override fun getTheme(): Theme {
