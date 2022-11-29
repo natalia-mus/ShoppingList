@@ -39,12 +39,32 @@ class MainActivityPresenterTest {
 
     @Test
     fun deleteProduct() {
-        mainActivityPresenter.fetchData()
-        val products = mainActivityPresenter.returnData()
-
         var condition = false
+        mainActivityPresenter.fetchData()
+        var products = mainActivityPresenter.returnData()
+
         if (products != null) {
-            condition = true
+            var id: Int? = null
+            for (product in products) {
+                if (product.name == "tomatoes" && product.quantity == "2" && product.priority == 1) {
+                    id = product.id
+                }
+            }
+
+            if (id != null) {
+                mainActivityPresenter.deleteItem(id)
+                mainActivityPresenter.fetchData()
+                products = mainActivityPresenter.returnData()
+
+                if (products != null) {
+                    condition = true
+                    for (product in products) {
+                        if (product.id == id) {
+                            condition = false
+                        }
+                    }
+                }
+            }
         }
 
         assertTrue(condition)
