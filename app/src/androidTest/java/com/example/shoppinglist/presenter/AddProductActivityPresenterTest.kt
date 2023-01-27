@@ -46,18 +46,12 @@ class AddProductActivityPresenterTest {
 
     @Test
     fun addValidProduct() {
-        val result = addProduct()
-
-        mainActivityPresenter.fetchData()
-        val products = mainActivityPresenter.returnData()
-
+        val result = presenter.saveData(SavingContext.CREATE, null, NAME, QUANTITY, PRIORITY.toString())
         var isInDatabase = false
-        if (products != null) {
-            for (product in products) {
-                if (product.name == NAME && product.quantity == QUANTITY && product.priority == PRIORITY) {
-                    isInDatabase = true
-                }
-            }
+        val productId = getProductId(NAME, QUANTITY, PRIORITY)
+
+        if (productId != null) {
+            isInDatabase = true
         }
 
         assertTrue(result == ValidationResult.VALID && isInDatabase)
@@ -66,17 +60,11 @@ class AddProductActivityPresenterTest {
     @Test
     fun addProductWithEmptyName() {
         val result = presenter.saveData(SavingContext.CREATE, null, "", QUANTITY, PRIORITY.toString())
-
-        mainActivityPresenter.fetchData()
-        val products = mainActivityPresenter.returnData()
-
         var isInDatabase = false
-        if (products != null) {
-            for (product in products) {
-                if (product.name == "" && product.quantity == QUANTITY && product.priority == PRIORITY) {
-                    isInDatabase = true
-                }
-            }
+        val productId = getProductId("", QUANTITY, PRIORITY)
+
+        if (productId != null) {
+            isInDatabase = true
         }
 
         assertTrue(result == ValidationResult.EMPTY_NAME && !isInDatabase)
@@ -91,31 +79,23 @@ class AddProductActivityPresenterTest {
     @Test
     fun updateProduct() {
         var result = false
-        if (addProduct() == ValidationResult.VALID) {
+        var productId = getProductId(NAME, QUANTITY, PRIORITY)
+
+        if (productId == null) {
+            presenter.saveData(SavingContext.CREATE, null, NAME, QUANTITY, PRIORITY.toString())
+            productId = getProductId(NAME, QUANTITY, PRIORITY)
+        }
+
+        if (productId != null) {
+            presenter.saveData(SavingContext.EDIT, productId, NEW_NAME, NEW_QUANTITY, NEW_PRIORITY.toString())
 
             mainActivityPresenter.fetchData()
-            var products = mainActivityPresenter.returnData()
+            val products = mainActivityPresenter.returnData()
 
-            var id: Int? = null
             if (products != null) {
                 for (product in products) {
-                    if (product.name == NAME && product.quantity == QUANTITY && product.priority == PRIORITY) {
-                        id = product.id
-                    }
-                }
-            }
-
-            if (id != null) {
-                presenter.saveData(SavingContext.EDIT, id, NEW_NAME, NEW_QUANTITY, NEW_PRIORITY.toString())
-
-                mainActivityPresenter.fetchData()
-                products = mainActivityPresenter.returnData()
-
-                if (products != null) {
-                    for (product in products) {
-                        if (product.id == id && product.name == NEW_NAME && product.quantity == NEW_QUANTITY && product.priority == NEW_PRIORITY) {
-                            result = true
-                        }
+                    if (product.id == productId && product.name == NEW_NAME && product.quantity == NEW_QUANTITY && product.priority == NEW_PRIORITY) {
+                        result = true
                     }
                 }
             }
@@ -124,8 +104,20 @@ class AddProductActivityPresenterTest {
         assertTrue(result)
     }
 
-    private fun addProduct(): ValidationResult {
-        return presenter.saveData(SavingContext.CREATE, null, NAME, QUANTITY, PRIORITY.toString())
+    private fun getProductId(name: String, quantity: String, priority: Int): Int? {
+        var id: Int? = null
+        mainActivityPresenter.fetchData()
+        val products = mainActivityPresenter.returnData()
+
+        if (products != null) {
+            for (product in products) {
+                if (product.name == name && product.quantity == quantity && product.priority == priority) {
+                    id = product.id
+                }
+            }
+        }
+
+        return id
     }
 
 }
