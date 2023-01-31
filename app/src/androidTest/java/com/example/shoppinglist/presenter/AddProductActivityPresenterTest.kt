@@ -6,6 +6,7 @@ import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.database.DBHelper
+import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -15,11 +16,11 @@ import org.mockito.MockitoAnnotations
 class AddProductActivityPresenterTest {
 
     companion object {
-        private const val NAME = "name"
+        private const val NAME = "6da11f55-ab6b-4d9c-b4ce-b1651221d6c5"
         private const val QUANTITY = "5 pcs"
         private const val PRIORITY = 4
 
-        private const val NEW_NAME = "new name"
+        private const val NEW_NAME = "09d3ffef-0868-4ba2-960f-5f0140e090d6"
         private const val NEW_QUANTITY = "3 kilos"
         private const val NEW_PRIORITY = 2
     }
@@ -33,6 +34,8 @@ class AddProductActivityPresenterTest {
 
     @Mock
     private lateinit var mainActivityView: MainActivityContract.MainActivityView
+
+    private val testProductsIds = ArrayList<Int>()
 
 
     @Before
@@ -52,6 +55,7 @@ class AddProductActivityPresenterTest {
 
         if (productId != null) {
             isInDatabase = true
+            testProductsIds.add(productId)
         }
 
         assertTrue(result == ValidationResult.VALID && isInDatabase)
@@ -65,6 +69,7 @@ class AddProductActivityPresenterTest {
 
         if (productId != null) {
             isInDatabase = true
+            testProductsIds.add(productId)
         }
 
         assertTrue(result == ValidationResult.EMPTY_NAME && !isInDatabase)
@@ -87,6 +92,7 @@ class AddProductActivityPresenterTest {
         }
 
         if (productId != null) {
+            testProductsIds.add(productId)
             presenter.saveData(SavingContext.EDIT, productId, NEW_NAME, NEW_QUANTITY, NEW_PRIORITY.toString())
 
             mainActivityPresenter.fetchData()
@@ -102,6 +108,22 @@ class AddProductActivityPresenterTest {
         }
 
         assertTrue(result)
+    }
+
+    @After
+    fun finish() {
+        mainActivityPresenter.fetchData()
+        val products = mainActivityPresenter.returnData()
+
+        if (products != null) {
+            for (product in products) {
+                for (id in testProductsIds) {
+                    if (product.id == id) {
+                        mainActivityPresenter.deleteItem(id)
+                    }
+                }
+            }
+        }
     }
 
     private fun getProductId(name: String, quantity: String, priority: Int): Int? {

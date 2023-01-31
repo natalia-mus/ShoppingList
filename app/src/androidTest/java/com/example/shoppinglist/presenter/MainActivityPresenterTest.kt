@@ -15,11 +15,11 @@ import org.mockito.MockitoAnnotations
 class MainActivityPresenterTest {
 
     companion object {
-        private const val PRODUCT_1_NAME = "testProduct1Name"
-        private const val PRODUCT_2_NAME = "testProduct2Name"
-        private const val PRODUCT_1_QUANTITY = "testProduct1Quantity"
-        private const val PRODUCT_2_QUANTITY = "testProduct2Quantity"
-        private const val PRODUCT_PRIORITY = "17"
+        private const val PRODUCT_1_NAME = "14c81e60-9b3f-43ae-b128-5a6692764c9b"
+        private const val PRODUCT_2_NAME = "3a98e130-a15e-49df-979f-d5ebc90403cc"
+        private const val PRODUCT_1_QUANTITY = "1 kilo"
+        private const val PRODUCT_2_QUANTITY = "10 pcs"
+        private const val PRODUCT_PRIORITY = "3"
     }
 
     private lateinit var mainActivityPresenter: MainActivityPresenter
