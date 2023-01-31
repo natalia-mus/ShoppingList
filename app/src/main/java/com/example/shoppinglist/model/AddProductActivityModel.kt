@@ -3,7 +3,7 @@ package com.example.shoppinglist.model
 import com.example.shoppinglist.Settings
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.SavingContext
-import com.example.shoppinglist.constants.Themes
+import com.example.shoppinglist.constants.Theme
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.database.DBHelper
 
@@ -11,7 +11,7 @@ class AddProductActivityModel : AddProductActivityContract.AddProductActivityMod
 
     private val dataBase = DBHelper.instance
 
-    override fun getTheme(): Themes {
+    override fun getTheme(): Theme {
         return Settings.getTheme()
     }
 

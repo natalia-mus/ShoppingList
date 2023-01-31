@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.R
-import com.example.shoppinglist.constants.Themes
+import com.example.shoppinglist.constants.Theme
 import com.example.shoppinglist.contract.ThemesActivityContract
 import com.example.shoppinglist.presenter.ThemesActivityPresenter
 import kotlinx.android.synthetic.main.activity_themes.*
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_themes.*
 class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivityView {
 
     private lateinit var presenter: ThemesActivityContract.ThemesActivityPresenter
-    private lateinit var selectedTheme: Themes
+    private lateinit var selectedTheme: Theme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,37 +24,37 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         presenter = ThemesActivityPresenter(this)
     }
 
-    override fun initView(actualTheme: Themes) {
+    override fun initView(actualTheme: Theme) {
         selectedTheme = actualTheme
         when (actualTheme) {
-            Themes.GROCERY -> {
-                checkOption(Themes.GROCERY, theme_grocery, theme_name_grocery)
+            Theme.GROCERY -> {
+                checkOption(Theme.GROCERY, theme_grocery, theme_name_grocery)
             }
-            Themes.MARKETPLACE -> {
-                checkOption(Themes.MARKETPLACE, theme_marketplace, theme_name_marketplace)
+            Theme.MARKETPLACE -> {
+                checkOption(Theme.MARKETPLACE, theme_marketplace, theme_name_marketplace)
             }
-            Themes.FASHION -> {
-                checkOption(Themes.FASHION, theme_fashion, theme_name_fashion)
+            Theme.FASHION -> {
+                checkOption(Theme.FASHION, theme_fashion, theme_name_fashion)
             }
-            Themes.CHRISTMAS -> {
-                checkOption(Themes.CHRISTMAS, theme_christmas, theme_name_christmas)
+            Theme.CHRISTMAS -> {
+                checkOption(Theme.CHRISTMAS, theme_christmas, theme_name_christmas)
             }
         }
 
         theme_grocery.setOnClickListener() {
-            checkOption(Themes.GROCERY, theme_grocery, theme_name_grocery)
+            checkOption(Theme.GROCERY, theme_grocery, theme_name_grocery)
         }
 
         theme_marketplace.setOnClickListener() {
-            checkOption(Themes.MARKETPLACE, theme_marketplace, theme_name_marketplace)
+            checkOption(Theme.MARKETPLACE, theme_marketplace, theme_name_marketplace)
         }
 
         theme_fashion.setOnClickListener() {
-            checkOption(Themes.FASHION, theme_fashion, theme_name_fashion)
+            checkOption(Theme.FASHION, theme_fashion, theme_name_fashion)
         }
 
         theme_christmas.setOnClickListener() {
-            checkOption(Themes.CHRISTMAS, theme_christmas, theme_name_christmas)
+            checkOption(Theme.CHRISTMAS, theme_christmas, theme_name_christmas)
         }
 
         themes_button_save.setOnClickListener() {
@@ -70,7 +70,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         }
     }
 
-    private fun checkOption(theme: Themes, themeLayout: LinearLayout, themeName: TextView) {
+    private fun checkOption(theme: Theme, themeLayout: LinearLayout, themeName: TextView) {
         uncheckOption(theme_grocery, theme_name_grocery)
         uncheckOption(theme_marketplace, theme_name_marketplace)
         uncheckOption(theme_fashion, theme_name_fashion)
