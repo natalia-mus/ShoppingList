@@ -14,3 +14,9 @@ In the near future it is planned to allow editing products.
 ### <b> update: </b>
  
 Now editing products is possible - in order to edit item user needs to tap and hold one.
+
+<br/><br/>
+
+## Author
+
+[Natalia Muskała](https://github.com/natalia-mus)
