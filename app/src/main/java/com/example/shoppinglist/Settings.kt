@@ -7,7 +7,7 @@ import com.example.shoppinglist.constants.Theme
 
 object Settings {
 
-    var instance: SharedPreferences? = null
+    private var instance: SharedPreferences? = null
 
     private fun getSettingsName(context: Context): String {
         val name = StringBuilder()
