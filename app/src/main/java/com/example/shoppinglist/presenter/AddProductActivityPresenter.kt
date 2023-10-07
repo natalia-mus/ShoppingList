@@ -2,7 +2,7 @@ package com.example.shoppinglist.presenter
 
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.SavingContext
-import com.example.shoppinglist.constants.Theme
+import com.example.shoppinglist.constants.ThemeType
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.AddProductActivityModel
 
@@ -17,7 +17,7 @@ class AddProductActivityPresenter(_view: AddProductActivityContract.AddProductAc
         view.initView()
     }
 
-    override fun getTheme(): Theme {
+    override fun getTheme(): ThemeType {
         return model.getTheme()
     }
 

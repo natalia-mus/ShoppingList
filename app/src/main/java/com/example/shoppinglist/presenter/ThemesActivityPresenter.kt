@@ -1,6 +1,6 @@
 package com.example.shoppinglist.presenter
 
-import com.example.shoppinglist.constants.Theme
+import com.example.shoppinglist.constants.ThemeType
 import com.example.shoppinglist.contract.ThemesActivityContract
 import com.example.shoppinglist.model.ThemesActivityModel
 
@@ -16,7 +16,7 @@ class ThemesActivityPresenter(_view: ThemesActivityContract.ThemesActivityView) 
         view.initView(actualTheme)
     }
 
-    override fun setTheme(selectedTheme: Theme) {
-        model.setTheme(selectedTheme)
+    override fun setTheme(selectedThemeType: ThemeType) {
+        model.setTheme(selectedThemeType)
     }
 }

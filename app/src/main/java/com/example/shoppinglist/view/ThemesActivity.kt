@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.R
-import com.example.shoppinglist.constants.Theme
+import com.example.shoppinglist.constants.ThemeType
 import com.example.shoppinglist.contract.ThemesActivityContract
 import com.example.shoppinglist.presenter.ThemesActivityPresenter
 import kotlinx.android.synthetic.main.activity_themes.*
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_themes.*
 class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivityView {
 
     private lateinit var presenter: ThemesActivityContract.ThemesActivityPresenter
-    private lateinit var selectedTheme: Theme
+    private lateinit var selectedThemeType: ThemeType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,41 +24,41 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         presenter = ThemesActivityPresenter(this)
     }
 
-    override fun initView(actualTheme: Theme) {
-        selectedTheme = actualTheme
-        when (actualTheme) {
-            Theme.GROCERY -> {
-                checkOption(Theme.GROCERY, theme_grocery, theme_name_grocery)
+    override fun initView(actualThemeType: ThemeType) {
+        selectedThemeType = actualThemeType
+        when (actualThemeType) {
+            ThemeType.GROCERY -> {
+                checkOption(ThemeType.GROCERY, theme_grocery, theme_name_grocery)
             }
-            Theme.MARKETPLACE -> {
-                checkOption(Theme.MARKETPLACE, theme_marketplace, theme_name_marketplace)
+            ThemeType.MARKETPLACE -> {
+                checkOption(ThemeType.MARKETPLACE, theme_marketplace, theme_name_marketplace)
             }
-            Theme.FASHION -> {
-                checkOption(Theme.FASHION, theme_fashion, theme_name_fashion)
+            ThemeType.FASHION -> {
+                checkOption(ThemeType.FASHION, theme_fashion, theme_name_fashion)
             }
-            Theme.CHRISTMAS -> {
-                checkOption(Theme.CHRISTMAS, theme_christmas, theme_name_christmas)
+            ThemeType.CHRISTMAS -> {
+                checkOption(ThemeType.CHRISTMAS, theme_christmas, theme_name_christmas)
             }
         }
 
         theme_grocery.setOnClickListener() {
-            checkOption(Theme.GROCERY, theme_grocery, theme_name_grocery)
+            checkOption(ThemeType.GROCERY, theme_grocery, theme_name_grocery)
         }
 
         theme_marketplace.setOnClickListener() {
-            checkOption(Theme.MARKETPLACE, theme_marketplace, theme_name_marketplace)
+            checkOption(ThemeType.MARKETPLACE, theme_marketplace, theme_name_marketplace)
         }
 
         theme_fashion.setOnClickListener() {
-            checkOption(Theme.FASHION, theme_fashion, theme_name_fashion)
+            checkOption(ThemeType.FASHION, theme_fashion, theme_name_fashion)
         }
 
         theme_christmas.setOnClickListener() {
-            checkOption(Theme.CHRISTMAS, theme_christmas, theme_name_christmas)
+            checkOption(ThemeType.CHRISTMAS, theme_christmas, theme_name_christmas)
         }
 
         themes_button_save.setOnClickListener() {
-            presenter.setTheme(selectedTheme)
+            presenter.setTheme(selectedThemeType)
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -70,7 +70,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         }
     }
 
-    private fun checkOption(theme: Theme, themeLayout: LinearLayout, themeName: TextView) {
+    private fun checkOption(themeType: ThemeType, themeLayout: LinearLayout, themeName: TextView) {
         uncheckOption(theme_grocery, theme_name_grocery)
         uncheckOption(theme_marketplace, theme_name_marketplace)
         uncheckOption(theme_fashion, theme_name_fashion)
@@ -78,7 +78,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
 
         themeLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
         themeName.setTextColor(resources.getColor(R.color.white, null))
-        selectedTheme = theme
+        selectedThemeType = themeType
     }
 
     private fun uncheckOption(themeLayout: LinearLayout, themeName: TextView) {

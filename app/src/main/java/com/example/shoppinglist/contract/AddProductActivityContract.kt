@@ -2,23 +2,23 @@ package com.example.shoppinglist.contract
 
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.SavingContext
-import com.example.shoppinglist.constants.Theme
+import com.example.shoppinglist.constants.ThemeType
 
 interface AddProductActivityContract {
 
     interface AddProductActivityModel {
-        fun getTheme(): Theme
+        fun getTheme(): ThemeType
         fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String): ValidationResult
     }
 
     interface AddProductActivityPresenter {
-        fun getTheme(): Theme
+        fun getTheme(): ThemeType
         fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String): ValidationResult
     }
 
     interface AddProductActivityView {
         fun initView()
-        fun setTheme(theme: Theme)
+        fun setTheme(theme: ThemeType)
     }
 
 }

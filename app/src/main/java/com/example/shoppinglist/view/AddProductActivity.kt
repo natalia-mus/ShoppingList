@@ -8,7 +8,7 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.constants.SavingContext
-import com.example.shoppinglist.constants.Theme
+import com.example.shoppinglist.constants.ThemeType
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.presenter.AddProductActivityPresenter
@@ -40,28 +40,28 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         }
     }
 
-    override fun setTheme(theme: Theme) {
+    override fun setTheme(themeType: ThemeType) {
         val orientation = resources.configuration.orientation
-        when (theme) {
-            Theme.GROCERY -> {
+        when (themeType) {
+            ThemeType.GROCERY -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
                     R.drawable.grocery_2_portrait
                 )
                 else add_product_activity_container.setBackgroundResource(R.drawable.grocery_2_landscape)
             }
-            Theme.MARKETPLACE -> {
+            ThemeType.MARKETPLACE -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
                     R.drawable.marketplace_2_portrait
                 )
                 else add_product_activity_container.setBackgroundResource(R.drawable.marketplace_2_landscape)
             }
-            Theme.FASHION -> {
+            ThemeType.FASHION -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
                     R.drawable.fashion_2_portrait
                 )
                 else add_product_activity_container.setBackgroundResource(R.drawable.fashion_2_landscape)
             }
-            Theme.CHRISTMAS -> {
+            ThemeType.CHRISTMAS -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
                     R.drawable.christmas_2_portrait
                 )
