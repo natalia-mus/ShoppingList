@@ -6,14 +6,14 @@ interface ThemesActivityContract {
 
     interface ThemesActivityModel {
         fun getActualTheme(): ThemeType
-        fun setTheme(selectedTheme: ThemeType)
+        fun setTheme(selectedThemeType: ThemeType)
     }
 
     interface ThemesActivityPresenter {
-        fun setTheme(selectedTheme: ThemeType)
+        fun setTheme(selectedThemeType: ThemeType)
     }
 
     interface ThemesActivityView {
-        fun initView(actualTheme: ThemeType)
+        fun initView(actualThemeType: ThemeType)
     }
 }

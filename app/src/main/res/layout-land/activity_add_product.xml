@@ -4,7 +4,7 @@
     android:id="@+id/add_product_activity_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/grocery_2_landscape">
+    android:background="@drawable/theme_grocery_add_product_landscape">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

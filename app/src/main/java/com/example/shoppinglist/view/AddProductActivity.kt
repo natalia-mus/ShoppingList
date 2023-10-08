@@ -45,27 +45,27 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         when (themeType) {
             ThemeType.GROCERY -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
-                    R.drawable.grocery_2_portrait
+                    R.drawable.theme_grocery_add_product_portrait
                 )
-                else add_product_activity_container.setBackgroundResource(R.drawable.grocery_2_landscape)
+                else add_product_activity_container.setBackgroundResource(R.drawable.theme_grocery_add_product_landscape)
             }
             ThemeType.MARKETPLACE -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
-                    R.drawable.marketplace_2_portrait
+                    R.drawable.theme_marketplace_add_product_portrait
                 )
-                else add_product_activity_container.setBackgroundResource(R.drawable.marketplace_2_landscape)
+                else add_product_activity_container.setBackgroundResource(R.drawable.theme_marketplace_add_product_landscape)
             }
             ThemeType.FASHION -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
-                    R.drawable.fashion_2_portrait
+                    R.drawable.theme_fashion_add_product_portrait
                 )
-                else add_product_activity_container.setBackgroundResource(R.drawable.fashion_2_landscape)
+                else add_product_activity_container.setBackgroundResource(R.drawable.theme_fashion_add_product_landscape)
             }
             ThemeType.CHRISTMAS -> {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
-                    R.drawable.christmas_2_portrait
+                    R.drawable.theme_christmas_add_product_portrait
                 )
-                else add_product_activity_container.setBackgroundResource(R.drawable.christmas_2_landscape)
+                else add_product_activity_container.setBackgroundResource(R.drawable.theme_christmas_add_product_landscape)
             }
         }
     }

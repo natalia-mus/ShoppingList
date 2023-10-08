@@ -5,7 +5,7 @@
     android:id="@+id/main_activity_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/grocery_1_landscape"
+    android:background="@drawable/theme_grocery_list_landscape"
     tools:context=".view.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView

@@ -34,7 +34,7 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/grocery_1_portrait" />
+                    android:src="@drawable/theme_grocery_list_portrait" />
 
                 <TextView
                     android:id="@+id/theme_name_grocery"
@@ -62,7 +62,7 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/marketplace_1_portrait" />
+                    android:src="@drawable/theme_marketplace_list_portrait" />
 
                 <TextView
                     android:id="@+id/theme_name_marketplace"
@@ -90,7 +90,7 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/fashion_1_portrait" />
+                    android:src="@drawable/theme_fashion_list_portrait" />
 
                 <TextView
                     android:id="@+id/theme_name_fashion"
@@ -117,7 +117,7 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/christmas_1_portrait" />
+                    android:src="@drawable/theme_christmas_list_portrait" />
 
                 <TextView
                     android:id="@+id/theme_name_christmas"

@@ -18,7 +18,7 @@ interface AddProductActivityContract {
 
     interface AddProductActivityView {
         fun initView()
-        fun setTheme(theme: ThemeType)
+        fun setTheme(themeType: ThemeType)
     }
 
 }

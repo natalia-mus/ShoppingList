@@ -84,20 +84,20 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         val orientation = resources.configuration.orientation
         when (themeType) {
             ThemeType.GROCERY -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.grocery_1_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.grocery_1_landscape)
+                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.theme_grocery_list_portrait)
+                else main_activity_container.setBackgroundResource(R.drawable.theme_grocery_list_landscape)
             }
             ThemeType.MARKETPLACE -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.marketplace_1_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.marketplace_1_landscape)
+                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.theme_marketplace_list_portrait)
+                else main_activity_container.setBackgroundResource(R.drawable.theme_marketplace_list_landscape)
             }
             ThemeType.FASHION -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.fashion_1_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.fashion_1_landscape)
+                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.theme_fashion_list_portrait)
+                else main_activity_container.setBackgroundResource(R.drawable.theme_fashion_list_landscape)
             }
             ThemeType.CHRISTMAS -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.christmas_1_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.christmas_1_landscape)
+                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.theme_christmas_list_portrait)
+                else main_activity_container.setBackgroundResource(R.drawable.theme_christmas_list_landscape)
             }
         }
     }

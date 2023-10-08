@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.core.content.contentValuesOf
+import com.example.shoppinglist.R
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
 
@@ -37,6 +38,8 @@ object BasicSQLCommands {
 class DBHelper(context: Context) :
     SQLiteOpenHelper(context, TableInfo.DATABASE_NAME, null, TableInfo.DATABASE_VERSION) {
 
+    private val resources = context.resources
+
     companion object {
         var instance: DBHelper? = null
 
@@ -51,6 +54,7 @@ class DBHelper(context: Context) :
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(BasicSQLCommands.CREATE_TABLE_PRODUCTS)
         db?.execSQL(BasicSQLCommands.CREATE_TABLE_THEMES)
+        createThemes()
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -142,6 +146,13 @@ class DBHelper(context: Context) :
         val db = this.writableDatabase
         db.insert(TableInfo.TABLE_NAME_THEMES, null, theme)
         db.close()
+    }
+
+    private fun createThemes() {
+        saveTheme(resources.getString(R.string.theme_grocery), Theme.THEME_GROCERY_LIST, Theme.THEME_GROCERY_ADD_PRODUCT)
+        saveTheme(resources.getString(R.string.theme_marketplace), Theme.THEME_MARKETPLACE_LIST, Theme.THEME_MARKETPLACE_ADD_PRODUCT)
+        saveTheme(resources.getString(R.string.theme_fashion), Theme.THEME_FASHION_LIST, Theme.THEME_FASHION_ADD_PRODUCT)
+        saveTheme(resources.getString(R.string.theme_christmas), Theme.THEME_CHRISTMAS_LIST, Theme.THEME_CHRISTMAS_ADD_PRODUCT)
     }
 
     private fun delete(tableName: String, id: Int) {
