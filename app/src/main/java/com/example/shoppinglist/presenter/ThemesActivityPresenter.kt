@@ -1,6 +1,5 @@
 package com.example.shoppinglist.presenter
 
-import com.example.shoppinglist.constants.ThemeType
 import com.example.shoppinglist.contract.ThemesActivityContract
 import com.example.shoppinglist.model.ThemesActivityModel
 
@@ -10,13 +9,14 @@ class ThemesActivityPresenter(_view: ThemesActivityContract.ThemesActivityView) 
     private val view = _view
     private val model = ThemesActivityModel()
 
-    private val actualTheme = model.getActualTheme()
+    private val allThemes = model.getAllThemes()
+    private val actualThemeId = model.getActualThemeId()
 
     init {
-        view.initView(actualTheme)
+        view.initView(allThemes, actualThemeId)
     }
 
-    override fun setTheme(selectedThemeType: ThemeType) {
-        model.setTheme(selectedThemeType)
+    override fun setTheme(selectedThemeId: Int) {
+        model.setTheme(selectedThemeId)
     }
 }

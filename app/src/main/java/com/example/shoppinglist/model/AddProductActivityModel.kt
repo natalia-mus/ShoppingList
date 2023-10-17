@@ -3,7 +3,6 @@ package com.example.shoppinglist.model
 import com.example.shoppinglist.Settings
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.SavingContext
-import com.example.shoppinglist.constants.ThemeType
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.database.DBHelper
 
@@ -11,8 +10,8 @@ class AddProductActivityModel : AddProductActivityContract.AddProductActivityMod
 
     private val dataBase = DBHelper.instance
 
-    override fun getTheme(): ThemeType {
-        return Settings.getTheme()
+    override fun getThemeId(): Int {
+        return Settings.getThemeId()
     }
 
     override fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String): ValidationResult {

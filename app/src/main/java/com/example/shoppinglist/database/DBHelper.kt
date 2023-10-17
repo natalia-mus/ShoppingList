@@ -54,7 +54,7 @@ class DBHelper(context: Context) :
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(BasicSQLCommands.CREATE_TABLE_PRODUCTS)
         db?.execSQL(BasicSQLCommands.CREATE_TABLE_THEMES)
-        createThemes()
+        db?.let { createThemes(it) }
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -136,23 +136,22 @@ class DBHelper(context: Context) :
         return themes
     }
 
-    fun saveTheme(name: String, listBackground: String, addProductBackground: String) {
+    fun saveTheme(name: String, listBackground: String, addProductBackground: String, database: SQLiteDatabase?) {
         val theme = ContentValues()
 
         theme.put(TableInfo.COLUMN_NAME, name)
         theme.put(TableInfo.COLUMN_LIST_BACKGROUND, listBackground)
         theme.put(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND, addProductBackground)
 
-        val db = this.writableDatabase
+        val db = database ?: this.writableDatabase
         db.insert(TableInfo.TABLE_NAME_THEMES, null, theme)
-        db.close()
     }
 
-    private fun createThemes() {
-        saveTheme(resources.getString(R.string.theme_grocery), Theme.THEME_GROCERY_LIST, Theme.THEME_GROCERY_ADD_PRODUCT)
-        saveTheme(resources.getString(R.string.theme_marketplace), Theme.THEME_MARKETPLACE_LIST, Theme.THEME_MARKETPLACE_ADD_PRODUCT)
-        saveTheme(resources.getString(R.string.theme_fashion), Theme.THEME_FASHION_LIST, Theme.THEME_FASHION_ADD_PRODUCT)
-        saveTheme(resources.getString(R.string.theme_christmas), Theme.THEME_CHRISTMAS_LIST, Theme.THEME_CHRISTMAS_ADD_PRODUCT)
+    private fun createThemes(database: SQLiteDatabase) {
+        saveTheme(resources.getString(R.string.theme_grocery), Theme.THEME_GROCERY_LIST, Theme.THEME_GROCERY_ADD_PRODUCT, database)
+        saveTheme(resources.getString(R.string.theme_marketplace), Theme.THEME_MARKETPLACE_LIST, Theme.THEME_MARKETPLACE_ADD_PRODUCT, database)
+        saveTheme(resources.getString(R.string.theme_fashion), Theme.THEME_FASHION_LIST, Theme.THEME_FASHION_ADD_PRODUCT, database)
+        saveTheme(resources.getString(R.string.theme_christmas), Theme.THEME_CHRISTMAS_LIST, Theme.THEME_CHRISTMAS_ADD_PRODUCT, database)
     }
 
     private fun delete(tableName: String, id: Int) {

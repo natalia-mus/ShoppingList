@@ -3,7 +3,6 @@ package com.example.shoppinglist
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.constants.ThemeType
 
 object Settings {
 
@@ -27,19 +26,13 @@ object Settings {
         return instance as SharedPreferences
     }
 
-    fun getTheme(): ThemeType {
-        var themeType = ThemeType.GROCERY
-
-        when (instance?.getString(Constants.THEME, ThemeType.GROCERY.name)) {
-            ThemeType.GROCERY.name -> themeType = ThemeType.GROCERY
-            ThemeType.MARKETPLACE.name -> themeType = ThemeType.MARKETPLACE
-            ThemeType.FASHION.name -> themeType = ThemeType.FASHION
-            ThemeType.CHRISTMAS.name -> themeType = ThemeType.CHRISTMAS
-        }
-        return themeType
+    fun getThemeId(): Int {
+        return if (instance != null) {
+            instance!!.getInt(Constants.THEME, 0)
+        } else return 0
     }
 
-    fun setTheme(themeType: ThemeType) {
-        instance?.edit()?.putString(Constants.THEME, themeType.name)?.apply()
+    fun setTheme(themeId: Int) {
+        instance?.edit()?.putInt(Constants.THEME, themeId)?.apply()
     }
 }

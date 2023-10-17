@@ -1,7 +1,6 @@
 package com.example.shoppinglist.view
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,7 +11,6 @@ import com.example.shoppinglist.Settings
 import com.example.shoppinglist.adapter.OnItemClickAction
 import com.example.shoppinglist.adapter.ProductAdapter
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.constants.ThemeType
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.model.Product
@@ -80,26 +78,9 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         Settings.getInstance(this)
     }
 
-    override fun setTheme(themeType: ThemeType) {
+    override fun setThemeId(themeId: Int) {
         val orientation = resources.configuration.orientation
-        when (themeType) {
-            ThemeType.GROCERY -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.theme_grocery_list_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.theme_grocery_list_landscape)
-            }
-            ThemeType.MARKETPLACE -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.theme_marketplace_list_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.theme_marketplace_list_landscape)
-            }
-            ThemeType.FASHION -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.theme_fashion_list_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.theme_fashion_list_landscape)
-            }
-            ThemeType.CHRISTMAS -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.theme_christmas_list_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.theme_christmas_list_landscape)
-            }
-        }
+        // todo
     }
 
     private fun openProductWithEditContext(product: Product) {

@@ -1,6 +1,5 @@
 package com.example.shoppinglist.view
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +7,6 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.constants.SavingContext
-import com.example.shoppinglist.constants.ThemeType
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.presenter.AddProductActivityPresenter
@@ -40,34 +38,9 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         }
     }
 
-    override fun setTheme(themeType: ThemeType) {
+    override fun setTheme(themeId: Int) {
         val orientation = resources.configuration.orientation
-        when (themeType) {
-            ThemeType.GROCERY -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
-                    R.drawable.theme_grocery_add_product_portrait
-                )
-                else add_product_activity_container.setBackgroundResource(R.drawable.theme_grocery_add_product_landscape)
-            }
-            ThemeType.MARKETPLACE -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
-                    R.drawable.theme_marketplace_add_product_portrait
-                )
-                else add_product_activity_container.setBackgroundResource(R.drawable.theme_marketplace_add_product_landscape)
-            }
-            ThemeType.FASHION -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
-                    R.drawable.theme_fashion_add_product_portrait
-                )
-                else add_product_activity_container.setBackgroundResource(R.drawable.theme_fashion_add_product_landscape)
-            }
-            ThemeType.CHRISTMAS -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(
-                    R.drawable.theme_christmas_add_product_portrait
-                )
-                else add_product_activity_container.setBackgroundResource(R.drawable.theme_christmas_add_product_landscape)
-            }
-        }
+        // todo
     }
 
     private fun checkContext() {
