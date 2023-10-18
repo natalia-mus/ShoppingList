@@ -148,10 +148,10 @@ class DBHelper(context: Context) :
     }
 
     private fun createThemes(database: SQLiteDatabase) {
-        saveTheme(resources.getString(R.string.theme_grocery), Theme.THEME_GROCERY_LIST, Theme.THEME_GROCERY_ADD_PRODUCT, database)
-        saveTheme(resources.getString(R.string.theme_marketplace), Theme.THEME_MARKETPLACE_LIST, Theme.THEME_MARKETPLACE_ADD_PRODUCT, database)
-        saveTheme(resources.getString(R.string.theme_fashion), Theme.THEME_FASHION_LIST, Theme.THEME_FASHION_ADD_PRODUCT, database)
-        saveTheme(resources.getString(R.string.theme_christmas), Theme.THEME_CHRISTMAS_LIST, Theme.THEME_CHRISTMAS_ADD_PRODUCT, database)
+        saveTheme(resources.getString(R.string.theme_grocery), R.drawable.theme_grocery_list_portrait.toString(), R.drawable.theme_grocery_add_product_portrait.toString(), database)
+        saveTheme(resources.getString(R.string.theme_marketplace), R.drawable.theme_marketplace_list_portrait.toString(), R.drawable.theme_marketplace_add_product_portrait.toString(), database)
+        saveTheme(resources.getString(R.string.theme_fashion), R.drawable.theme_fashion_list_portrait.toString(), R.drawable.theme_fashion_add_product_portrait.toString(), database)
+        saveTheme(resources.getString(R.string.theme_christmas), R.drawable.theme_christmas_list_portrait.toString(), R.drawable.theme_christmas_add_product_portrait.toString(), database)
     }
 
     private fun delete(tableName: String, id: Int) {

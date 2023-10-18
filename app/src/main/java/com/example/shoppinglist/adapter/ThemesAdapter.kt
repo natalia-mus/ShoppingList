@@ -22,10 +22,15 @@ class ThemesAdapter(private val context: Context, private val themes: ArrayList<
 
     override fun onBindViewHolder(holder: ThemesAdapterViewHolder, position: Int) {
         holder.themeName.text = themes[position].name
-        // todo - set themeImage source
+        val imageSource = getImageSource(themes[position].listBackground)
+        imageSource?.let { holder.themeImage.setImageResource(it) }
     }
 
     override fun getItemCount() = themes.size
+
+    private fun getImageSource(image: String): Int? {
+        return image.toIntOrNull()
+    }
 
 
     inner class ThemesAdapterViewHolder(view: View) : ViewHolder(view) {
