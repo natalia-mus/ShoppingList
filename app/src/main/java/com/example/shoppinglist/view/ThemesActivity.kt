@@ -6,7 +6,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
+import com.example.shoppinglist.adapter.ThemesAdapter
 import com.example.shoppinglist.constants.ThemeType
 import com.example.shoppinglist.contract.ThemesActivityContract
 import com.example.shoppinglist.model.Theme
@@ -25,6 +27,9 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
     }
 
     override fun initView(themes: ArrayList<Theme>?, actualThemeId: Int) {
+        themes_list.layoutManager = LinearLayoutManager(this)
+        themes?.let { themes_list.adapter = ThemesAdapter(this, it) }
+
         themes_button_save.setOnClickListener() {
             presenter.setTheme(actualThemeId)
             val intent = Intent(this, MainActivity::class.java)

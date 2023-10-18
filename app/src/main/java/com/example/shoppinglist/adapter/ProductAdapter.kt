@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.contract.MainActivityContract
@@ -20,10 +21,8 @@ class ProductAdapter(
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val layoutInflater = LayoutInflater.from(context)
-        val inflatedLayoutInflater = layoutInflater.inflate(R.layout.product_item, parent, false)
-
-        return ProductViewHolder(inflatedLayoutInflater)
+        val view = LayoutInflater.from(context).inflate(R.layout.product_item, parent, false)
+        return ProductViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
@@ -50,9 +49,9 @@ class ProductAdapter(
             }
         }
 
-        val productName = view.product_name
-        val productQuantity = view.product_quantity
-        val productPriority = view.product_priority
+        val productName:TextView = view.product_name
+        val productQuantity:TextView = view.product_quantity
+        val productPriority:TextView = view.product_priority
     }
 
 }
