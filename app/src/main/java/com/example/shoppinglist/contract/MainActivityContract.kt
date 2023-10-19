@@ -2,11 +2,12 @@ package com.example.shoppinglist.contract
 
 import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.model.Product
+import com.example.shoppinglist.model.Theme
 
 interface MainActivityContract {
 
     interface MainActivityModel {
-        fun getThemeId(): Int
+        fun getTheme(): Theme?
         fun fetchDataFromDB()
         fun returnData(): List<Product>?
         fun deleteItemFromDB(id: Int)
@@ -21,7 +22,7 @@ interface MainActivityContract {
 
     interface MainActivityView {
         fun initSettings()
-        fun setThemeId(themeId: Int)
+        fun setTheme(theme: Theme?)
         fun createDBinstance(): DBHelper?
         fun showData()
         fun deleteItem(id: Int)

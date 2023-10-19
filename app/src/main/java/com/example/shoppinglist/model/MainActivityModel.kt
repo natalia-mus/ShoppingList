@@ -9,8 +9,9 @@ class MainActivityModel() : MainActivityContract.MainActivityModel {
     private val database = DBHelper.instance
     private var data: List<Product>? = emptyList()
 
-    override fun getThemeId(): Int {
-        return Settings.getThemeId()
+    override fun getTheme(): Theme? {
+        val themeId = Settings.getThemeId()
+        return database?.getTheme(themeId)
     }
 
     override fun fetchDataFromDB() {

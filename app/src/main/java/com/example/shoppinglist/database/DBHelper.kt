@@ -33,6 +33,8 @@ object BasicSQLCommands {
     const val GET_ALL_PRODUCTS = "SELECT * FROM ${TableInfo.TABLE_NAME_PRODUCTS} ORDER BY ${TableInfo.COLUMN_PRIORITY}"
 
     const val GET_ALL_THEMES = "SELECT * FROM ${TableInfo.TABLE_NAME_THEMES}"
+
+    const val GET_THEME = "SELECT * FROM ${TableInfo.TABLE_NAME_THEMES} WHERE ${TableInfo.COLUMN_ID} = "
 }
 
 class DBHelper(context: Context) :
@@ -134,6 +136,23 @@ class DBHelper(context: Context) :
         cursor.close()
         db.close()
         return themes
+    }
+
+    fun getTheme(themeId: Int): Theme? {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(BasicSQLCommands.GET_THEME + themeId, null)
+
+        return if (cursor.moveToFirst()) {
+            val id = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ID))
+            val name = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_NAME))
+            val listBackground = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND))
+            val addProductBackground = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND))
+
+            cursor.close()
+            db.close()
+            Theme(id, name, listBackground, addProductBackground)
+
+        } else return null
     }
 
     fun saveTheme(name: String, listBackground: String, addProductBackground: String, database: SQLiteDatabase?) {

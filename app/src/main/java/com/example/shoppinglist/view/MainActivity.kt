@@ -1,6 +1,7 @@
 package com.example.shoppinglist.view
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +15,7 @@ import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.model.Product
+import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.MainActivityPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -78,9 +80,14 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         Settings.getInstance(this)
     }
 
-    override fun setThemeId(themeId: Int) {
-        val orientation = resources.configuration.orientation
-        // todo
+    override fun setTheme(theme: Theme?) {
+        if (theme != null && theme.listBackground.toIntOrNull() != null) {
+            val orientation = resources.configuration.orientation
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) main_activity_container.setBackgroundResource(
+                theme.listBackground.toInt()
+            ) else main_activity_container.setBackgroundResource(theme.listBackground.toInt())        // todo: landscape background
+
+        }
     }
 
     private fun openProductWithEditContext(product: Product) {
