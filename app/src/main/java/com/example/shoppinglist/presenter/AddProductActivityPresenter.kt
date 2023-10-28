@@ -4,6 +4,7 @@ import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.AddProductActivityModel
+import com.example.shoppinglist.model.Theme
 
 class AddProductActivityPresenter(_view: AddProductActivityContract.AddProductActivityView) :
     AddProductActivityContract.AddProductActivityPresenter {
@@ -12,12 +13,12 @@ class AddProductActivityPresenter(_view: AddProductActivityContract.AddProductAc
     private val model = AddProductActivityModel()
 
     init {
-        view.setTheme(getThemeId())
+        view.setTheme(getTheme())
         view.initView()
     }
 
-    override fun getThemeId(): Int {
-        return model.getThemeId()
+    override fun getTheme(): Theme? {
+        return model.getTheme()
     }
 
     override fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String): ValidationResult {

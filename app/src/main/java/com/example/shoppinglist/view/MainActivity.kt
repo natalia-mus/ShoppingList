@@ -83,10 +83,8 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     override fun setTheme(theme: Theme?) {
         if (theme != null && theme.listBackground.toIntOrNull() != null) {
             val orientation = resources.configuration.orientation
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) main_activity_container.setBackgroundResource(
-                theme.listBackground.toInt()
-            ) else main_activity_container.setBackgroundResource(theme.listBackground.toInt())        // todo: landscape background
-
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) main_activity_container.setBackgroundResource(theme.listBackground.toInt())
+            else main_activity_container.setBackgroundResource(theme.listBackground.toInt())        // todo: landscape background
         }
     }
 

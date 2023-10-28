@@ -1,5 +1,6 @@
 package com.example.shoppinglist.view
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +10,10 @@ import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
+import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.AddProductActivityPresenter
 import kotlinx.android.synthetic.main.activity_add_product.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddProductActivityView {
 
@@ -38,9 +41,12 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         }
     }
 
-    override fun setTheme(themeId: Int) {
-        val orientation = resources.configuration.orientation
-        // todo
+    override fun setTheme(theme: Theme?) {
+        if (theme != null && theme.listBackground.toIntOrNull() != null) {
+            val orientation = resources.configuration.orientation
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) main_activity_container.setBackgroundResource(theme.listBackground.toInt())
+            else main_activity_container.setBackgroundResource(theme.listBackground.toInt())        // todo: landscape background
+        }
     }
 
     private fun checkContext() {

@@ -8,18 +8,19 @@ import com.example.shoppinglist.database.DBHelper
 
 class AddProductActivityModel : AddProductActivityContract.AddProductActivityModel {
 
-    private val dataBase = DBHelper.instance
+    private val database = DBHelper.instance
 
-    override fun getThemeId(): Int {
-        return Settings.getThemeId()
+    override fun getTheme(): Theme? {
+        val themeId = Settings.getThemeId()
+        return database?.getTheme(themeId)
     }
 
     override fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String): ValidationResult {
         val validationResult = validateData(name, priority)
 
         if (validationResult == ValidationResult.VALID) {
-            if (savingContext == SavingContext.CREATE)  dataBase?.addProduct(name, quantity, priority.toInt())
-            else dataBase?.editProduct(id!!, name, quantity, priority.toInt())
+            if (savingContext == SavingContext.CREATE)  database?.addProduct(name, quantity, priority.toInt())
+            else database?.editProduct(id!!, name, quantity, priority.toInt())
         }
         return validationResult
     }
