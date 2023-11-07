@@ -5,7 +5,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.Settings
@@ -13,13 +12,12 @@ import com.example.shoppinglist.adapter.OnItemClickAction
 import com.example.shoppinglist.adapter.ProductAdapter
 import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.contract.MainActivityContract
-import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.MainActivityPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView, OnItemClickAction {
+class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivityView, OnItemClickAction {
 
     private lateinit var presenter: MainActivityPresenter
 
@@ -34,10 +32,6 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     override fun onResume() {
         super.onResume()
         presenter.showData()
-    }
-
-    override fun createDBinstance(): DBHelper {
-        return DBHelper.getInstance(this)
     }
 
     override fun showData() {

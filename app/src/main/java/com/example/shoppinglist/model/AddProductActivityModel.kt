@@ -1,6 +1,5 @@
 package com.example.shoppinglist.model
 
-import com.example.shoppinglist.Settings
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.contract.AddProductActivityContract
@@ -9,11 +8,6 @@ import com.example.shoppinglist.database.DBHelper
 class AddProductActivityModel : AddProductActivityContract.AddProductActivityModel {
 
     private val database = DBHelper.instance
-
-    override fun getTheme(): Theme? {
-        val themeId = Settings.getThemeId()
-        return database?.getTheme(themeId)
-    }
 
     override fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String): ValidationResult {
         val validationResult = validateData(name, priority)

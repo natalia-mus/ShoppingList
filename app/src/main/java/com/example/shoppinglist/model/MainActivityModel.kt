@@ -1,6 +1,5 @@
 package com.example.shoppinglist.model
 
-import com.example.shoppinglist.Settings
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.database.DBHelper
 
@@ -8,11 +7,6 @@ class MainActivityModel() : MainActivityContract.MainActivityModel {
 
     private val database = DBHelper.instance
     private var data: List<Product>? = emptyList()
-
-    override fun getTheme(): Theme? {
-        val themeId = Settings.getThemeId()
-        return database?.getTheme(themeId)
-    }
 
     override fun fetchDataFromDB() {
         data = database?.getAllProducts()
