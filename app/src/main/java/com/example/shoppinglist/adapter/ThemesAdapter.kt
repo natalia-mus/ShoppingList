@@ -22,7 +22,7 @@ class ThemesAdapter(private val context: Context, private val themes: ArrayList<
 
     override fun onBindViewHolder(holder: ThemesAdapterViewHolder, position: Int) {
         holder.themeName.text = themes[position].name
-        val imageSource = getImageSource(themes[position].listBackground)
+        val imageSource = getImageSource(themes[position].listBackgroundPortrait)
         imageSource?.let { holder.themeImage.setImageResource(it) }
     }
 

@@ -40,10 +40,10 @@ class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.
     }
 
     override fun setTheme(theme: Theme?) {
-        if (theme != null && theme.listBackground.toIntOrNull() != null) {
+        if (theme != null) {
             val orientation = resources.configuration.orientation
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) add_product_activity_container.setBackgroundResource(theme.addProductBackground.toInt())
-            else add_product_activity_container.setBackgroundResource(theme.addProductBackground.toInt())        // todo: landscape background
+            if (orientation == Configuration.ORIENTATION_PORTRAIT && theme.listBackgroundPortrait.toIntOrNull() != null) add_product_activity_container.setBackgroundResource(theme.addProductBackgroundPortrait.toInt())
+            else if (orientation == Configuration.ORIENTATION_LANDSCAPE && theme.listBackgroundLandscape.toIntOrNull() != null) add_product_activity_container.setBackgroundResource(theme.addProductBackgroundLandscape.toInt())
         }
     }
 
