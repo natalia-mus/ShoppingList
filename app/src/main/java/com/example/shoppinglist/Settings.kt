@@ -28,8 +28,8 @@ object Settings {
 
     fun getThemeId(): Int {
         return if (instance != null) {
-            instance!!.getInt(Constants.THEME, 0)
-        } else return 0
+            instance!!.getInt(Constants.THEME, 1)
+        } else return 1
     }
 
     fun setTheme(themeId: Int) {

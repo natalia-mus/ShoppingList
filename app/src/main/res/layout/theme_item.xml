@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="4dp"
-        android:textColor="@color/sea_blue_dark"
+        android:textColor="@drawable/option_item_text"
         android:textSize="24sp"
         android:textStyle="bold"
         tools:text="@string/theme_grocery" />

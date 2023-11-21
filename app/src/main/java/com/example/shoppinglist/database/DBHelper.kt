@@ -41,7 +41,7 @@ object BasicSQLCommands {
             "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_PORTRAIT} TEXT, " +
             "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_LANDSCAPE} TEXT)"
 
-    const val DELETE_TABLE = "SELECT * FROM "
+    const val DELETE_TABLE = "DROP TABLE "
 
     const val GET_ALL_PRODUCTS = "SELECT * FROM ${TableInfo.TABLE_NAME_PRODUCTS} ORDER BY ${TableInfo.COLUMN_PRIORITY}"
 

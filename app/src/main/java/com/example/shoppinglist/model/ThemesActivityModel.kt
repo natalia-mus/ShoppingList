@@ -10,11 +10,11 @@ class ThemesActivityModel : ThemesActivityContract.ThemesActivityModel {
         return Settings.getThemeId()
     }
 
-    override fun getAllThemes(): ArrayList<Theme>? {
+    override fun getAllThemes(): ArrayList<Theme> {
         return DBHelper.instance?.getAllThemes() as ArrayList<Theme>
     }
 
-    override fun setTheme(selectedThemeId: Int) {
-        Settings.setTheme(selectedThemeId)
+    override fun setTheme(themeId: Int) {
+        Settings.setTheme(themeId)
     }
 }
