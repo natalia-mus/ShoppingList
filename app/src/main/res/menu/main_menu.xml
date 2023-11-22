@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_item_add_product"
         android:icon="@drawable/ic_baseline_add_24"
-        android:title="@string/menu_item_add_product"
+        android:title="@string/add_product"
         app:showAsAction="always" />
 
     <item

@@ -6,7 +6,7 @@
     <string name="add_product_quantity">product quantity</string>
     <string name="add_product_priority">priority</string>
     <string name="add_product_button_save">SAVE</string>
-    <string name="menu_item_add_product">Add product</string>
+    <string name="add_product">Add product</string>
     <string name="menu_item_themes">Themes</string>
     <string name="activity_main">Shopping list</string>
     <string name="activity_add_product">Add product</string>
@@ -19,4 +19,12 @@
     <string name="theme_marketplace">Marketplace</string>
     <string name="theme_fashion">Fashion</string>
     <string name="theme_christmas">Christmas</string>
+    <string name="add_theme">Add theme</string>
+    <string name="add_theme_lowercase">add theme</string>
+    <string name="portrait">portrait</string>
+    <string name="landscape">landscape</string>
+    <string name="product_list_background">Product list background</string>
+    <string name="add_product_background">Add product background</string>
+    <string name="theme_name">Theme name</string>
+    <string name="save">save</string>
 </resources>
