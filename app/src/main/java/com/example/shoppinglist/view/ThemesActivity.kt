@@ -10,6 +10,7 @@ import com.example.shoppinglist.contract.ThemesActivityContract
 import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.ThemesActivityPresenter
 import kotlinx.android.synthetic.main.activity_themes.*
+import kotlinx.android.synthetic.main.buttons_section.*
 
 class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivityView, ThemeSelector {
 
@@ -34,7 +35,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
                 startActivity(intent)
             }
 
-            themes_button_save.setOnClickListener {
+            button_save.setOnClickListener {
                 presenter.setTheme(selectedThemeType)
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -42,7 +43,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
                 startActivity(intent)
             }
 
-            themes_button_cancel.setOnClickListener {
+            button_cancel.setOnClickListener {
                 onBackPressed()
             }
         }

@@ -88,7 +88,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/add_product_buttons_section"
+            app:layout_constraintBottom_toTopOf="@+id/buttons_section"
             app:layout_constraintTop_toBottomOf="@+id/add_product_quantity_section">
 
             <EditText
@@ -117,36 +117,13 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/add_product_buttons_section"
+        <include
+            android:id="@+id/buttons_section"
+            layout="@layout/buttons_section"
             android:layout_width="match_parent"
             android:layout_height="@dimen/buttons_section_height"
-            android:layout_marginVertical="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_product_priority_section">
-
-            <Button
-                android:id="@+id/add_product_button_save"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                android:text="@string/add_product_button_save"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/add_product_button_cancel"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/add_product_button_cancel"
-                android:layout_width="140dp"
-                android:layout_height="80dp"
-                android:backgroundTint="@color/button_red"
-                android:text="@android:string/cancel"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/add_product_button_save"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@id/add_product_priority_section" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -12,6 +12,7 @@ import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.AddProductActivityPresenter
 import kotlinx.android.synthetic.main.activity_add_product.*
+import kotlinx.android.synthetic.main.buttons_section.*
 
 class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.AddProductActivityView {
 
@@ -30,11 +31,11 @@ class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.
         checkContext()
         if (savingContext == SavingContext.EDIT) prepareProductData(product)
 
-        add_product_button_cancel.setOnClickListener() {
+        button_cancel.setOnClickListener {
             onBackPressed()
         }
 
-        add_product_button_save.setOnClickListener() {
+        button_save.setOnClickListener {
             onSaveButtonClicked()
         }
     }

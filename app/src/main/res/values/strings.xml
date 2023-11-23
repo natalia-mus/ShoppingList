@@ -5,7 +5,6 @@
     <string name="add_product_name">product name</string>
     <string name="add_product_quantity">product quantity</string>
     <string name="add_product_priority">priority</string>
-    <string name="add_product_button_save">SAVE</string>
     <string name="add_product">Add product</string>
     <string name="menu_item_themes">Themes</string>
     <string name="activity_main">Shopping list</string>
@@ -27,4 +26,5 @@
     <string name="add_product_background">Add product background</string>
     <string name="theme_name">Theme name</string>
     <string name="save">save</string>
+    <string name="cancel">cancel</string>
 </resources>
