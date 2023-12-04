@@ -30,8 +30,8 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
             themes_list.layoutManager = LinearLayoutManager(this)
             themes_list.adapter = ThemesAdapter(this, themes, selectedThemeType, this)
 
-            themes_add_theme.setOnClickListener {
-                val intent = Intent(this, AddThemeActivity::class.java)
+            themes_create_theme.setOnClickListener {
+                val intent = Intent(this, CreateThemeActivity::class.java)
                 startActivity(intent)
             }
 

@@ -18,8 +18,8 @@
     <string name="theme_marketplace">Marketplace</string>
     <string name="theme_fashion">Fashion</string>
     <string name="theme_christmas">Christmas</string>
-    <string name="add_theme">Add theme</string>
-    <string name="add_theme_lowercase">add theme</string>
+    <string name="create_theme">Create theme</string>
+    <string name="create_theme_lowercase">create theme</string>
     <string name="portrait">portrait</string>
     <string name="landscape">landscape</string>
     <string name="product_list_background">Product list background</string>

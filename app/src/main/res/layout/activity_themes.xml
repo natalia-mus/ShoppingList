@@ -24,7 +24,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/themes_add_theme"
+                android:id="@+id/themes_create_theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
@@ -38,7 +38,7 @@
                     android:layout_height="80dp"
                     android:layout_margin="10dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_add_theme" />
+                    android:src="@drawable/ic_create_theme" />
 
                 <TextView
                     android:id="@+id/theme_name"
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="4dp"
-                    android:text="@string/add_theme_lowercase"
+                    android:text="@string/create_theme_lowercase"
                     android:textColor="@drawable/option_item_text"
                     android:textSize="24sp"
                     android:textStyle="bold" />
