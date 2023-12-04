@@ -46,7 +46,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/create_theme_product_list_portrait"
+                    android:id="@+id/create_theme_product_list_portrait_background"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
@@ -74,7 +74,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/create_theme_product_list_landscape"
+                    android:id="@+id/create_theme_product_list_landscape_background"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
@@ -124,7 +124,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/create_theme_add_product_portrait"
+                    android:id="@+id/create_theme_add_product_portrait_background"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
@@ -152,7 +152,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/create_theme_add_product_landscape"
+                    android:id="@+id/create_theme_add_product_landscape_background"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
