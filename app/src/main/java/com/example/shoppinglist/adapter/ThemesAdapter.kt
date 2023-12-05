@@ -37,7 +37,7 @@ class ThemesAdapter(private val context: Context, private val themes: ArrayList<
 
         holder.themeItem.setOnClickListener {
             refreshSelection(holder.themeItem)
-            themeSelector.onThemeSelected(themes[position].id)
+            themes[position].id?.let { id -> themeSelector.onThemeSelected(id) }
         }
     }
 

@@ -158,7 +158,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         } else return null
     }
 
-    fun saveTheme(name: String, listBackgroundPortrait: String, listBackgroundLandscape: String, addProductBackgroundPortrait: String, addProductBackgroundLandscape: String, database: SQLiteDatabase?) {
+    fun saveTheme(name: String, listBackgroundPortrait: String, listBackgroundLandscape: String, addProductBackgroundPortrait: String, addProductBackgroundLandscape: String, database: SQLiteDatabase? = null) {
         val theme = ContentValues()
 
         theme.put(TableInfo.COLUMN_NAME, name)
@@ -169,6 +169,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
 
         val db = database ?: this.writableDatabase
         db.insert(TableInfo.TABLE_NAME_THEMES, null, theme)
+
+        if (database == null) {
+            db.close()
+        }
     }
 
     private fun createThemes(database: SQLiteDatabase) {

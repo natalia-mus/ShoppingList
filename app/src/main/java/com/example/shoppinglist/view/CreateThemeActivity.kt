@@ -3,16 +3,25 @@ package com.example.shoppinglist.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
+import com.example.shoppinglist.contract.CreateThemeActivityContract
+import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 
-class CreateThemeActivity : AppCompatActivity() {
+class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.CreateThemeActivityView {
 
     companion object {
         private const val INTENT_TYPE_IMAGE = "image/*"
     }
 
+    private lateinit var presenter: CreateThemeActivityContract.CreateThemeActivityPresenter
+
+    private lateinit var saveButton: Button
+    private lateinit var cancelButton: Button
+    private lateinit var themeName: EditText
     private lateinit var productListPortraitBackground: ImageView
     private lateinit var productListLandscapeBackground: ImageView
     private lateinit var addProductPortraitBackground: ImageView
@@ -26,7 +35,41 @@ class CreateThemeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_theme)
-        setView()
+        presenter = CreateThemeActivityPresenter(this)
+    }
+
+    override fun initView() {
+        saveButton = findViewById(R.id.button_save)
+        cancelButton = findViewById(R.id.button_cancel)
+        themeName = findViewById(R.id.create_theme_name)
+        productListPortraitBackground = findViewById(R.id.create_theme_product_list_portrait_background)
+        productListLandscapeBackground = findViewById(R.id.create_theme_product_list_landscape_background)
+        addProductPortraitBackground = findViewById(R.id.create_theme_add_product_portrait_background)
+        addProductLandscapeBackground = findViewById(R.id.create_theme_add_product_landscape_background)
+
+        saveButton.setOnClickListener {
+            saveTheme()
+        }
+
+        cancelButton.setOnClickListener {
+            finish()
+        }
+
+        productListPortraitBackground.setOnClickListener {
+            openGallery(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
+        }
+
+        productListLandscapeBackground.setOnClickListener {
+            openGallery(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
+        }
+
+        addProductPortraitBackground.setOnClickListener {
+            openGallery(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
+        }
+
+        addProductLandscapeBackground.setOnClickListener {
+            openGallery(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -38,6 +81,18 @@ class CreateThemeActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = INTENT_TYPE_IMAGE
         startActivityForResult(intent, backgroundType.typeId)
+    }
+
+    private fun saveTheme() {
+        val name = themeName.text.toString()
+
+        presenter.saveTheme(
+            name,
+            productListPortraitBackgroundSource.toString(),
+            productListLandscapeBackgroundSource.toString(),
+            addProductPortraitBackgroundSource.toString(),
+            addProductLandscapeBackgroundSource.toString()
+        )
     }
 
     private fun setBackgroundSource(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -64,29 +119,6 @@ class CreateThemeActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-
-    private fun setView() {
-        productListPortraitBackground = findViewById(R.id.create_theme_product_list_portrait_background)
-        productListLandscapeBackground = findViewById(R.id.create_theme_product_list_landscape_background)
-        addProductPortraitBackground = findViewById(R.id.create_theme_add_product_portrait_background)
-        addProductLandscapeBackground = findViewById(R.id.create_theme_add_product_landscape_background)
-
-        productListPortraitBackground.setOnClickListener {
-            openGallery(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
-        }
-
-        productListLandscapeBackground.setOnClickListener {
-            openGallery(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
-        }
-
-        addProductPortraitBackground.setOnClickListener {
-            openGallery(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
-        }
-
-        addProductLandscapeBackground.setOnClickListener {
-            openGallery(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
         }
     }
 }
