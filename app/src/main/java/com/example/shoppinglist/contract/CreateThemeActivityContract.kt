@@ -1,5 +1,7 @@
 package com.example.shoppinglist.contract
 
+import com.example.shoppinglist.ValidationResult
+
 interface CreateThemeActivityContract {
 
     interface CreateThemeActivityModel {
@@ -9,7 +11,7 @@ interface CreateThemeActivityContract {
             listBackgroundLandscape: String,
             addProductBackgroundPortrait: String,
             addProductBackgroundLandscape: String
-        )
+        ): ValidationResult
     }
 
     interface CreateThemeActivityPresenter {
@@ -19,7 +21,7 @@ interface CreateThemeActivityContract {
             listBackgroundLandscape: String,
             addProductBackgroundPortrait: String,
             addProductBackgroundLandscape: String
-        )
+        ): ValidationResult
     }
 
     interface CreateThemeActivityView {

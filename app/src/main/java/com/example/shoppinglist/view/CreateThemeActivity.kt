@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
+import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 
@@ -86,13 +88,28 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun saveTheme() {
         val name = themeName.text.toString()
 
-        presenter.saveTheme(
+        val productListPortrait = productListPortraitBackgroundSource?.toString() ?: ""
+        val productListLandscape = productListLandscapeBackgroundSource?.toString() ?: ""
+        val addProductPortrait = addProductPortraitBackgroundSource?.toString() ?: ""
+        val addProductLandscape = addProductLandscapeBackgroundSource?.toString() ?: ""
+
+        val result = presenter.saveTheme(
             name,
-            productListPortraitBackgroundSource.toString(),
-            productListLandscapeBackgroundSource.toString(),
-            addProductPortraitBackgroundSource.toString(),
-            addProductLandscapeBackgroundSource.toString()
+            productListPortrait,
+            productListLandscape,
+            addProductPortrait,
+            addProductLandscape
         )
+
+        when (result) {
+            ValidationResult.EMPTY_NAME -> {
+                Toast.makeText(this, resources.getString(R.string.empty_theme_name), Toast.LENGTH_LONG).show()
+            }
+            ValidationResult.MISSING_BACKGROUNDS -> {
+                Toast.makeText(this, resources.getString(R.string.missing_backgrounds), Toast.LENGTH_LONG).show()
+            }
+            else -> finish()
+        }
     }
 
     private fun setBackgroundSource(requestCode: Int, resultCode: Int, data: Intent?) {

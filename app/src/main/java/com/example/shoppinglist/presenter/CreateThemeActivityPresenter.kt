@@ -1,5 +1,6 @@
 package com.example.shoppinglist.presenter
 
+import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.model.CreateThemeActivityModel
 
@@ -18,7 +19,7 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         listBackgroundLandscape: String,
         addProductBackgroundPortrait: String,
         addProductBackgroundLandscape: String
-    ) {
-        model.saveTheme(name, listBackgroundPortrait, listBackgroundLandscape, addProductBackgroundPortrait, addProductBackgroundLandscape)
+    ): ValidationResult {
+        return model.saveTheme(name, listBackgroundPortrait, listBackgroundLandscape, addProductBackgroundPortrait, addProductBackgroundLandscape)
     }
 }
