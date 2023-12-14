@@ -11,10 +11,12 @@ interface ThemesActivityContract {
     }
 
     interface ThemesActivityPresenter {
+        fun onViewResume()
         fun setTheme(selectedThemeId: Int)
     }
 
     interface ThemesActivityView {
         fun initView(themes: ArrayList<Theme>?, actualThemeId: Int)
+        fun refreshThemesList(themes: ArrayList<Theme>?)
     }
 }

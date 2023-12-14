@@ -14,7 +14,7 @@ import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.view.ThemeSelector
 import kotlinx.android.synthetic.main.theme_item.view.*
 
-class ThemesAdapter(private val context: Context, private val themes: ArrayList<Theme>, private var selectedThemeId: Int, private val themeSelector: ThemeSelector) :
+class ThemesAdapter(private val context: Context, private var themes: ArrayList<Theme>, private var selectedThemeId: Int, private val themeSelector: ThemeSelector) :
     RecyclerView.Adapter<ThemesAdapter.ThemesAdapterViewHolder>() {
 
     private val viewHolders = ArrayList<ThemesAdapterViewHolder>()
@@ -42,6 +42,11 @@ class ThemesAdapter(private val context: Context, private val themes: ArrayList<
     }
 
     override fun getItemCount() = themes.size
+
+    fun dataSetChanged(newDataSet: ArrayList<Theme>) {
+        themes = newDataSet
+        notifyDataSetChanged()
+    }
 
     private fun getImageSource(image: String): Int? {
         return image.toIntOrNull()

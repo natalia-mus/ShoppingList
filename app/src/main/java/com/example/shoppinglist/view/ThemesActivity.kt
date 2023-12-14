@@ -15,7 +15,8 @@ import kotlinx.android.synthetic.main.buttons_section.*
 class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivityView, ThemeSelector {
 
     private lateinit var presenter: ThemesActivityContract.ThemesActivityPresenter
-    private var selectedThemeType = 1
+    private lateinit var themesAdapter: ThemesAdapter
+    private var selectedThemeId = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +25,17 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         presenter = ThemesActivityPresenter(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.onViewResume()
+    }
+
     override fun initView(themes: ArrayList<Theme>?, actualThemeId: Int) {
         if (themes != null) {
-            selectedThemeType = actualThemeId
+            selectedThemeId = actualThemeId
             themes_list.layoutManager = LinearLayoutManager(this)
-            themes_list.adapter = ThemesAdapter(this, themes, selectedThemeType, this)
+            themesAdapter = ThemesAdapter(this, themes, selectedThemeId, this)
+            themes_list.adapter = themesAdapter
 
             themes_create_theme.setOnClickListener {
                 val intent = Intent(this, CreateThemeActivity::class.java)
@@ -36,7 +43,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
             }
 
             button_save.setOnClickListener {
-                presenter.setTheme(selectedThemeType)
+                presenter.setTheme(selectedThemeId)
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -50,7 +57,13 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
     }
 
     override fun onThemeSelected(themeId: Int) {
-        selectedThemeType = themeId
+        selectedThemeId = themeId
+    }
+
+    override fun refreshThemesList(themes: ArrayList<Theme>?) {
+        if (themes != null) {
+            themesAdapter.dataSetChanged(themes)
+        }
     }
 }
 

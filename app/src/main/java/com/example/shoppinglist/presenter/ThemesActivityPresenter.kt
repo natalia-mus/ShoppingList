@@ -16,6 +16,10 @@ class ThemesActivityPresenter(_view: ThemesActivityContract.ThemesActivityView) 
         view.initView(allThemes, actualThemeId)
     }
 
+    override fun onViewResume() {
+        view.refreshThemesList(model.getAllThemes())
+    }
+
     override fun setTheme(selectedThemeId: Int) {
         model.setTheme(selectedThemeId)
     }
