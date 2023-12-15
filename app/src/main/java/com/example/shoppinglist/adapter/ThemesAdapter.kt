@@ -28,8 +28,7 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
 
     override fun onBindViewHolder(holder: ThemesAdapterViewHolder, position: Int) {
         holder.themeName.text = themes[position].name
-        val imageSource = getImageSource(themes[position].listBackgroundLandscape)
-        imageSource?.let { holder.themeImage.setImageResource(it) }
+        setImage(holder.themeImage, position)
 
         if (themes[position].id == selectedThemeId) {
             refreshSelection(holder.themeItem)
@@ -41,15 +40,14 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
         }
     }
 
+    private fun setImage(imageView: ImageView, position: Int) {
+    }
+
     override fun getItemCount() = themes.size
 
     fun dataSetChanged(newDataSet: ArrayList<Theme>) {
         themes = newDataSet
         notifyDataSetChanged()
-    }
-
-    private fun getImageSource(image: String): Int? {
-        return image.toIntOrNull()
     }
 
     private fun refreshSelection(themeItem: LinearLayout) {

@@ -5,10 +5,15 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import androidx.core.content.contentValuesOf
+import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.R
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
+import java.io.ByteArrayOutputStream
 
 object TableInfo {
     const val DATABASE_NAME = "shopping_list.db"
@@ -36,10 +41,10 @@ object BasicSQLCommands {
     const val CREATE_TABLE_THEMES = "CREATE TABLE ${TableInfo.TABLE_NAME_THEMES} " +
             "(${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, " +
             "${TableInfo.COLUMN_NAME} TEXT NOT NULL, " +
-            "${TableInfo.COLUMN_LIST_BACKGROUND_PORTRAIT} TEXT, " +
-            "${TableInfo.COLUMN_LIST_BACKGROUND_LANDSCAPE} TEXT, " +
-            "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_PORTRAIT} TEXT, " +
-            "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_LANDSCAPE} TEXT)"
+            "${TableInfo.COLUMN_LIST_BACKGROUND_PORTRAIT} BLOB, " +
+            "${TableInfo.COLUMN_LIST_BACKGROUND_LANDSCAPE} BLOB, " +
+            "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_PORTRAIT} BLOB, " +
+            "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_LANDSCAPE} BLOB)"
 
     const val DELETE_TABLE = "DROP TABLE "
 
@@ -158,7 +163,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         } else return null
     }
 
-    fun saveTheme(name: String, listBackgroundPortrait: String, listBackgroundLandscape: String, addProductBackgroundPortrait: String, addProductBackgroundLandscape: String, database: SQLiteDatabase? = null) {
+    fun saveTheme(name: String, listBackgroundPortrait: ByteArray?, listBackgroundLandscape: ByteArray?, addProductBackgroundPortrait: ByteArray?, addProductBackgroundLandscape: ByteArray?, database: SQLiteDatabase? = null) {
         val theme = ContentValues()
 
         theme.put(TableInfo.COLUMN_NAME, name)
@@ -177,31 +182,31 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
 
     private fun createThemes(database: SQLiteDatabase) {
         saveTheme(resources.getString(R.string.theme_grocery),
-            R.drawable.theme_grocery_list_portrait.toString(),
-            R.drawable.theme_grocery_list_landscape.toString(),
-            R.drawable.theme_grocery_add_product_portrait.toString(),
-            R.drawable.theme_grocery_add_product_landscape.toString(),
+            getImageAsByteArray(R.drawable.theme_grocery_list_portrait),
+            getImageAsByteArray(R.drawable.theme_grocery_list_landscape),
+            getImageAsByteArray(R.drawable.theme_grocery_add_product_portrait),
+            getImageAsByteArray(R.drawable.theme_grocery_add_product_landscape),
             database)
 
         saveTheme(resources.getString(R.string.theme_marketplace),
-            R.drawable.theme_marketplace_list_portrait.toString(),
-            R.drawable.theme_marketplace_list_landscape.toString(),
-            R.drawable.theme_marketplace_add_product_portrait.toString(),
-            R.drawable.theme_marketplace_add_product_landscape.toString(),
+            getImageAsByteArray(R.drawable.theme_marketplace_list_portrait),
+            getImageAsByteArray(R.drawable.theme_marketplace_list_landscape),
+            getImageAsByteArray(R.drawable.theme_marketplace_add_product_portrait),
+            getImageAsByteArray(R.drawable.theme_marketplace_add_product_landscape),
             database)
 
         saveTheme(resources.getString(R.string.theme_fashion),
-            R.drawable.theme_fashion_list_portrait.toString(),
-            R.drawable.theme_fashion_list_landscape.toString(),
-            R.drawable.theme_fashion_add_product_portrait.toString(),
-            R.drawable.theme_fashion_add_product_landscape.toString(),
+            getImageAsByteArray(R.drawable.theme_fashion_list_portrait),
+            getImageAsByteArray(R.drawable.theme_fashion_list_landscape),
+            getImageAsByteArray(R.drawable.theme_fashion_add_product_portrait),
+            getImageAsByteArray(R.drawable.theme_fashion_add_product_landscape),
             database)
 
         saveTheme(resources.getString(R.string.theme_christmas),
-            R.drawable.theme_christmas_list_portrait.toString(),
-            R.drawable.theme_christmas_list_landscape.toString(),
-            R.drawable.theme_christmas_add_product_portrait.toString(),
-            R.drawable.theme_christmas_add_product_landscape.toString(),
+            getImageAsByteArray(R.drawable.theme_christmas_list_portrait),
+            getImageAsByteArray(R.drawable.theme_christmas_list_landscape),
+            getImageAsByteArray(R.drawable.theme_christmas_add_product_portrait),
+            getImageAsByteArray(R.drawable.theme_christmas_add_product_landscape),
             database)
     }
 
@@ -211,13 +216,21 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         db.close()
     }
 
+    private fun getImageAsByteArray(imageId: Int): ByteArray {
+        val drawable = ResourcesCompat.getDrawable(resources, imageId, null)
+        val bitmap = (drawable as BitmapDrawable).bitmap
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        return byteArrayOutputStream.toByteArray()
+    }
+
     private fun parseTheme(cursor: Cursor): Theme {
         val id = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ID))
         val name = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_NAME))
-        val listBackgroundPortrait = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_PORTRAIT))
-        val listBackgroundLandscape = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_LANDSCAPE))
-        val addProductBackgroundPortrait = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_PORTRAIT))
-        val addProductBackgroundLandscape = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_LANDSCAPE))
+        val listBackgroundPortrait = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_PORTRAIT))
+        val listBackgroundLandscape = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_LANDSCAPE))
+        val addProductBackgroundPortrait = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_PORTRAIT))
+        val addProductBackgroundLandscape = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_LANDSCAPE))
 
         return Theme(id, name, listBackgroundPortrait, listBackgroundLandscape, addProductBackgroundPortrait, addProductBackgroundLandscape)
     }

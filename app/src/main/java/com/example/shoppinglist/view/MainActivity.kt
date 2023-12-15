@@ -1,7 +1,6 @@
 package com.example.shoppinglist.view
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -77,8 +76,8 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
     override fun setTheme(theme: Theme?) {
         if (theme != null) {
             val orientation = resources.configuration.orientation
-            if (orientation == Configuration.ORIENTATION_PORTRAIT && theme.listBackgroundPortrait.toIntOrNull() != null) main_activity_container.setBackgroundResource(theme.listBackgroundPortrait.toInt())
-            else if (orientation == Configuration.ORIENTATION_LANDSCAPE && theme.listBackgroundLandscape.toIntOrNull() != null) main_activity_container.setBackgroundResource(theme.listBackgroundLandscape.toInt())
+            //if (orientation == Configuration.ORIENTATION_PORTRAIT && theme.listBackgroundPortrait.toIntOrNull() != null) main_activity_container.setBackgroundResource(theme.listBackgroundPortrait.toInt())
+            //else if (orientation == Configuration.ORIENTATION_LANDSCAPE && theme.listBackgroundLandscape.toIntOrNull() != null) main_activity_container.setBackgroundResource(theme.listBackgroundLandscape.toInt())
         }
     }
 

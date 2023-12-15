@@ -29,4 +29,5 @@
     <string name="cancel">cancel</string>
     <string name="empty_theme_name">Theme name can not be empty</string>
     <string name="missing_backgrounds">Theme must contain at least one background</string>
+    <string name="error_message">Something went wrong. Try again</string>
 </resources>

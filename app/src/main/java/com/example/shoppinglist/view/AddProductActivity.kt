@@ -1,12 +1,11 @@
 package com.example.shoppinglist.view
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.constants.SavingContext
+import com.example.shoppinglist.SavingContext
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
@@ -43,8 +42,8 @@ class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.
     override fun setTheme(theme: Theme?) {
         if (theme != null) {
             val orientation = resources.configuration.orientation
-            if (orientation == Configuration.ORIENTATION_PORTRAIT && theme.addProductBackgroundPortrait.toIntOrNull() != null) add_product_activity_container.setBackgroundResource(theme.addProductBackgroundPortrait.toInt())
-            else if (orientation == Configuration.ORIENTATION_LANDSCAPE && theme.addProductBackgroundLandscape.toIntOrNull() != null) add_product_activity_container.setBackgroundResource(theme.addProductBackgroundLandscape.toInt())
+            //if (orientation == Configuration.ORIENTATION_PORTRAIT && theme.addProductBackgroundPortrait.toIntOrNull() != null) add_product_activity_container.setBackgroundResource(theme.addProductBackgroundPortrait.toInt())
+            //else if (orientation == Configuration.ORIENTATION_LANDSCAPE && theme.addProductBackgroundLandscape.toIntOrNull() != null) add_product_activity_container.setBackgroundResource(theme.addProductBackgroundLandscape.toInt())
         }
     }
 

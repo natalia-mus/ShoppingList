@@ -28,8 +28,8 @@ object Settings {
 
     fun getThemeId(): Int {
         return if (instance != null) {
-            instance!!.getInt(Constants.THEME, 1)
-        } else return 1
+            instance!!.getInt(Constants.THEME, PredefinedTheme.GROCERY.id)
+        } else return PredefinedTheme.GROCERY.id
     }
 
     fun setTheme(themeId: Int) {

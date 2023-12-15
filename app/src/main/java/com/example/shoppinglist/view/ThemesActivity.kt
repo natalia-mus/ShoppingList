@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.adapter.ThemesAdapter
+import com.example.shoppinglist.PredefinedTheme
 import com.example.shoppinglist.contract.ThemesActivityContract
 import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.ThemesActivityPresenter
@@ -16,7 +17,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
 
     private lateinit var presenter: ThemesActivityContract.ThemesActivityPresenter
     private lateinit var themesAdapter: ThemesAdapter
-    private var selectedThemeId = 1
+    private var selectedThemeId = PredefinedTheme.GROCERY.id
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

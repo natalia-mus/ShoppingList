@@ -10,10 +10,10 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
 
     override fun saveTheme(
         name: String,
-        listBackgroundPortrait: String,
-        listBackgroundLandscape: String,
-        addProductBackgroundPortrait: String,
-        addProductBackgroundLandscape: String
+        listBackgroundPortrait: ByteArray?,
+        listBackgroundLandscape: ByteArray?,
+        addProductBackgroundPortrait: ByteArray?,
+        addProductBackgroundLandscape: ByteArray?
     ): ValidationResult {
         val validationResult = validate(name, listBackgroundPortrait, listBackgroundLandscape, addProductBackgroundPortrait, addProductBackgroundLandscape)
         if (validationResult == ValidationResult.VALID) {
@@ -24,15 +24,15 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
 
     private fun validate(
         name: String,
-        listBackgroundPortrait: String,
-        listBackgroundLandscape: String,
-        addProductBackgroundPortrait: String,
-        addProductBackgroundLandscape: String
+        listBackgroundPortrait: ByteArray?,
+        listBackgroundLandscape: ByteArray?,
+        addProductBackgroundPortrait: ByteArray?,
+        addProductBackgroundLandscape: ByteArray?
     ): ValidationResult {
         return if (name.isEmpty()) {
             ValidationResult.EMPTY_NAME
 
-        } else if (listBackgroundPortrait.isEmpty() && listBackgroundLandscape.isEmpty() && addProductBackgroundPortrait.isEmpty() && addProductBackgroundLandscape.isEmpty()) {
+        } else if (listBackgroundPortrait == null && listBackgroundLandscape == null && addProductBackgroundPortrait == null && addProductBackgroundLandscape == null) {
             ValidationResult.MISSING_BACKGROUNDS
 
         } else ValidationResult.VALID

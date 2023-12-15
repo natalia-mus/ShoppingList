@@ -1,7 +1,6 @@
 package com.example.shoppinglist.view
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -29,10 +28,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var addProductPortraitBackground: ImageView
     private lateinit var addProductLandscapeBackground: ImageView
 
-    private var productListPortraitBackgroundSource: Uri? = null
-    private var productListLandscapeBackgroundSource: Uri? = null
-    private var addProductPortraitBackgroundSource: Uri? = null
-    private var addProductLandscapeBackgroundSource: Uri? = null
+    private var productListPortraitBackgroundSource: ByteArray? = null
+    private var productListLandscapeBackgroundSource: ByteArray? = null
+    private var addProductPortraitBackgroundSource: ByteArray? = null
+    private var addProductLandscapeBackgroundSource: ByteArray? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,17 +87,12 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun saveTheme() {
         val name = themeName.text.toString()
 
-        val productListPortrait = productListPortraitBackgroundSource?.toString() ?: ""
-        val productListLandscape = productListLandscapeBackgroundSource?.toString() ?: ""
-        val addProductPortrait = addProductPortraitBackgroundSource?.toString() ?: ""
-        val addProductLandscape = addProductLandscapeBackgroundSource?.toString() ?: ""
-
         val result = presenter.saveTheme(
             name,
-            productListPortrait,
-            productListLandscape,
-            addProductPortrait,
-            addProductLandscape
+            productListPortraitBackgroundSource,
+            productListLandscapeBackgroundSource,
+            addProductPortraitBackgroundSource,
+            addProductLandscapeBackgroundSource
         )
 
         when (result) {
@@ -119,23 +113,25 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             if (uri != null) {
                 when (requestCode) {
                     BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND.typeId -> {
-                        productListPortraitBackgroundSource = uri
+                        productListPortraitBackgroundSource = presenter.getImageAsByteArray(this, uri)
                         productListPortraitBackground.setImageURI(uri)
                     }
                     BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND.typeId -> {
-                        productListLandscapeBackgroundSource = uri
+                        productListLandscapeBackgroundSource = presenter.getImageAsByteArray(this, uri)
                         productListLandscapeBackground.setImageURI(uri)
                     }
                     BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND.typeId -> {
-                        addProductPortraitBackgroundSource = uri
+                        addProductPortraitBackgroundSource = presenter.getImageAsByteArray(this, uri)
                         addProductPortraitBackground.setImageURI(uri)
                     }
                     BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND.typeId -> {
-                        addProductLandscapeBackgroundSource = uri
+                        addProductLandscapeBackgroundSource = presenter.getImageAsByteArray(this, uri)
                         addProductLandscapeBackground.setImageURI(uri)
                     }
                 }
             }
+        } else {
+            Toast.makeText(this, resources.getString(R.string.error_message), Toast.LENGTH_SHORT).show()
         }
     }
 }
