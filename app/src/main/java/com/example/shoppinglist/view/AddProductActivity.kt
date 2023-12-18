@@ -39,12 +39,8 @@ class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.
         }
     }
 
-    override fun setTheme(theme: Theme?) {
-        if (theme != null) {
-            val orientation = resources.configuration.orientation
-            //if (orientation == Configuration.ORIENTATION_PORTRAIT && theme.addProductBackgroundPortrait.toIntOrNull() != null) add_product_activity_container.setBackgroundResource(theme.addProductBackgroundPortrait.toInt())
-            //else if (orientation == Configuration.ORIENTATION_LANDSCAPE && theme.addProductBackgroundLandscape.toIntOrNull() != null) add_product_activity_container.setBackgroundResource(theme.addProductBackgroundLandscape.toInt())
-        }
+    override fun provideTheme(theme: Theme?) {
+        if (theme != null) setTheme(theme.addProductBackgroundPortrait, theme.addProductBackgroundLandscape, add_product_activity_container)
     }
 
     private fun checkContext() {

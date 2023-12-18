@@ -16,7 +16,7 @@ class ThemeProvidingActivityPresenter(_view: ThemeProvidingActivityContract.Them
     override fun getTheme(): Theme? = model.getTheme()
 
     override fun onResume() {
-        view.setTheme(getTheme())
+        view.provideTheme(getTheme())
     }
 
 }

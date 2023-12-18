@@ -73,12 +73,8 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
         Settings.getInstance(this)
     }
 
-    override fun setTheme(theme: Theme?) {
-        if (theme != null) {
-            val orientation = resources.configuration.orientation
-            //if (orientation == Configuration.ORIENTATION_PORTRAIT && theme.listBackgroundPortrait.toIntOrNull() != null) main_activity_container.setBackgroundResource(theme.listBackgroundPortrait.toInt())
-            //else if (orientation == Configuration.ORIENTATION_LANDSCAPE && theme.listBackgroundLandscape.toIntOrNull() != null) main_activity_container.setBackgroundResource(theme.listBackgroundLandscape.toInt())
-        }
+    override fun provideTheme(theme: Theme?) {
+        if (theme != null) setTheme(theme.listBackgroundPortrait, theme.listBackgroundLandscape, main_activity_container)
     }
 
     private fun openProductWithEditContext(product: Product) {

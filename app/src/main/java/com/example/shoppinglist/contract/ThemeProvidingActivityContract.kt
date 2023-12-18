@@ -15,6 +15,6 @@ interface ThemeProvidingActivityContract {
 
     interface ThemeProvidingActivityView {
         fun createDBInstance()
-        fun setTheme(theme: Theme?)
+        fun provideTheme(theme: Theme?)
     }
 }
