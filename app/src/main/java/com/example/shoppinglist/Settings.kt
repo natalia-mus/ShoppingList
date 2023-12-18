@@ -3,6 +3,7 @@ package com.example.shoppinglist
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.shoppinglist.constants.Constants
+import com.example.shoppinglist.constants.PredefinedTheme
 
 object Settings {
 

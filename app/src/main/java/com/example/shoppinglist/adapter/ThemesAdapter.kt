@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.view.ThemeSelector
@@ -41,6 +42,21 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
     }
 
     private fun setImage(imageView: ImageView, position: Int) {
+        val theme = themes[position]
+        // find first existing background image in theme
+        val bitmap = if (theme.listBackgroundLandscape != null) {
+            ImageUtils.getImageAsBitmap(theme.listBackgroundLandscape)
+        } else if (theme.listBackgroundPortrait != null) {
+            ImageUtils.getImageAsBitmap(theme.listBackgroundPortrait)
+        } else if (theme.addProductBackgroundLandscape != null) {
+            ImageUtils.getImageAsBitmap(theme.addProductBackgroundLandscape)
+        } else if (theme.addProductBackgroundPortrait != null) {
+            ImageUtils.getImageAsBitmap(theme.addProductBackgroundPortrait)
+        } else {
+            null
+        }
+
+        if (bitmap != null) imageView.setImageBitmap(bitmap)
     }
 
     override fun getItemCount() = themes.size

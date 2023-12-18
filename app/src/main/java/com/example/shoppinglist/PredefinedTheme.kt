@@ -1,4 +1,4 @@
-package com.example.shoppinglist
+package com.example.shoppinglist.constants
 
 enum class PredefinedTheme(val id: Int) {
     GROCERY(1),

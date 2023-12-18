@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.adapter.ThemesAdapter
-import com.example.shoppinglist.PredefinedTheme
+import com.example.shoppinglist.constants.PredefinedTheme
 import com.example.shoppinglist.contract.ThemesActivityContract
 import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.ThemesActivityPresenter
