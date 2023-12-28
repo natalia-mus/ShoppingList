@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.Settings
 import com.example.shoppinglist.adapter.OnItemClickAction
@@ -74,7 +76,9 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
     }
 
     override fun provideTheme(theme: Theme?) {
-        if (theme != null) setTheme(theme.listBackgroundPortrait, theme.listBackgroundLandscape, main_activity_container)
+        val portraitBackground = theme?.listBackgroundPortrait ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null) ?.let { ImageUtils.getImageAsByteArray(it) }
+        val landscapeBackground = theme?.listBackgroundLandscape ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_landscape, null) ?.let { ImageUtils.getImageAsByteArray(it) }
+        setTheme(portraitBackground, landscapeBackground, main_activity_container)
     }
 
     private fun openProductWithEditContext(product: Product) {

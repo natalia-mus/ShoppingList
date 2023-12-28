@@ -6,7 +6,7 @@ import com.example.shoppinglist.database.DBHelper
 
 class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivityModel {
 
-    private val database = DBHelper.instance
+    private val database = DBHelper.getInstance()
 
     override fun saveTheme(
         name: String,

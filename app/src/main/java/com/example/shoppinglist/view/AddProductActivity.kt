@@ -2,6 +2,8 @@ package com.example.shoppinglist.view
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.Constants
@@ -40,7 +42,9 @@ class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.
     }
 
     override fun provideTheme(theme: Theme?) {
-        if (theme != null) setTheme(theme.addProductBackgroundPortrait, theme.addProductBackgroundLandscape, add_product_activity_container)
+        val portraitBackground = theme?.addProductBackgroundPortrait ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_portrait, null) ?.let { ImageUtils.getImageAsByteArray(it) }
+        val landscapeBackground = theme?.addProductBackgroundLandscape ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_landscape, null) ?.let { ImageUtils.getImageAsByteArray(it) }
+        setTheme(portraitBackground, landscapeBackground, add_product_activity_container)
     }
 
     private fun checkContext() {

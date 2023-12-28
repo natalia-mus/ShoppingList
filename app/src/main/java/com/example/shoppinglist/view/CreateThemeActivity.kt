@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
@@ -113,19 +114,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             if (uri != null) {
                 when (requestCode) {
                     BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND.typeId -> {
-                        productListPortraitBackgroundSource = presenter.getImageAsByteArray(this, uri)
+                        productListPortraitBackgroundSource = ImageUtils.getImageAsByteArray(this, uri)
                         productListPortraitBackground.setImageURI(uri)
                     }
                     BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND.typeId -> {
-                        productListLandscapeBackgroundSource = presenter.getImageAsByteArray(this, uri)
+                        productListLandscapeBackgroundSource = ImageUtils.getImageAsByteArray(this, uri)
                         productListLandscapeBackground.setImageURI(uri)
                     }
                     BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND.typeId -> {
-                        addProductPortraitBackgroundSource = presenter.getImageAsByteArray(this, uri)
+                        addProductPortraitBackgroundSource = ImageUtils.getImageAsByteArray(this, uri)
                         addProductPortraitBackground.setImageURI(uri)
                     }
                     BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND.typeId -> {
-                        addProductLandscapeBackgroundSource = presenter.getImageAsByteArray(this, uri)
+                        addProductLandscapeBackgroundSource = ImageUtils.getImageAsByteArray(this, uri)
                         addProductLandscapeBackground.setImageURI(uri)
                     }
                 }

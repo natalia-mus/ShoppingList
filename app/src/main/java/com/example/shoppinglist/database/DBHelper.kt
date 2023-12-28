@@ -5,14 +5,12 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.contentValuesOf
 import androidx.core.content.res.ResourcesCompat
+import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
-import java.io.ByteArrayOutputStream
 
 object TableInfo {
     const val DATABASE_NAME = "shopping_list.db"
@@ -59,13 +57,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
     private val resources = context.resources
 
     companion object {
-        var instance: DBHelper? = null
+        private var instance: DBHelper? = null
 
-        fun getInstance(context: Context): DBHelper {
-            if (instance == null) {
+        fun getInstance(context: Context? = null): DBHelper? {
+            if (instance == null && context != null) {
                 instance = DBHelper(context.applicationContext)
             }
-            return instance as DBHelper
+            return instance
         }
     }
 
@@ -217,10 +215,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
 
     private fun getImageAsByteArray(imageId: Int): ByteArray {
         val drawable = ResourcesCompat.getDrawable(resources, imageId, null)
-        val bitmap = (drawable as BitmapDrawable).bitmap
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-        return byteArrayOutputStream.toByteArray()
+        return ImageUtils.getImageAsByteArray(drawable)
     }
 
     private fun parseTheme(cursor: Cursor): Theme {

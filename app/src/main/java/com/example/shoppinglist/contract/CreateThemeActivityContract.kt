@@ -1,7 +1,5 @@
 package com.example.shoppinglist.contract
 
-import android.content.Context
-import android.net.Uri
 import com.example.shoppinglist.ValidationResult
 
 interface CreateThemeActivityContract {
@@ -17,8 +15,6 @@ interface CreateThemeActivityContract {
     }
 
     interface CreateThemeActivityPresenter {
-        fun getImageAsByteArray(context: Context, uri: Uri): ByteArray
-
         fun saveTheme(
             name: String,
             listBackgroundPortrait: ByteArray?,

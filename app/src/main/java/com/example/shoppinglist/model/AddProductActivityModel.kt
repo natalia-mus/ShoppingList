@@ -7,7 +7,7 @@ import com.example.shoppinglist.database.DBHelper
 
 class AddProductActivityModel : AddProductActivityContract.AddProductActivityModel {
 
-    private val database = DBHelper.instance
+    private val database = DBHelper.getInstance()
 
     override fun saveData(savingContext: SavingContext, id: Int?, name: String, quantity: String, priority: String): ValidationResult {
         val validationResult = validateData(name, priority)

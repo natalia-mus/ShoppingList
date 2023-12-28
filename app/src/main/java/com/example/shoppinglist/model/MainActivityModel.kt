@@ -5,7 +5,7 @@ import com.example.shoppinglist.database.DBHelper
 
 class MainActivityModel() : MainActivityContract.MainActivityModel {
 
-    private val database = DBHelper.instance
+    private val database = DBHelper.getInstance()
     private var data: List<Product>? = emptyList()
 
     override fun fetchDataFromDB() {

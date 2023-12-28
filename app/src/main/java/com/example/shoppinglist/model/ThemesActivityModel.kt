@@ -11,7 +11,7 @@ class ThemesActivityModel : ThemesActivityContract.ThemesActivityModel {
     }
 
     override fun getAllThemes(): ArrayList<Theme> {
-        return DBHelper.instance?.getAllThemes() as ArrayList<Theme>
+        return DBHelper.getInstance()?.getAllThemes() as ArrayList<Theme>
     }
 
     override fun setTheme(themeId: Int) {
