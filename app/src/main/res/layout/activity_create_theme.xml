@@ -35,14 +35,24 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/create_theme_product_list_portrait_background"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
+                <LinearLayout
+                    android:id="@+id/create_theme_product_list_portrait_background_border"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_create_theme" />
+                    android:background="@drawable/round_background"
+                    android:backgroundTint="@color/transparent">
+
+                    <ImageView
+                        android:id="@+id/create_theme_product_list_portrait_background"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_create_theme" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -63,14 +73,24 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/create_theme_product_list_landscape_background"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
+                <LinearLayout
+                    android:id="@+id/create_theme_product_list_landscape_background_border"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_create_theme" />
+                    android:background="@drawable/round_background"
+                    android:backgroundTint="@color/transparent">
+
+                    <ImageView
+                        android:id="@+id/create_theme_product_list_landscape_background"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_create_theme" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -113,14 +133,24 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/create_theme_add_product_portrait_background"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
+                <LinearLayout
+                    android:id="@+id/create_theme_add_product_portrait_background_border"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_create_theme" />
+                    android:background="@drawable/round_background"
+                    android:backgroundTint="@color/transparent">
+
+                    <ImageView
+                        android:id="@+id/create_theme_add_product_portrait_background"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_create_theme" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -141,14 +171,24 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/create_theme_add_product_landscape_background"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
+                <LinearLayout
+                    android:id="@+id/create_theme_add_product_landscape_background_border"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_create_theme" />
+                    android:background="@drawable/round_background"
+                    android:backgroundTint="@color/transparent">
+
+                    <ImageView
+                        android:id="@+id/create_theme_add_product_landscape_background"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="1dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_create_theme" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
