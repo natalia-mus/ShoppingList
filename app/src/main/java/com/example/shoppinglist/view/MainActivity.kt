@@ -72,7 +72,7 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
     }
 
     override fun initSettings() {
-        Settings.getInstance(this)
+        Settings.init(this)
     }
 
     override fun provideTheme(theme: Theme?) {

@@ -9,15 +9,13 @@ object Settings {
 
     var instance: SharedPreferences? = null
 
-    private fun getSettingsName(context: Context): String {
-        val name = StringBuilder()
-        name.append(context.packageName)
-        name.append(".")
-        name.append(Constants.SETTINGS)
-        return name.toString()
+    fun getThemeId(): Int {
+        return if (instance != null) {
+            instance!!.getInt(Constants.THEME, PredefinedTheme.GROCERY.id)
+        } else return PredefinedTheme.GROCERY.id
     }
 
-    fun getInstance(context: Context): SharedPreferences {
+    fun init(context: Context): SharedPreferences {
         if (instance == null) {
             instance = context.applicationContext.getSharedPreferences(
                 getSettingsName(context),
@@ -27,13 +25,15 @@ object Settings {
         return instance as SharedPreferences
     }
 
-    fun getThemeId(): Int {
-        return if (instance != null) {
-            instance!!.getInt(Constants.THEME, PredefinedTheme.GROCERY.id)
-        } else return PredefinedTheme.GROCERY.id
-    }
-
     fun setTheme(themeId: Int) {
         instance?.edit()?.putInt(Constants.THEME, themeId)?.apply()
+    }
+
+    private fun getSettingsName(context: Context): String {
+        val name = StringBuilder()
+        name.append(context.packageName)
+        name.append(".")
+        name.append(Constants.SETTINGS)
+        return name.toString()
     }
 }

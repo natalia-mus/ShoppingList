@@ -2,16 +2,15 @@ package com.example.shoppinglist.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.CreateThemeActivityView {
 
@@ -58,19 +57,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
 
         productListPortraitBackground.setOnClickListener {
-            openGallery(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
+            selectBackgroundType(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
         }
 
         productListLandscapeBackground.setOnClickListener {
-            openGallery(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
+            selectBackgroundType(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
         }
 
         addProductPortraitBackground.setOnClickListener {
-            openGallery(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
+            selectBackgroundType(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
         }
 
         addProductLandscapeBackground.setOnClickListener {
-            openGallery(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
+            selectBackgroundType(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
         }
     }
 
@@ -105,6 +104,24 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             }
             else -> finish()
         }
+    }
+
+    private fun selectBackgroundType(backgroundType: BackgroundType) {
+        val backgroundTypePanel = BottomSheetDialog(this)
+        val backgroundTypePanelView = LayoutInflater.from(this).inflate(R.layout.panel_background_type, findViewById(R.id.panel_background_type_container))
+
+        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_image).setOnClickListener{
+            openGallery(backgroundType)
+            backgroundTypePanel.dismiss()
+        }
+
+        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_color).setOnClickListener{
+            //openColorPicker()
+            backgroundTypePanel.dismiss()
+        }
+
+        backgroundTypePanel.setContentView(backgroundTypePanelView)
+        backgroundTypePanel.show()
     }
 
     private fun setBackgroundSource(requestCode: Int, resultCode: Int, data: Intent?) {

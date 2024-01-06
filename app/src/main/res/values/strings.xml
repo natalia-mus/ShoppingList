@@ -30,4 +30,7 @@
     <string name="empty_theme_name">Theme name can not be empty</string>
     <string name="missing_backgrounds">Theme must contain at least one background</string>
     <string name="error_message">Something went wrong. Try again</string>
+    <string name="image">image</string>
+    <string name="color">color</string>
+    <string name="select_background_type">select background type:</string>
 </resources>
