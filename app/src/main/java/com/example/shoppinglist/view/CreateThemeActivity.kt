@@ -34,10 +34,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var addProductPortraitBackgroundBorder: LinearLayout
     private lateinit var addProductLandscapeBackgroundBorder: LinearLayout
 
-    private var productListPortraitBackgroundSource: ByteArray? = null
-    private var productListLandscapeBackgroundSource: ByteArray? = null
-    private var addProductPortraitBackgroundSource: ByteArray? = null
-    private var addProductLandscapeBackgroundSource: ByteArray? = null
+    private var productListPortraitBackgroundImage: ByteArray? = null
+    private var productListLandscapeBackgroundImage: ByteArray? = null
+    private var addProductPortraitBackgroundImage: ByteArray? = null
+    private var addProductLandscapeBackgroundImage: ByteArray? = null
 
     private var productListPortraitBackgroundColor: Int? = null
     private var productListLandscapeBackgroundColor: Int? = null
@@ -133,10 +133,14 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         val result = presenter.saveTheme(
             name,
-            productListPortraitBackgroundSource,
-            productListLandscapeBackgroundSource,
-            addProductPortraitBackgroundSource,
-            addProductLandscapeBackgroundSource
+            productListPortraitBackgroundImage,
+            productListLandscapeBackgroundImage,
+            addProductPortraitBackgroundImage,
+            addProductLandscapeBackgroundImage,
+            productListPortraitBackgroundColor,
+            productListLandscapeBackgroundColor,
+            addProductPortraitBackgroundColor,
+            addProductLandscapeBackgroundColor
         )
 
         when (result) {
@@ -194,19 +198,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             if (uri != null) {
                 when (requestCode) {
                     BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND.typeId -> {
-                        productListPortraitBackgroundSource = ImageUtils.getImageAsByteArray(this, uri)
+                        productListPortraitBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
                         productListPortraitBackground.setImageURI(uri)
                     }
                     BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND.typeId -> {
-                        productListLandscapeBackgroundSource = ImageUtils.getImageAsByteArray(this, uri)
+                        productListLandscapeBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
                         productListLandscapeBackground.setImageURI(uri)
                     }
                     BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND.typeId -> {
-                        addProductPortraitBackgroundSource = ImageUtils.getImageAsByteArray(this, uri)
+                        addProductPortraitBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
                         addProductPortraitBackground.setImageURI(uri)
                     }
                     BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND.typeId -> {
-                        addProductLandscapeBackgroundSource = ImageUtils.getImageAsByteArray(this, uri)
+                        addProductLandscapeBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
                         addProductLandscapeBackground.setImageURI(uri)
                     }
                 }

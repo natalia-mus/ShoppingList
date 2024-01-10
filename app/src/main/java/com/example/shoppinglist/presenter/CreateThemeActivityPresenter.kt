@@ -15,11 +15,19 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
 
     override fun saveTheme(
         name: String,
-        listBackgroundPortrait: ByteArray?,
-        listBackgroundLandscape: ByteArray?,
-        addProductBackgroundPortrait: ByteArray?,
-        addProductBackgroundLandscape: ByteArray?
+        listBackgroundImagePortrait: ByteArray?,
+        listBackgroundImageLandscape: ByteArray?,
+        addProductBackgroundImagePortrait: ByteArray?,
+        addProductBackgroundImageLandscape: ByteArray?,
+        listBackgroundColorPortrait: Int?,
+        listBackgroundColorLandscape: Int?,
+        addProductBackgroundColorPortrait: Int?,
+        addProductBackgroundColorLandscape: Int?
+
     ): ValidationResult {
-        return model.saveTheme(name, listBackgroundPortrait, listBackgroundLandscape, addProductBackgroundPortrait, addProductBackgroundLandscape)
+        return model.saveTheme(
+            name, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
+            listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape
+        )
     }
 }

@@ -42,8 +42,8 @@ class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.
     }
 
     override fun provideTheme(theme: Theme?) {
-        val portraitBackground = theme?.addProductBackgroundPortrait ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_portrait, null) ?.let { ImageUtils.getImageAsByteArray(it) }
-        val landscapeBackground = theme?.addProductBackgroundLandscape ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_landscape, null) ?.let { ImageUtils.getImageAsByteArray(it) }
+        val portraitBackground = theme?.addProductBackgroundImagePortrait ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_portrait, null) ?.let { ImageUtils.getImageAsByteArray(it) }
+        val landscapeBackground = theme?.addProductBackgroundImageLandscape ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_landscape, null) ?.let { ImageUtils.getImageAsByteArray(it) }
         setTheme(portraitBackground, landscapeBackground, add_product_activity_container)
     }
 

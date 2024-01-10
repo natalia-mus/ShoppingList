@@ -10,14 +10,24 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
 
     override fun saveTheme(
         name: String,
-        listBackgroundPortrait: ByteArray?,
-        listBackgroundLandscape: ByteArray?,
-        addProductBackgroundPortrait: ByteArray?,
-        addProductBackgroundLandscape: ByteArray?
+        listBackgroundImagePortrait: ByteArray?,
+        listBackgroundImageLandscape: ByteArray?,
+        addProductBackgroundImagePortrait: ByteArray?,
+        addProductBackgroundImageLandscape: ByteArray?,
+        listBackgroundColorPortrait: Int?,
+        listBackgroundColorLandscape: Int?,
+        addProductBackgroundColorPortrait: Int?,
+        addProductBackgroundColorLandscape: Int?
     ): ValidationResult {
-        val validationResult = validate(name, listBackgroundPortrait, listBackgroundLandscape, addProductBackgroundPortrait, addProductBackgroundLandscape)
+        val validationResult = validate(
+            name, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
+            listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape
+        )
         if (validationResult == ValidationResult.VALID) {
-            database?.saveTheme(name, listBackgroundPortrait, listBackgroundLandscape, addProductBackgroundPortrait, addProductBackgroundLandscape)
+            database?.saveTheme(
+                name, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
+                listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape
+            )
         }
         return validationResult
     }
@@ -27,12 +37,18 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         listBackgroundPortrait: ByteArray?,
         listBackgroundLandscape: ByteArray?,
         addProductBackgroundPortrait: ByteArray?,
-        addProductBackgroundLandscape: ByteArray?
+        addProductBackgroundLandscape: ByteArray?,
+        listBackgroundColorPortrait: Int?,
+        listBackgroundColorLandscape: Int?,
+        addProductBackgroundColorPortrait: Int?,
+        addProductBackgroundColorLandscape: Int?
     ): ValidationResult {
         return if (name.isEmpty()) {
             ValidationResult.EMPTY_NAME
 
-        } else if (listBackgroundPortrait == null && listBackgroundLandscape == null && addProductBackgroundPortrait == null && addProductBackgroundLandscape == null) {
+        } else if (listBackgroundPortrait == null && listBackgroundLandscape == null && addProductBackgroundPortrait == null && addProductBackgroundLandscape == null
+            && listBackgroundColorPortrait == null && listBackgroundColorLandscape == null && addProductBackgroundColorPortrait == null && addProductBackgroundColorLandscape == null
+        ) {
             ValidationResult.MISSING_BACKGROUNDS
 
         } else ValidationResult.VALID

@@ -44,14 +44,14 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
     private fun setImage(imageView: ImageView, position: Int) {
         val theme = themes[position]
         // find first existing background image in theme
-        val bitmap = if (theme.listBackgroundLandscape != null) {
-            ImageUtils.getImageAsBitmap(theme.listBackgroundLandscape)
-        } else if (theme.listBackgroundPortrait != null) {
-            ImageUtils.getImageAsBitmap(theme.listBackgroundPortrait)
-        } else if (theme.addProductBackgroundLandscape != null) {
-            ImageUtils.getImageAsBitmap(theme.addProductBackgroundLandscape)
-        } else if (theme.addProductBackgroundPortrait != null) {
-            ImageUtils.getImageAsBitmap(theme.addProductBackgroundPortrait)
+        val bitmap = if (theme.listBackgroundImageLandscape != null) {
+            ImageUtils.getImageAsBitmap(theme.listBackgroundImageLandscape)
+        } else if (theme.listBackgroundImagePortrait != null) {
+            ImageUtils.getImageAsBitmap(theme.listBackgroundImagePortrait)
+        } else if (theme.addProductBackgroundImageLandscape != null) {
+            ImageUtils.getImageAsBitmap(theme.addProductBackgroundImageLandscape)
+        } else if (theme.addProductBackgroundImagePortrait != null) {
+            ImageUtils.getImageAsBitmap(theme.addProductBackgroundImagePortrait)
         } else {
             null
         }

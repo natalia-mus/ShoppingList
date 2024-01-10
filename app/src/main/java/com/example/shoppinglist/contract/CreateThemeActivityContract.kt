@@ -7,20 +7,28 @@ interface CreateThemeActivityContract {
     interface CreateThemeActivityModel {
         fun saveTheme(
             name: String,
-            listBackgroundPortrait: ByteArray?,
-            listBackgroundLandscape: ByteArray?,
-            addProductBackgroundPortrait: ByteArray?,
-            addProductBackgroundLandscape: ByteArray?
+            listBackgroundImagePortrait: ByteArray?,
+            listBackgroundImageLandscape: ByteArray?,
+            addProductBackgroundImagePortrait: ByteArray?,
+            addProductBackgroundImageLandscape: ByteArray?,
+            listBackgroundColorPortrait: Int?,
+            listBackgroundColorLandscape: Int?,
+            addProductBackgroundColorPortrait: Int?,
+            addProductBackgroundColorLandscape: Int?
         ): ValidationResult
     }
 
     interface CreateThemeActivityPresenter {
         fun saveTheme(
             name: String,
-            listBackgroundPortrait: ByteArray?,
-            listBackgroundLandscape: ByteArray?,
-            addProductBackgroundPortrait: ByteArray?,
-            addProductBackgroundLandscape: ByteArray?
+            listBackgroundImagePortrait: ByteArray?,
+            listBackgroundImageLandscape: ByteArray?,
+            addProductBackgroundImagePortrait: ByteArray?,
+            addProductBackgroundImageLandscape: ByteArray?,
+            listBackgroundColorPortrait: Int?,
+            listBackgroundColorLandscape: Int?,
+            addProductBackgroundColorPortrait: Int?,
+            addProductBackgroundColorLandscape: Int?
         ): ValidationResult
     }
 

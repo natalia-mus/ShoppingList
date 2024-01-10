@@ -76,8 +76,8 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
     }
 
     override fun provideTheme(theme: Theme?) {
-        val portraitBackground = theme?.listBackgroundPortrait ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null) ?.let { ImageUtils.getImageAsByteArray(it) }
-        val landscapeBackground = theme?.listBackgroundLandscape ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_landscape, null) ?.let { ImageUtils.getImageAsByteArray(it) }
+        val portraitBackground = theme?.listBackgroundImagePortrait ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null) ?.let { ImageUtils.getImageAsByteArray(it) }
+        val landscapeBackground = theme?.listBackgroundImageLandscape ?: ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_landscape, null) ?.let { ImageUtils.getImageAsByteArray(it) }
         setTheme(portraitBackground, landscapeBackground, main_activity_container)
     }
 
