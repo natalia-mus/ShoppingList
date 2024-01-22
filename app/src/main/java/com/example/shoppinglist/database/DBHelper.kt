@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.core.content.contentValuesOf
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.database.getIntOrNull
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.model.Product
@@ -266,10 +267,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         val addProductBackgroundImagePortrait = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_IMAGE_PORTRAIT))
         val addProductBackgroundImageLandscape = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_IMAGE_LANDSCAPE))
 
-        val listBackgroundColorPortrait = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_COLOR_PORTRAIT))
-        val listBackgroundColorLandscape = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_COLOR_LANDSCAPE))
-        val addProductBackgroundColorPortrait = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT))
-        val addProductBackgroundColorLandscape = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE))
+        val listBackgroundColorPortrait = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_COLOR_PORTRAIT))
+        val listBackgroundColorLandscape = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_COLOR_LANDSCAPE))
+        val addProductBackgroundColorPortrait = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT))
+        val addProductBackgroundColorLandscape = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE))
 
         return Theme(
             id,

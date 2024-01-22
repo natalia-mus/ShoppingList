@@ -1,6 +1,7 @@
 package com.example.shoppinglist.adapter
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,20 +44,31 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
 
     private fun setImage(imageView: ImageView, position: Int) {
         val theme = themes[position]
-        // find first existing background image in theme
-        val bitmap = if (theme.listBackgroundImageLandscape != null) {
-            ImageUtils.getImageAsBitmap(theme.listBackgroundImageLandscape)
-        } else if (theme.listBackgroundImagePortrait != null) {
+        // find first existing background in theme
+        val thumbnail = if (theme.listBackgroundImagePortrait != null) {
             ImageUtils.getImageAsBitmap(theme.listBackgroundImagePortrait)
-        } else if (theme.addProductBackgroundImageLandscape != null) {
-            ImageUtils.getImageAsBitmap(theme.addProductBackgroundImageLandscape)
+        } else if (theme.listBackgroundColorPortrait != null) {
+            theme.listBackgroundColorPortrait
+        } else if (theme.listBackgroundImageLandscape != null) {
+            ImageUtils.getImageAsBitmap(theme.listBackgroundImageLandscape)
+        } else if (theme.listBackgroundColorLandscape != null) {
+            theme.listBackgroundColorLandscape
         } else if (theme.addProductBackgroundImagePortrait != null) {
             ImageUtils.getImageAsBitmap(theme.addProductBackgroundImagePortrait)
+        } else if (theme.addProductBackgroundColorPortrait != null) {
+            theme.addProductBackgroundColorPortrait
+        } else if (theme.addProductBackgroundImageLandscape != null) {
+            ImageUtils.getImageAsBitmap(theme.addProductBackgroundImageLandscape)
+        } else if (theme.addProductBackgroundColorLandscape != null) {
+            theme.addProductBackgroundColorLandscape
         } else {
             null
         }
 
-        if (bitmap != null) imageView.setImageBitmap(bitmap)
+        if (thumbnail != null) {
+            if (thumbnail is Bitmap) imageView.setImageBitmap(thumbnail)
+            else if (thumbnail is Int) imageView.setBackgroundColor(thumbnail)
+        }
     }
 
     override fun getItemCount() = themes.size
