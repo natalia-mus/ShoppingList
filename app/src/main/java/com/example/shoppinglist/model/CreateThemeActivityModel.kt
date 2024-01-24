@@ -25,7 +25,7 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         )
         if (validationResult == ValidationResult.VALID) {
             database?.saveTheme(
-                name, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
+                name, false, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
                 listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape
             )
         }

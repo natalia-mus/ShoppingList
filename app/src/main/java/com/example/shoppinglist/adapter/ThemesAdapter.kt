@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.shoppinglist.ImageUtils
@@ -29,16 +29,26 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
     }
 
     override fun onBindViewHolder(holder: ThemesAdapterViewHolder, position: Int) {
-        holder.themeName.text = themes[position].name
+        val theme = themes[position]
+
+        holder.themeName.text = theme.name
         setImage(holder.themeImage, position)
 
-        if (themes[position].id == selectedThemeId) {
+        if (theme.id == selectedThemeId) {
             refreshSelection(holder.themeItem)
         }
 
         holder.themeItem.setOnClickListener {
             refreshSelection(holder.themeItem)
-            themes[position].id?.let { id -> themeSelector.onThemeSelected(id) }
+            themeSelector.onThemeSelected(theme.id)
+        }
+
+        if (!theme.builtInTheme) {
+            holder.themeDelete.visibility = View.VISIBLE
+
+            holder.themeDelete.setOnClickListener {
+                // todo
+            }
         }
     }
 
@@ -78,7 +88,7 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
         notifyDataSetChanged()
     }
 
-    private fun refreshSelection(themeItem: LinearLayout) {
+    private fun refreshSelection(themeItem: ConstraintLayout) {
         for (viewHolder in viewHolders) {
             viewHolder.themeItem.isSelected = false
         }
@@ -88,9 +98,10 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
 
 
     inner class ThemesAdapterViewHolder(val view: View) : ViewHolder(view) {
-        val themeItem: LinearLayout = view.theme_item
+        val themeItem: ConstraintLayout = view.theme_item
         val themeImage: ImageView = view.theme_image
         val themeName: TextView = view.theme_name
+        val themeDelete: ImageView = view.theme_delete
     }
 }
 

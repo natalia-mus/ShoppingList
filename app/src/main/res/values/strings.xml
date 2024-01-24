@@ -34,4 +34,5 @@
     <string name="color">color</string>
     <string name="select_background_type">select background type:</string>
     <string name="select_background_color">select background color:</string>
+    <string name="remove_background">remove background</string>
 </resources>

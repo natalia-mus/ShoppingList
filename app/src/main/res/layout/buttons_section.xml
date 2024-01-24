@@ -19,7 +19,7 @@
         android:id="@+id/button_cancel"
         android:layout_width="140dp"
         android:layout_height="80dp"
-        android:backgroundTint="@color/button_red"
+        android:backgroundTint="@color/red"
         android:text="@string/cancel"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -3,6 +3,7 @@ package com.example.shoppinglist.model
 data class Theme(
     val id: Int,
     val name: String,
+    val builtInTheme: Boolean,
     val listBackgroundImagePortrait: ByteArray?,
     val listBackgroundImageLandscape: ByteArray?,
     val addProductBackgroundImagePortrait: ByteArray?,

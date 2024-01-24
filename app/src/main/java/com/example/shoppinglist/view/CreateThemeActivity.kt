@@ -3,6 +3,7 @@ package com.example.shoppinglist.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -128,6 +129,27 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         startActivityForResult(intent, backgroundType.typeId)
     }
 
+    private fun removeBackground(backgroundType: BackgroundType) {
+        when (backgroundType) {
+            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                productListPortraitBackgroundImage = null
+                productListPortraitBackgroundColor = null
+            }
+            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                productListLandscapeBackgroundImage = null
+                productListLandscapeBackgroundColor = null
+            }
+            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                addProductPortraitBackgroundImage = null
+                addProductPortraitBackgroundColor = null
+            }
+            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                addProductLandscapeBackgroundImage = null
+                addProductLandscapeBackgroundColor = null
+            }
+        }
+    }
+
     private fun saveTheme() {
         val name = themeName.text.toString()
 
@@ -166,6 +188,41 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_color).setOnClickListener {
             openColorPicker(backgroundType)
             backgroundTypePanel.dismiss()
+        }
+
+        var visible = View.GONE
+        when (backgroundType) {
+            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                if (productListPortraitBackgroundImage != null || productListPortraitBackgroundColor != null) {
+                    visible = View.VISIBLE
+                }
+            }
+            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                if (productListLandscapeBackgroundImage != null || productListLandscapeBackgroundColor != null) {
+                    visible = View.VISIBLE
+                }
+            }
+            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                if (addProductPortraitBackgroundImage != null || addProductPortraitBackgroundColor != null) {
+                    visible = View.VISIBLE
+                }
+            }
+            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                if (addProductLandscapeBackgroundImage != null || addProductLandscapeBackgroundColor != null) {
+                    visible = View.VISIBLE
+                }
+            }
+        }
+
+
+        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_remove).apply {
+            visibility = visible
+            if (visible == View.VISIBLE) {
+                setOnClickListener {
+                    removeBackground(backgroundType)
+                    backgroundTypePanel.dismiss()
+                }
+            }
         }
 
         backgroundTypePanel.setContentView(backgroundTypePanelView)
@@ -217,8 +274,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             }
 
             setBackgroundColor(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, null)
-        } else {
-            Toast.makeText(this, resources.getString(R.string.error_message), Toast.LENGTH_SHORT).show()
         }
     }
 
