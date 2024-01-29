@@ -6,6 +6,10 @@ import com.example.shoppinglist.database.DBHelper
 
 class ThemesActivityModel : ThemesActivityContract.ThemesActivityModel {
 
+    override fun deleteTheme(themeId: Int) {
+        DBHelper.getInstance()?.deleteTheme(themeId)
+    }
+
     override fun getActualThemeId(): Int {
         return Settings.getThemeId()
     }

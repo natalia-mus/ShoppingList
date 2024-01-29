@@ -74,6 +74,10 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         selectedThemeId = themeId
     }
 
+    override fun refreshSelection(actualThemeId: Int) {
+        themesAdapter.setSelectedThemeId(actualThemeId)
+    }
+
     override fun refreshThemesList(themes: ArrayList<Theme>?) {
         if (themes != null) {
             themesAdapter.dataSetChanged(themes)
@@ -81,7 +85,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
     }
 
     private fun deleteTheme(themeId: Int) {
-        // todo
+        presenter.deleteTheme(themeId)
     }
 }
 

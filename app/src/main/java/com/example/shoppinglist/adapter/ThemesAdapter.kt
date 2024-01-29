@@ -43,7 +43,10 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
             themeSelector.onThemeSelected(theme.id)
         }
 
-        if (!theme.builtInTheme) {
+        if (theme.builtInTheme) {
+            holder.themeDelete.visibility = View.GONE
+
+        } else {
             holder.themeDelete.visibility = View.VISIBLE
 
             holder.themeDelete.setOnClickListener {
@@ -86,6 +89,17 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
     fun dataSetChanged(newDataSet: ArrayList<Theme>) {
         themes = newDataSet
         notifyDataSetChanged()
+    }
+
+    fun setSelectedThemeId(themeId: Int) {
+        selectedThemeId = themeId
+
+        for (viewHolder in viewHolders) {
+            if (viewHolder.adapterPosition == selectedThemeId) {
+                refreshSelection(viewHolder.themeItem)
+                break
+            }
+        }
     }
 
     private fun refreshSelection(themeItem: ConstraintLayout) {
