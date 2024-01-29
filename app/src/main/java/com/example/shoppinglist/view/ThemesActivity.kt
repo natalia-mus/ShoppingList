@@ -57,6 +57,19 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         }
     }
 
+    override fun onDeleteThemeClicked(themeId: Int) {
+        val deleteThemeDialogListener = object : DeleteItemDialogListener {
+            override fun onConfirmButtonClick() {
+                deleteTheme(themeId)
+            }
+
+            override fun onDeclineButtonClick() { }
+        }
+
+        val dialog = ConfirmationDialog(this, resources.getString(R.string.delete_theme_question), deleteThemeDialogListener)
+        dialog.show()
+    }
+
     override fun onThemeSelected(themeId: Int) {
         selectedThemeId = themeId
     }
@@ -66,8 +79,13 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
             themesAdapter.dataSetChanged(themes)
         }
     }
+
+    private fun deleteTheme(themeId: Int) {
+        // todo
+    }
 }
 
 interface ThemeSelector {
+    fun onDeleteThemeClicked(themeId: Int)
     fun onThemeSelected(themeId: Int)
 }

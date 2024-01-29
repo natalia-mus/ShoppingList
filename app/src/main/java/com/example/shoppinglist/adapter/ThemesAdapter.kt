@@ -47,7 +47,7 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
             holder.themeDelete.visibility = View.VISIBLE
 
             holder.themeDelete.setOnClickListener {
-                // todo
+                themeSelector.onDeleteThemeClicked(theme.id)
             }
         }
     }

@@ -50,6 +50,20 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onDeleteClicked(productId: Int) {
+        val deleteItemDialogListener = object : DeleteItemDialogListener {
+            override fun onConfirmButtonClick() {
+                deleteItem(productId)
+                showData()
+            }
+
+            override fun onDeclineButtonClick() { }
+        }
+
+        val dialog = ConfirmationDialog(this, resources.getString(R.string.delete_product_question), deleteItemDialogListener)
+        dialog.show()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_item_add_product -> {

@@ -7,14 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
-import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.model.Product
-import com.example.shoppinglist.view.DeleteItemDialog
 import kotlinx.android.synthetic.main.product_item.view.*
 
 class ProductAdapter(
     val context: Context,
-    val mainView: MainActivityContract.MainActivityView,
     val products: List<Product>,
     val onItemClickAction: OnItemClickAction
 ) :
@@ -37,15 +34,13 @@ class ProductAdapter(
     inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         init {
-            view.setOnLongClickListener() {
+            view.setOnLongClickListener {
                 onItemClickAction.onItemLongClicked(products[adapterPosition])
                 return@setOnLongClickListener true
             }
 
-            view.product_button_delete.setOnClickListener() {
-                val productId = products[adapterPosition].id
-                val dialog = DeleteItemDialog(context, mainView, productId)
-                dialog.show()
+            view.product_button_delete.setOnClickListener {
+                onItemClickAction.onDeleteClicked(products[adapterPosition].id)
             }
         }
 
@@ -57,5 +52,6 @@ class ProductAdapter(
 }
 
 interface OnItemClickAction {
+    fun onDeleteClicked(productId: Int)
     fun onItemLongClicked(product: Product)
 }
