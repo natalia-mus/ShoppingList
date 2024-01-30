@@ -3,7 +3,6 @@ package com.example.shoppinglist
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.constants.PredefinedTheme
 
 object Settings {
 
@@ -11,8 +10,8 @@ object Settings {
 
     fun getThemeId(): Int {
         return if (instance != null) {
-            instance!!.getInt(Constants.THEME, PredefinedTheme.GROCERY.id)
-        } else return PredefinedTheme.GROCERY.id
+            instance!!.getInt(Constants.THEME, Constants.THEME_GROCERY_ID)
+        } else return Constants.THEME_GROCERY_ID
     }
 
     fun init(context: Context): SharedPreferences {
