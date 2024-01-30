@@ -130,24 +130,39 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun removeBackground(backgroundType: BackgroundType) {
+        var backgroundControl: ImageView? = null
+        var border: LinearLayout? = null
+
         when (backgroundType) {
             BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundImage = null
                 productListPortraitBackgroundColor = null
+                backgroundControl = productListPortraitBackground
+                border = productListPortraitBackgroundBorder
             }
             BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListLandscapeBackgroundImage = null
                 productListLandscapeBackgroundColor = null
+                backgroundControl = productListLandscapeBackground
+                border = productListLandscapeBackgroundBorder
             }
             BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductPortraitBackgroundImage = null
                 addProductPortraitBackgroundColor = null
+                backgroundControl = addProductPortraitBackground
+                border = addProductPortraitBackgroundBorder
             }
             BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundImage = null
                 addProductLandscapeBackgroundColor = null
+                backgroundControl = addProductLandscapeBackground
+                border = addProductLandscapeBackgroundBorder
             }
         }
+
+        val background = ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null)
+        backgroundControl.setImageDrawable(background)
+        border.background?.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
     }
 
     private fun saveTheme() {
