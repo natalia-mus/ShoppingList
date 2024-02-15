@@ -25,7 +25,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
-    private lateinit var themeName: EditText
+    private lateinit var nextButton: Button
     private lateinit var productListPortraitBackground: ImageView
     private lateinit var productListLandscapeBackground: ImageView
     private lateinit var addProductPortraitBackground: ImageView
@@ -34,6 +34,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var productListLandscapeBackgroundBorder: LinearLayout
     private lateinit var addProductPortraitBackgroundBorder: LinearLayout
     private lateinit var addProductLandscapeBackgroundBorder: LinearLayout
+
+    private val creatorSteps = ArrayList<Int>()
 
     private var productListPortraitBackgroundImage: ByteArray? = null
     private var productListLandscapeBackgroundImage: ByteArray? = null
@@ -45,16 +47,17 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var addProductPortraitBackgroundColor: Int? = null
     private var addProductLandscapeBackgroundColor: Int? = null
 
+    private var currentCreatorStep = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_theme)
+        setContentView(R.layout.activity_create_theme_first_step)
         presenter = CreateThemeActivityPresenter(this)
+        populateCreatorStepsList()
     }
 
     override fun initView() {
-        saveButton = findViewById(R.id.button_save)
-        cancelButton = findViewById(R.id.button_cancel)
-        themeName = findViewById(R.id.create_theme_name)
+        nextButton = findViewById(R.id.create_theme_next)
         productListPortraitBackground = findViewById(R.id.create_theme_product_list_portrait_background)
         productListLandscapeBackground = findViewById(R.id.create_theme_product_list_landscape_background)
         addProductPortraitBackground = findViewById(R.id.create_theme_add_product_portrait_background)
@@ -64,12 +67,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         addProductPortraitBackgroundBorder = findViewById(R.id.create_theme_add_product_portrait_background_border)
         addProductLandscapeBackgroundBorder = findViewById(R.id.create_theme_add_product_landscape_background_border)
 
-        saveButton.setOnClickListener {
-            saveTheme()
-        }
-
-        cancelButton.setOnClickListener {
-            finish()
+        nextButton.setOnClickListener {
+            nextStep()
         }
 
         productListPortraitBackground.setOnClickListener {
@@ -113,6 +112,26 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         return result ?: ResourcesCompat.getColor(resources, R.color.sea_blue_dark, null)
     }
 
+    private fun keepCurrentStepData() {
+        when (creatorSteps[currentCreatorStep]) {
+            R.layout.activity_create_theme_first_step -> {
+                // nothing to keep - everything is up to date
+            }
+            R.layout.activity_create_theme_second_step -> {
+                // todo
+            }
+            R.layout.activity_create_theme_last_step -> {
+                // todo
+            }
+        }
+    }
+
+    private fun nextStep() {
+        keepCurrentStepData()
+        currentCreatorStep++
+        setContentView(creatorSteps[currentCreatorStep])
+    }
+
     private fun openColorPicker(backgroundType: BackgroundType) {
         AmbilWarnaDialog(this, getInitialColor(backgroundType), object : AmbilWarnaDialog.OnAmbilWarnaListener {
             override fun onCancel(dialog: AmbilWarnaDialog?) {}
@@ -127,6 +146,12 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = INTENT_TYPE_IMAGE
         startActivityForResult(intent, backgroundType.typeId)
+    }
+
+    private fun populateCreatorStepsList() {
+        creatorSteps.add(0, R.layout.activity_create_theme_first_step)
+        creatorSteps.add(1, R.layout.activity_create_theme_second_step)
+        creatorSteps.add(2, R.layout.activity_create_theme_last_step)
     }
 
     private fun removeBackground(backgroundType: BackgroundType) {
@@ -166,7 +191,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun saveTheme() {
-        val name = themeName.text.toString()
+        val name = ""
 
         val result = presenter.saveTheme(
             name,
