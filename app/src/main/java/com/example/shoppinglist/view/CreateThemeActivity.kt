@@ -26,6 +26,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
     private lateinit var nextButton: Button
+    private lateinit var themeName: EditText
     private lateinit var productListPortraitBackground: ImageView
     private lateinit var productListLandscapeBackground: ImageView
     private lateinit var addProductPortraitBackground: ImageView
@@ -46,6 +47,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var productListLandscapeBackgroundColor: Int? = null
     private var addProductPortraitBackgroundColor: Int? = null
     private var addProductLandscapeBackgroundColor: Int? = null
+
+    private var name: String = ""
 
     private var currentCreatorStep = 0
 
@@ -93,6 +96,15 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         setBackgroundSource(requestCode, resultCode, data)
     }
 
+    private fun changeView() {
+        setContentView(creatorSteps[currentCreatorStep])
+
+        when (creatorSteps[currentCreatorStep]) {
+            R.layout.activity_create_theme_second_step -> initSecondStepView()
+            R.layout.activity_create_theme_last_step -> initLastStepView()
+        }
+    }
+
     private fun getInitialColor(backgroundType: BackgroundType): Int {
         val result: Int? = when (backgroundType) {
             BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
@@ -112,6 +124,31 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         return result ?: ResourcesCompat.getColor(resources, R.color.sea_blue_dark, null)
     }
 
+    private fun initSecondStepView() {
+        nextButton = findViewById(R.id.create_theme_next)
+
+        nextButton.setOnClickListener {
+            nextStep()
+        }
+    }
+
+    private fun initLastStepView() {
+        saveButton = findViewById(R.id.button_save)
+        cancelButton = findViewById(R.id.button_cancel)
+        themeName = findViewById(R.id.create_theme_name)
+
+        saveButton.setOnClickListener {
+            keepCurrentStepData()
+            if (validateCurrentStep()) {
+                saveTheme()
+            }
+        }
+
+        cancelButton.setOnClickListener {
+            finish()
+        }
+    }
+
     private fun keepCurrentStepData() {
         when (creatorSteps[currentCreatorStep]) {
             R.layout.activity_create_theme_first_step -> {
@@ -121,15 +158,17 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 // todo
             }
             R.layout.activity_create_theme_last_step -> {
-                // todo
+                name = themeName.text.toString()
             }
         }
     }
 
     private fun nextStep() {
         keepCurrentStepData()
-        currentCreatorStep++
-        setContentView(creatorSteps[currentCreatorStep])
+        if (validateCurrentStep()) {
+            currentCreatorStep++
+            changeView()
+        }
     }
 
     private fun openColorPicker(backgroundType: BackgroundType) {
@@ -343,6 +382,39 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         imageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
         imageView.drawable.setTint(color)
         border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
+    }
+
+    /**
+     * @return true if validation success, false otherwise
+     */
+    private fun validateCurrentStep(): Boolean {
+        val validationResult = when (creatorSteps[currentCreatorStep]) {
+            R.layout.activity_create_theme_first_step -> presenter.validateFirstStep(
+                productListPortraitBackgroundImage,
+                productListLandscapeBackgroundImage,
+                addProductPortraitBackgroundImage,
+                addProductLandscapeBackgroundImage,
+                productListPortraitBackgroundColor,
+                productListLandscapeBackgroundColor,
+                addProductPortraitBackgroundColor,
+                addProductLandscapeBackgroundColor
+            )
+            R.layout.activity_create_theme_second_step -> presenter.validateSecondStep()
+            R.layout.activity_create_theme_last_step -> presenter.validateLastStep(name)
+            else -> false
+        }
+
+        return when (validationResult) {
+            ValidationResult.EMPTY_NAME -> {
+                Toast.makeText(this, resources.getString(R.string.empty_theme_name), Toast.LENGTH_LONG).show()
+                false
+            }
+            ValidationResult.MISSING_BACKGROUNDS -> {
+                Toast.makeText(this, resources.getString(R.string.missing_backgrounds), Toast.LENGTH_LONG).show()
+                false
+            }
+            else -> true
+        }
     }
 }
 
