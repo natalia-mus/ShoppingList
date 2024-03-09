@@ -1,11 +1,14 @@
 package com.example.shoppinglist.view
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
@@ -35,6 +38,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var productListLandscapeBackgroundBorder: LinearLayout
     private lateinit var addProductPortraitBackgroundBorder: LinearLayout
     private lateinit var addProductLandscapeBackgroundBorder: LinearLayout
+    private lateinit var boldTextSwitch: SwitchCompat
+
 
     private val creatorSteps = ArrayList<Int>()
 
@@ -130,6 +135,9 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         nextButton.setOnClickListener {
             nextStep()
         }
+
+        val background = findViewById<ScrollView>(R.id.create_theme_second_step)
+        setVisualizationBackground(background)
     }
 
     private fun initLastStepView() {
@@ -382,6 +390,43 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         imageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
         imageView.drawable.setTint(color)
         border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
+    }
+
+    private fun setVisualizationBackground(view: View) {
+        val orientation = resources.configuration.orientation
+        var backgroundImage: ByteArray? = null
+        var backgroundColor: Int? = null
+
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            if (addProductPortraitBackgroundImage != null) {
+                backgroundImage = addProductPortraitBackgroundImage
+
+            } else if (addProductPortraitBackgroundColor != null) {
+                backgroundColor = addProductPortraitBackgroundColor
+
+            } else {
+                backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null))
+            }
+
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (addProductLandscapeBackgroundImage != null) {
+                backgroundImage = addProductLandscapeBackgroundImage
+
+            } else if (addProductLandscapeBackgroundColor != null) {
+                backgroundColor = addProductLandscapeBackgroundColor
+
+            } else {
+                backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null))
+            }
+        }
+
+        if (backgroundImage != null) {
+            val background = ImageUtils.getImageAsDrawable(this, backgroundImage)
+            view.background = background
+
+        } else if (backgroundColor != null) {
+            view.setBackgroundColor(backgroundColor)
+        }
     }
 
     /**
