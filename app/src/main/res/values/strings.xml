@@ -36,4 +36,9 @@
     <string name="select_background_color">select background color:</string>
     <string name="remove_background">remove background</string>
     <string name="delete_theme_question">Do you want to delete this theme?</string>
+    <string name="background_transparency">background transparency:</string>
+    <string name="background_color">background color</string>
+    <string name="text_color">text color</string>
+    <string name="delete_icon">delete icon:</string>
+    <string name="bold_product_name">bold product name</string>
 </resources>
