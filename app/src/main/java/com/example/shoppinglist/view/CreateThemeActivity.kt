@@ -2,8 +2,8 @@ package com.example.shoppinglist.view
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -38,10 +38,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var productListLandscapeBackgroundBorder: LinearLayout
     private lateinit var addProductPortraitBackgroundBorder: LinearLayout
     private lateinit var addProductLandscapeBackgroundBorder: LinearLayout
+    private lateinit var productNameLabel: TextView
+    private lateinit var iconTrashBin: LinearLayout
+    private lateinit var iconCross: LinearLayout
     private lateinit var boldTextSwitch: SwitchCompat
 
 
     private val creatorSteps = ArrayList<Int>()
+
+    private val boldTextOnCheckedChangedListener = object : CompoundButton.OnCheckedChangeListener {
+        override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+            setBoldText(isChecked)
+        }
+    }
 
     private var productListPortraitBackgroundImage: ByteArray? = null
     private var productListLandscapeBackgroundImage: ByteArray? = null
@@ -53,7 +62,9 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var addProductPortraitBackgroundColor: Int? = null
     private var addProductLandscapeBackgroundColor: Int? = null
 
-    private var name: String = ""
+    private var name = ""
+    private var icon = Icon.TRASH_BIN
+    private var boldText = true
 
     private var currentCreatorStep = 0
 
@@ -130,7 +141,25 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun initSecondStepView() {
+        productNameLabel = findViewById(R.id.product_name)
+        iconTrashBin = findViewById(R.id.create_theme_icon_trash_bin)
+        iconCross = findViewById(R.id.create_theme_icon_cross)
+        boldTextSwitch = findViewById(R.id.create_theme_bold_switch)
         nextButton = findViewById(R.id.create_theme_next)
+
+        boldTextSwitch.setOnCheckedChangeListener(boldTextOnCheckedChangedListener)
+
+        iconTrashBin.setOnClickListener {
+            selectIcon(Icon.TRASH_BIN)
+        }
+
+        iconCross.setOnClickListener {
+            selectIcon(Icon.CROSS)
+        }
+
+        boldTextSwitch.setOnClickListener {
+            boldText = !boldText
+        }
 
         nextButton.setOnClickListener {
             nextStep()
@@ -316,6 +345,27 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         backgroundTypePanel.show()
     }
 
+    private fun selectIcon(icon: Icon) {
+        this.icon = icon
+
+        val iconToSelect: LinearLayout
+        val iconToUnselect: LinearLayout
+
+        when (icon) {
+            Icon.TRASH_BIN -> {
+                iconToSelect = iconTrashBin
+                iconToUnselect = iconCross
+            }
+            Icon.CROSS -> {
+                iconToSelect = iconCross
+                iconToUnselect = iconTrashBin
+            }
+        }
+
+        iconToSelect.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_white, null))
+        iconToUnselect.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
+    }
+
     private fun setBackgroundColor(backgroundType: BackgroundType, color: Int?) {
         when (backgroundType) {
             BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
@@ -361,6 +411,14 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             }
 
             setBackgroundColor(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, null)
+        }
+    }
+
+    private fun setBoldText(bold: Boolean) {
+        if (bold) {
+            productNameLabel.typeface = Typeface.DEFAULT_BOLD
+        } else {
+            productNameLabel.typeface = Typeface.DEFAULT
         }
     }
 
@@ -468,4 +526,9 @@ enum class BackgroundType(val typeId: Int) {
     PRODUCT_LIST_LANDSCAPE_BACKGROUND(102),
     ADD_PRODUCT_PORTRAIT_BACKGROUND(103),
     ADD_PRODUCT_LANDSCAPE_BACKGROUND(104)
+}
+
+enum class Icon(val iconId: Int) {
+    TRASH_BIN(101),
+    CROSS(102)
 }

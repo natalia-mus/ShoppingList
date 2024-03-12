@@ -71,14 +71,6 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         addProductBackgroundColorPortrait: Int?,
         addProductBackgroundColorLandscape: Int?
     ): ValidationResult {
-        return if (name.isEmpty()) {
-            ValidationResult.EMPTY_NAME
-
-        } else if (listBackgroundPortrait == null && listBackgroundLandscape == null && addProductBackgroundPortrait == null && addProductBackgroundLandscape == null
-            && listBackgroundColorPortrait == null && listBackgroundColorLandscape == null && addProductBackgroundColorPortrait == null && addProductBackgroundColorLandscape == null
-        ) {
-            ValidationResult.MISSING_BACKGROUNDS
-
-        } else ValidationResult.VALID
+        return ValidationResult.VALID
     }
 }
