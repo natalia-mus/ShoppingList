@@ -10,27 +10,27 @@ import kotlinx.android.synthetic.main.delete_item_dialog.*
 class ConfirmationDialog(
     context: Context,
     private val question: String,
-    private val deleteItemDialogListener: DeleteItemDialogListener,
+    private val confirmationDialogListener: ConfirmationDialogListener,
 ) : AlertDialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.delete_item_dialog)
+        setContentView(R.layout.confirmation_dialog)
         findViewById<TextView>(R.id.confirmation_dialog_question).text = question
 
         confirmation_dialog_question_confirm.setOnClickListener {
-            deleteItemDialogListener.onConfirmButtonClick()
+            confirmationDialogListener.onConfirmButtonClick()
             dismiss()
         }
 
         confirmation_dialog_question_decline.setOnClickListener {
-            deleteItemDialogListener.onDeclineButtonClick()
+            confirmationDialogListener.onDeclineButtonClick()
             dismiss()
         }
     }
 }
 
-interface DeleteItemDialogListener {
+interface ConfirmationDialogListener {
     fun onConfirmButtonClick()
     fun onDeclineButtonClick()
 }

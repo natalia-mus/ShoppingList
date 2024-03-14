@@ -18,7 +18,7 @@ class ThemesActivityPresenter(_view: ThemesActivityContract.ThemesActivityView) 
 
     override fun deleteTheme(themeId: Int) {
         if (themeId == model.getActualThemeId()) {
-            setTheme(Constants.THEME_GROCERY_ID)
+            setTheme(Constants.DEFAULT_THEME_ID)
         }
         model.deleteTheme(themeId)
         onViewResume()

@@ -17,7 +17,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
 
     private lateinit var presenter: ThemesActivityContract.ThemesActivityPresenter
     private lateinit var themesAdapter: ThemesAdapter
-    private var selectedThemeId = Constants.THEME_GROCERY_ID
+    private var selectedThemeId = Constants.DEFAULT_THEME_ID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +58,7 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
     }
 
     override fun onDeleteThemeClicked(themeId: Int) {
-        val deleteThemeDialogListener = object : DeleteItemDialogListener {
+        val deleteThemeDialogListener = object : ConfirmationDialogListener {
             override fun onConfirmButtonClick() {
                 deleteTheme(themeId)
             }

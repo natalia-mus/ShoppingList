@@ -10,8 +10,8 @@ object Settings {
 
     fun getThemeId(): Int {
         return if (instance != null) {
-            instance!!.getInt(Constants.THEME, Constants.THEME_GROCERY_ID)
-        } else return Constants.THEME_GROCERY_ID
+            instance!!.getInt(Constants.THEME, Constants.DEFAULT_THEME_ID)
+        } else return Constants.DEFAULT_THEME_ID
     }
 
     fun init(context: Context): SharedPreferences {

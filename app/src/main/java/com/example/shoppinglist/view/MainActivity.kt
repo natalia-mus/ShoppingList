@@ -51,7 +51,7 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
     }
 
     override fun onDeleteClicked(productId: Int) {
-        val deleteItemDialogListener = object : DeleteItemDialogListener {
+        val confirmationDialogListener = object : ConfirmationDialogListener {
             override fun onConfirmButtonClick() {
                 deleteItem(productId)
                 showData()
@@ -60,7 +60,7 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
             override fun onDeclineButtonClick() { }
         }
 
-        val dialog = ConfirmationDialog(this, resources.getString(R.string.delete_product_question), deleteItemDialogListener)
+        val dialog = ConfirmationDialog(this, resources.getString(R.string.delete_product_question), confirmationDialogListener)
         dialog.show()
     }
 
