@@ -1,13 +1,13 @@
 package com.example.shoppinglist.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
@@ -54,13 +54,20 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var productItemBackgroundColorBorder: LinearLayout
 
 
-    private val creatorSteps = ArrayList<Int>()
+    private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
+        @SuppressLint("RestrictedApi")
+        override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
+            setProductItemBackgroundAlpha(value)
+        }
+    }
 
     private val boldTextOnCheckedChangedListener = object : CompoundButton.OnCheckedChangeListener {
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
             setBoldText(isChecked)
         }
     }
+
+    private val creatorSteps = ArrayList<Int>()
 
     private var productListPortraitBackgroundImage: ByteArray? = null
     private var productListLandscapeBackgroundImage: ByteArray? = null
@@ -169,6 +176,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         boldTextSwitch.setOnCheckedChangeListener(boldTextOnCheckedChangedListener)
 
+        backgroundTransparencySlider.addOnChangeListener(backgroundTransparencySliderValueChangedListener)
+
         iconTrashBin.setOnClickListener {
             selectIcon(Icon.TRASH_BIN)
         }
@@ -210,6 +219,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun setProductItemBackgroundAlpha(alphaPercentage: Float) {
         val alpha = (255 * alphaPercentage).toInt()
         productItemBackgroundAlphaValue = Integer.toHexString(alpha)
+
+        if (productItemBackgroundAlphaValue?.length == 1) {
+            productItemBackgroundAlphaValue = "0$productItemBackgroundAlphaValue"
+        }
+
         setProductItemBackground()
     }
 
