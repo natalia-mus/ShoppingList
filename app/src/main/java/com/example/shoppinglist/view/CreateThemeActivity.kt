@@ -19,13 +19,15 @@ import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.slider.Slider
+import kotlinx.android.synthetic.main.product_item.*
 import yuku.ambilwarna.AmbilWarnaDialog
 
 class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.CreateThemeActivityView {
 
     companion object {
-        private const val DEFAULT_ITEM_BACKGROUND_COLOR = Color.BLACK
-        private const val DEFAULT_ITEM_BACKGROUND_ALFA = 0.5f
+        private const val DEFAULT_BACKGROUND_COLOR = Color.BLACK
+        private const val DEFAULT_BACKGROUND_ALFA = 0.3f
+        private const val DEFAULT_TEXT_COLOR = Color.WHITE
         private const val INTENT_TYPE_IMAGE = "image/*"
     }
 
@@ -44,6 +46,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var addProductPortraitBackgroundBorder: LinearLayout
     private lateinit var addProductLandscapeBackgroundBorder: LinearLayout
     private lateinit var productItemNameLabel: TextView
+    private lateinit var productItemQuantityLabel: TextView
+    private lateinit var productItemPriorityLabel: TextView
+    private lateinit var productItemQuantityValue: TextView
+    private lateinit var productItemPriorityValue: TextView
     private lateinit var productItemButtonDelete: ImageButton
     private lateinit var productItemBackground: LinearLayout
     private lateinit var iconTrashBin: LinearLayout
@@ -52,6 +58,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var backgroundTransparencySlider: Slider
     private lateinit var productItemBackgroundColor: ImageView
     private lateinit var productItemBackgroundColorBorder: LinearLayout
+    private lateinit var productItemTextColor: ImageView
+    private lateinit var productItemTextColorBorder: LinearLayout
 
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
@@ -84,8 +92,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var boldText = true
     private var productItemBackgroundAlphaValue: String? = ""
     private var productItemBackgroundColorValue: String? = ""
+    private var productItemTextColorValue: Int? = DEFAULT_TEXT_COLOR
 
     private var currentCreatorStep = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,22 +150,25 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun getInitialColor(backgroundType: BackgroundType): Int {
-        val result: Int? = when (backgroundType) {
-            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+    private fun getInitialColor(elementType: ElementType): Int {
+        val result: Int? = when (elementType) {
+            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundColor
             }
-            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListLandscapeBackgroundColor
             }
-            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductPortraitBackgroundColor
             }
-            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundColor
             }
-            BackgroundType.PRODUCT_ITEM_BACKGROUND -> {
+            ElementType.PRODUCT_ITEM_BACKGROUND -> {
                 Color.parseColor(productItemBackgroundColorValue)
+            }
+            ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
+                productItemTextColorValue
             }
         }
 
@@ -165,6 +178,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun initSecondStepView() {
         productItemBackground = findViewById(R.id.create_theme_product_item_visualization)
         productItemNameLabel = findViewById(R.id.product_name)
+        productItemQuantityLabel = findViewById(R.id.product_quantity_label)
+        productItemPriorityLabel = findViewById(R.id.product_priority_label)
+        productItemQuantityValue = findViewById(R.id.product_quantity)
+        productItemPriorityValue = findViewById(R.id.product_priority)
         productItemButtonDelete = findViewById(R.id.product_button_delete)
         iconTrashBin = findViewById(R.id.create_theme_icon_trash_bin)
         iconCross = findViewById(R.id.create_theme_icon_cross)
@@ -172,6 +189,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         backgroundTransparencySlider = findViewById(R.id.create_theme_product_background_transparency)
         productItemBackgroundColor = findViewById(R.id.create_theme_background_color)
         productItemBackgroundColorBorder = findViewById(R.id.create_theme_background_color_border)
+        productItemTextColor = findViewById(R.id.create_theme_text_color)
+        productItemTextColorBorder = findViewById(R.id.create_theme_text_color_border)
         nextButton = findViewById(R.id.create_theme_next)
 
         boldTextSwitch.setOnCheckedChangeListener(boldTextOnCheckedChangedListener)
@@ -196,10 +215,12 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         val background = findViewById<ScrollView>(R.id.create_theme_second_step)
         setVisualizationBackground(background)
-        setProductItemBackgroundColor(DEFAULT_ITEM_BACKGROUND_COLOR)
-        setProductItemBackgroundAlpha(DEFAULT_ITEM_BACKGROUND_ALFA)
-        setBackgroundColor(BackgroundType.PRODUCT_ITEM_BACKGROUND, DEFAULT_ITEM_BACKGROUND_COLOR)
-        backgroundTransparencySlider.value = DEFAULT_ITEM_BACKGROUND_ALFA
+        setProductItemBackgroundColor(DEFAULT_BACKGROUND_COLOR)
+        setProductItemBackgroundAlpha(DEFAULT_BACKGROUND_ALFA)
+        setColor(ElementType.PRODUCT_ITEM_BACKGROUND, DEFAULT_BACKGROUND_COLOR)
+        setProductItemTextColor(DEFAULT_TEXT_COLOR)
+        setColor(ElementType.PRODUCT_ITEM_TEXT_COLOR, DEFAULT_TEXT_COLOR)
+        backgroundTransparencySlider.value = DEFAULT_BACKGROUND_ALFA
     }
 
     private fun setProductItemBackground() {
@@ -209,10 +230,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun setProductItemBackgroundColor(backgroundColor: Int) {
-        val color = Integer.toHexString(backgroundColor)
-        val alpha = if (color.length == 8) 2 else 0
-        productItemBackgroundColorValue = color.drop(alpha)
+    private fun setProductItemTextColor(color: Int) {
+        productItemTextColorValue = color
+        productItemNameLabel.setTextColor(color)
+        productItemQuantityLabel.setTextColor(color)
+        productItemPriorityLabel.setTextColor(color)
+        productItemQuantityValue.setTextColor(color)
+        productItemPriorityValue.setTextColor(color)
+    }
+
+    private fun setProductItemBackgroundColor(color: Int) {
+        val colorValue = Integer.toHexString(color)
+        val alpha = if (colorValue.length == 8) 2 else 0
+        productItemBackgroundColorValue = colorValue.drop(alpha)
         setProductItemBackground()
     }
 
@@ -266,12 +296,12 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun openColorPicker(backgroundType: BackgroundType) {
-        AmbilWarnaDialog(this, getInitialColor(backgroundType), object : AmbilWarnaDialog.OnAmbilWarnaListener {
+    private fun openColorPicker(elementType: ElementType) {
+        AmbilWarnaDialog(this, getInitialColor(elementType), object : AmbilWarnaDialog.OnAmbilWarnaListener {
             override fun onCancel(dialog: AmbilWarnaDialog?) {}
 
             override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
-                setBackgroundColor(backgroundType, color)
+                setColor(elementType, color)
             }
         }).show()
     }
@@ -279,7 +309,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun openGallery(backgroundType: BackgroundType) {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = INTENT_TYPE_IMAGE
-        startActivityForResult(intent, backgroundType.typeId)
+        startActivityForResult(intent, backgroundType.backgroundTypeId)
     }
 
     private fun populateCreatorStepsList() {
@@ -316,12 +346,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 addProductLandscapeBackgroundColor = null
                 backgroundControl = addProductLandscapeBackground
                 border = addProductLandscapeBackgroundBorder
-            }
-            BackgroundType.PRODUCT_ITEM_BACKGROUND -> {
-                setProductItemBackgroundColor(DEFAULT_ITEM_BACKGROUND_COLOR)
-                setProductItemBackgroundAlpha(DEFAULT_ITEM_BACKGROUND_ALFA)
-                backgroundControl = productItemBackgroundColor
-                border = productItemBackgroundColorBorder
             }
         }
 
@@ -366,7 +390,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
 
         backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_color).setOnClickListener {
-            openColorPicker(backgroundType)
+            val elementType = ElementType.getByElementTypeId(backgroundType.backgroundTypeId)
+            if (elementType != null) {
+                openColorPicker(elementType)
+            }
             backgroundTypePanel.dismiss()
         }
 
@@ -434,23 +461,31 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         productItemButtonDelete.background = iconDrawable
     }
 
-    private fun setBackgroundColor(backgroundType: BackgroundType, color: Int?) {
-        when (backgroundType) {
-            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+    private fun setColor(elementType: ElementType, color: Int?) {
+        when (elementType) {
+            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundColor = color
             }
-            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListLandscapeBackgroundColor = color
             }
-            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductPortraitBackgroundColor = color
             }
-            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundColor = color
+            }
+            ElementType.PRODUCT_ITEM_BACKGROUND -> {
+                if (color != null) {
+                    setProductItemBackgroundColor(color)
+                }
+            }
+            ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
+                productItemTextColorValue = color
             }
         }
 
-        if (color != null) setSelectedColor(backgroundType, color)
+        if (color != null) setSelectedColor(elementType, color)
     }
 
     private fun setBackgroundSource(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -459,26 +494,26 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
             if (uri != null) {
                 when (requestCode) {
-                    BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND.typeId -> {
+                    ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND.elementTypeId -> {
                         productListPortraitBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
                         productListPortraitBackground.setImageURI(uri)
                     }
-                    BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND.typeId -> {
+                    ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND.elementTypeId -> {
                         productListLandscapeBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
                         productListLandscapeBackground.setImageURI(uri)
                     }
-                    BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND.typeId -> {
+                    ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND.elementTypeId -> {
                         addProductPortraitBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
                         addProductPortraitBackground.setImageURI(uri)
                     }
-                    BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND.typeId -> {
+                    ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND.elementTypeId -> {
                         addProductLandscapeBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
                         addProductLandscapeBackground.setImageURI(uri)
                     }
                 }
             }
 
-            setBackgroundColor(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, null)
+            setColor(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, null)
         }
     }
 
@@ -490,30 +525,34 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun setSelectedColor(backgroundType: BackgroundType, color: Int) {
+    private fun setSelectedColor(backgroundType: ElementType, color: Int) {
         val imageView: ImageView
         val border: LinearLayout
 
         when (backgroundType) {
-            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 imageView = productListPortraitBackground
                 border = productListPortraitBackgroundBorder
             }
-            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 imageView = productListLandscapeBackground
                 border = productListLandscapeBackgroundBorder
             }
-            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 imageView = addProductPortraitBackground
                 border = addProductPortraitBackgroundBorder
             }
-            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 imageView = addProductLandscapeBackground
                 border = addProductLandscapeBackgroundBorder
             }
-            BackgroundType.PRODUCT_ITEM_BACKGROUND -> {
+            ElementType.PRODUCT_ITEM_BACKGROUND -> {
                 imageView = productItemBackgroundColor
                 border = productItemBackgroundColorBorder
+            }
+            ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
+                imageView = productItemTextColor
+                border = productItemTextColorBorder
             }
         }
 
@@ -593,15 +632,34 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 }
 
-enum class BackgroundType(val typeId: Int) {
+private enum class BackgroundType(val backgroundTypeId: Int) {
+    PRODUCT_LIST_PORTRAIT_BACKGROUND(101),
+    PRODUCT_LIST_LANDSCAPE_BACKGROUND(102),
+    ADD_PRODUCT_PORTRAIT_BACKGROUND(103),
+    ADD_PRODUCT_LANDSCAPE_BACKGROUND(104)
+}
+
+private enum class ElementType(val elementTypeId: Int) {
     PRODUCT_LIST_PORTRAIT_BACKGROUND(101),
     PRODUCT_LIST_LANDSCAPE_BACKGROUND(102),
     ADD_PRODUCT_PORTRAIT_BACKGROUND(103),
     ADD_PRODUCT_LANDSCAPE_BACKGROUND(104),
-    PRODUCT_ITEM_BACKGROUND(105)
+    PRODUCT_ITEM_BACKGROUND(105),
+    PRODUCT_ITEM_TEXT_COLOR(106);
+
+    companion object {
+        fun getByElementTypeId(elementTypeId: Int): ElementType? {
+            for (elementType in values()) {
+                if (elementType.elementTypeId == elementTypeId) {
+                    return elementType
+                }
+            }
+            return null
+        }
+    }
 }
 
-enum class Icon(val iconId: Int) {
+private enum class Icon(val iconId: Int) {
     TRASH_BIN(101),
     CROSS(102)
 }

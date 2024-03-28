@@ -5,7 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.TextView
 import com.example.shoppinglist.R
-import kotlinx.android.synthetic.main.delete_item_dialog.*
+import kotlinx.android.synthetic.main.confirmation_dialog.*
 
 class ConfirmationDialog(
     context: Context,
