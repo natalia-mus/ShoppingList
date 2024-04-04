@@ -164,8 +164,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundColor
             }
-            ElementType.PRODUCT_ITEM_BACKGROUND -> {
-                Color.parseColor(productItemBackgroundColorValue)
+            ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
+                Color.parseColor("#$productItemBackgroundColorValue")
             }
             ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
                 productItemTextColorValue
@@ -197,6 +197,14 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         backgroundTransparencySlider.addOnChangeListener(backgroundTransparencySliderValueChangedListener)
 
+        productItemBackgroundColor.setOnClickListener {
+            openColorPicker(ElementType.PRODUCT_ITEM_BACKGROUND_COLOR)
+        }
+
+        productItemTextColor.setOnClickListener {
+            openColorPicker(ElementType.PRODUCT_ITEM_TEXT_COLOR)
+        }
+
         iconTrashBin.setOnClickListener {
             selectIcon(Icon.TRASH_BIN)
         }
@@ -217,7 +225,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         setVisualizationBackground(background)
         setProductItemBackgroundColor(DEFAULT_BACKGROUND_COLOR)
         setProductItemBackgroundAlpha(DEFAULT_BACKGROUND_ALFA)
-        setColor(ElementType.PRODUCT_ITEM_BACKGROUND, DEFAULT_BACKGROUND_COLOR)
+        setColor(ElementType.PRODUCT_ITEM_BACKGROUND_COLOR, DEFAULT_BACKGROUND_COLOR)
         setProductItemTextColor(DEFAULT_TEXT_COLOR)
         setColor(ElementType.PRODUCT_ITEM_TEXT_COLOR, DEFAULT_TEXT_COLOR)
         backgroundTransparencySlider.value = DEFAULT_BACKGROUND_ALFA
@@ -475,13 +483,15 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundColor = color
             }
-            ElementType.PRODUCT_ITEM_BACKGROUND -> {
+            ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
                 if (color != null) {
                     setProductItemBackgroundColor(color)
                 }
             }
             ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
-                productItemTextColorValue = color
+                if (color != null) {
+                    setProductItemTextColor(color)
+                }
             }
         }
 
@@ -546,7 +556,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 imageView = addProductLandscapeBackground
                 border = addProductLandscapeBackgroundBorder
             }
-            ElementType.PRODUCT_ITEM_BACKGROUND -> {
+            ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
                 imageView = productItemBackgroundColor
                 border = productItemBackgroundColorBorder
             }
@@ -644,7 +654,7 @@ private enum class ElementType(val elementTypeId: Int) {
     PRODUCT_LIST_LANDSCAPE_BACKGROUND(102),
     ADD_PRODUCT_PORTRAIT_BACKGROUND(103),
     ADD_PRODUCT_LANDSCAPE_BACKGROUND(104),
-    PRODUCT_ITEM_BACKGROUND(105),
+    PRODUCT_ITEM_BACKGROUND_COLOR(105),
     PRODUCT_ITEM_TEXT_COLOR(106);
 
     companion object {
