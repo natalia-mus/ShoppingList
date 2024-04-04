@@ -39,6 +39,7 @@
     <string name="background_transparency">background transparency:</string>
     <string name="background_color">background color</string>
     <string name="text_color">text color</string>
+    <string name="delete_icon_color">delete icon color</string>
     <string name="delete_icon">delete icon:</string>
     <string name="bold_product_name">bold product name</string>
 </resources>

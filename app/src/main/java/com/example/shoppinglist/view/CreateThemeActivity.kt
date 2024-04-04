@@ -60,6 +60,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var productItemBackgroundColorBorder: LinearLayout
     private lateinit var productItemTextColor: ImageView
     private lateinit var productItemTextColorBorder: LinearLayout
+    private lateinit var deleteIconColor: ImageView
+    private lateinit var deleteIconColorBorder: LinearLayout
 
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
@@ -93,6 +95,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var productItemBackgroundAlphaValue: String? = ""
     private var productItemBackgroundColorValue: String? = ""
     private var productItemTextColorValue: Int? = DEFAULT_TEXT_COLOR
+    private var deleteIconColorValue: Int? = null
 
     private var currentCreatorStep = 0
 
@@ -170,6 +173,9 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
                 productItemTextColorValue
             }
+            ElementType.DELETE_ICON_COLOR -> {
+                deleteIconColorValue
+            }
         }
 
         return result ?: ResourcesCompat.getColor(resources, R.color.sea_blue_dark, null)
@@ -191,6 +197,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         productItemBackgroundColorBorder = findViewById(R.id.create_theme_background_color_border)
         productItemTextColor = findViewById(R.id.create_theme_text_color)
         productItemTextColorBorder = findViewById(R.id.create_theme_text_color_border)
+        deleteIconColor = findViewById(R.id.create_theme_delete_icon_color)
+        deleteIconColorBorder = findViewById(R.id.create_theme_delete_icon_color_border)
         nextButton = findViewById(R.id.create_theme_next)
 
         boldTextSwitch.setOnCheckedChangeListener(boldTextOnCheckedChangedListener)
@@ -203,6 +211,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         productItemTextColor.setOnClickListener {
             openColorPicker(ElementType.PRODUCT_ITEM_TEXT_COLOR)
+        }
+
+        deleteIconColor.setOnClickListener {
+            openColorPicker(ElementType.DELETE_ICON_COLOR)
         }
 
         iconTrashBin.setOnClickListener {
@@ -228,7 +240,14 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         setColor(ElementType.PRODUCT_ITEM_BACKGROUND_COLOR, DEFAULT_BACKGROUND_COLOR)
         setProductItemTextColor(DEFAULT_TEXT_COLOR)
         setColor(ElementType.PRODUCT_ITEM_TEXT_COLOR, DEFAULT_TEXT_COLOR)
+        deleteIconColorValue = ResourcesCompat.getColor(resources, R.color.sea_blue_light, null)
+        setColor(ElementType.DELETE_ICON_COLOR, deleteIconColorValue)
         backgroundTransparencySlider.value = DEFAULT_BACKGROUND_ALFA
+    }
+
+    private fun setDeleteIconColor(color: Int) {
+        deleteIconColorValue = color
+        productItemButtonDelete.background.setTint(color)
     }
 
     private fun setProductItemBackground() {
@@ -288,7 +307,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 // nothing to keep - everything is up to date
             }
             R.layout.activity_create_theme_second_step -> {
-                // todo
+                // nothing to keep - everything is up to date
             }
             R.layout.activity_create_theme_last_step -> {
                 name = themeName.text.toString()
@@ -467,6 +486,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         iconToSelect.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_white, null))
         iconToUnselect.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
         productItemButtonDelete.background = iconDrawable
+        setColor(ElementType.DELETE_ICON_COLOR, deleteIconColorValue)
     }
 
     private fun setColor(elementType: ElementType, color: Int?) {
@@ -491,6 +511,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
                 if (color != null) {
                     setProductItemTextColor(color)
+                }
+            }
+            ElementType.DELETE_ICON_COLOR -> {
+                if (color != null) {
+                    setDeleteIconColor(color)
                 }
             }
         }
@@ -563,6 +588,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
                 imageView = productItemTextColor
                 border = productItemTextColorBorder
+            }
+            ElementType.DELETE_ICON_COLOR -> {
+                imageView = deleteIconColor
+                border = deleteIconColorBorder
             }
         }
 
@@ -655,7 +684,8 @@ private enum class ElementType(val elementTypeId: Int) {
     ADD_PRODUCT_PORTRAIT_BACKGROUND(103),
     ADD_PRODUCT_LANDSCAPE_BACKGROUND(104),
     PRODUCT_ITEM_BACKGROUND_COLOR(105),
-    PRODUCT_ITEM_TEXT_COLOR(106);
+    PRODUCT_ITEM_TEXT_COLOR(106),
+    DELETE_ICON_COLOR(107);
 
     companion object {
         fun getByElementTypeId(elementTypeId: Int): ElementType? {
