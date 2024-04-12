@@ -30,9 +30,9 @@ interface CreateThemeActivityContract {
             addProductPortraitBackgroundColor: Int?,
             addProductLandscapeBackgroundColor: Int?,
             productItemBackgroundValue: String,
-            productItemTextColorValue: Int?,
-            deleteIconColorValue: Int?,
-            icon: Icon,
+            productItemTextColorValue: Int,
+            deleteIconColorValue: Int,
+            deleteIcon: Icon,
             boldProductName: Boolean
         ): ValidationResult
 
@@ -64,9 +64,9 @@ interface CreateThemeActivityContract {
             addProductPortraitBackgroundColor: Int?,
             addProductLandscapeBackgroundColor: Int?,
             productItemBackgroundValue: String,
-            productItemTextColorValue: Int?,
-            deleteIconColorValue: Int?,
-            icon: Icon,
+            productItemTextColorValue: Int,
+            deleteIconColorValue: Int,
+            deleteIcon: Icon,
             boldProductName: Boolean
         ): ValidationResult
 

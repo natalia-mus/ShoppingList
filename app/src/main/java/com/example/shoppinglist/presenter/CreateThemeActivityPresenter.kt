@@ -46,9 +46,9 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         addProductPortraitBackgroundColor: Int?,
         addProductLandscapeBackgroundColor: Int?,
         productItemBackgroundValue: String,
-        productItemTextColorValue: Int?,
-        deleteIconColorValue: Int?,
-        icon: Icon,
+        productItemTextColorValue: Int,
+        deleteIconColorValue: Int,
+        deleteIcon: Icon,
         boldProductName: Boolean
     ): ValidationResult {
         return model.validateSecondStep(
@@ -63,7 +63,7 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
             productItemBackgroundValue,
             productItemTextColorValue,
             deleteIconColorValue,
-            icon,
+            deleteIcon,
             boldProductName
         )
     }

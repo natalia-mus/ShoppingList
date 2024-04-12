@@ -41,9 +41,9 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         addProductPortraitBackgroundColor: Int?,
         addProductLandscapeBackgroundColor: Int?,
         productItemBackgroundValue: String,
-        productItemTextColorValue: Int?,
-        deleteIconColorValue: Int?,
-        icon: Icon,
+        productItemTextColorValue: Int,
+        deleteIconColorValue: Int,
+        deleteIcon: Icon,
         boldProductName: Boolean
     ): ValidationResult {
         return ValidationResult.VALID   // todo

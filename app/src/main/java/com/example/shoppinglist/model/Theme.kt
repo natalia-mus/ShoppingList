@@ -11,10 +11,26 @@ data class Theme(
     val listBackgroundColorPortrait: Int?,
     val listBackgroundColorLandscape: Int?,
     val addProductBackgroundColorPortrait: Int?,
-    val addProductBackgroundColorLandscape: Int?
+    val addProductBackgroundColorLandscape: Int?,
+    val productItemBackgroundValue: String,
+    val productItemTextColorValue: Int,
+    val deleteIconColorValue: Int,
+    val deleteIcon: Icon,
+    val boldProductName: Boolean
 )
 
 enum class Icon(val iconId: Int) {
     TRASH_BIN(101),
-    CROSS(102)
+    CROSS(102);
+
+    companion object {
+        fun getByIconId(iconId: Int): Icon? {
+            for (icon in values()) {
+                if (icon.iconId == iconId) {
+                    return icon
+                }
+            }
+            return null
+        }
+    }
 }

@@ -91,11 +91,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var addProductLandscapeBackgroundColor: Int? = null
 
     private var name = ""
-    private var icon = Icon.TRASH_BIN
+    private var deleteIcon = Icon.TRASH_BIN
     private var boldProductName = true
     private var productItemBackgroundAlphaValue: String? = ""
     private var productItemBackgroundColorValue: String? = ""
-    private var productItemTextColorValue: Int? = DEFAULT_TEXT_COLOR
+    private var productItemTextColorValue: Int = DEFAULT_TEXT_COLOR
     private var deleteIconColorValue: Int? = null
 
     private var currentCreatorStep = 0
@@ -241,9 +241,16 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         setColor(ElementType.PRODUCT_ITEM_BACKGROUND_COLOR, DEFAULT_BACKGROUND_COLOR)
         setProductItemTextColor(DEFAULT_TEXT_COLOR)
         setColor(ElementType.PRODUCT_ITEM_TEXT_COLOR, DEFAULT_TEXT_COLOR)
-        deleteIconColorValue = ResourcesCompat.getColor(resources, R.color.sea_blue_light, null)
+        getDeleteIconColorValue()
         setColor(ElementType.DELETE_ICON_COLOR, deleteIconColorValue)
         backgroundTransparencySlider.value = DEFAULT_BACKGROUND_ALFA
+    }
+
+    private fun getDeleteIconColorValue(): Int {
+        if (deleteIconColorValue == null) {
+            deleteIconColorValue = ResourcesCompat.getColor(resources, R.color.sea_blue_light, null)
+        }
+        return deleteIconColorValue!!
     }
 
     private fun setDeleteIconColor(color: Int) {
@@ -451,7 +458,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun selectIcon(icon: Icon) {
-        this.icon = icon
+        deleteIcon = icon
 
         val iconToSelect: LinearLayout
         val iconToUnselect: LinearLayout
@@ -641,8 +648,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 addProductLandscapeBackgroundColor,
                 getProductItemBackgroundValue(),
                 productItemTextColorValue,
-                deleteIconColorValue,
-                icon,
+                getDeleteIconColorValue(),
+                deleteIcon,
                 boldProductName
             )
             R.layout.activity_create_theme_last_step -> presenter.validateLastStep(name)

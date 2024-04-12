@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.database.getIntOrNull
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
+import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
 
@@ -31,6 +32,11 @@ object TableInfo {
     const val COLUMN_LIST_BACKGROUND_COLOR_LANDSCAPE = "listBackgroundColorLandscape"
     const val COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT = "addProductBackgroundColorPortrait"
     const val COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE = "addProductBackgroundColorLandscape"
+    const val COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE = "productItemBackgroundValue"
+    const val COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE = "productItemTextColorValue"
+    const val COLUM_DELETE_ICON_COLOR_VALUE = "deleteIconColorValue"
+    const val COLUMN_DELETE_ICON = "deleteIcon"
+    const val COLUMN_BOLD_PRODUCT_NAME = "boldProductName"
 }
 
 object BasicSQLCommands {
@@ -42,7 +48,8 @@ object BasicSQLCommands {
             "${TableInfo.COLUMN_PRIORITY} INT NOT NULL)"
 
     const val CREATE_TABLE_THEMES = "CREATE TABLE ${TableInfo.TABLE_NAME_THEMES} " +
-            "(${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, " +
+            "(" +
+            "${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, " +
             "${TableInfo.COLUMN_NAME} TEXT NOT NULL, " +
             "${TableInfo.COLUMN_BUILT_IN_THEME} INTEGER NOT NULL, " +
             "${TableInfo.COLUMN_LIST_BACKGROUND_IMAGE_PORTRAIT} BLOB, " +
@@ -52,7 +59,13 @@ object BasicSQLCommands {
             "${TableInfo.COLUMN_LIST_BACKGROUND_COLOR_PORTRAIT} INTEGER, " +
             "${TableInfo.COLUMN_LIST_BACKGROUND_COLOR_LANDSCAPE} INTEGER, " +
             "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT} INTEGER, " +
-            "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE} INTEGER)"
+            "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE} INTEGER" +
+            "${TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE} TEXT" +
+            "${TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE} INTEGER" +
+            "${TableInfo.COLUM_DELETE_ICON_COLOR_VALUE} INTEGER" +
+            "${TableInfo.COLUMN_DELETE_ICON} INTEGER" +
+            "${TableInfo.COLUMN_BOLD_PRODUCT_NAME} INTEGER" +
+            ")"
 
     const val DELETE_TABLE = "DROP TABLE "
 
@@ -281,6 +294,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         val addProductBackgroundColorPortrait = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT))
         val addProductBackgroundColorLandscape = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE))
 
+        val productItemBackgroundValue = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE))
+        val productItemTextColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE))
+        val deleteIconColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUM_DELETE_ICON_COLOR_VALUE))
+        val deleteIcon = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_DELETE_ICON))
+        val boldProductName = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_BOLD_PRODUCT_NAME))
+
+
         return Theme(
             id,
             name,
@@ -292,7 +312,12 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             listBackgroundColorPortrait,
             listBackgroundColorLandscape,
             addProductBackgroundColorPortrait,
-            addProductBackgroundColorLandscape
+            addProductBackgroundColorLandscape,
+            productItemBackgroundValue,
+            productItemTextColorValue,
+            deleteIconColorValue,
+            Icon.getByIconId(deleteIcon)!!,
+            boldProductName != 0
         )
     }
 
