@@ -16,6 +16,7 @@ import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
+import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.slider.Slider
@@ -54,7 +55,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var productItemBackground: LinearLayout
     private lateinit var iconTrashBin: LinearLayout
     private lateinit var iconCross: LinearLayout
-    private lateinit var boldTextSwitch: SwitchCompat
+    private lateinit var boldProductNameSwitch: SwitchCompat
     private lateinit var backgroundTransparencySlider: Slider
     private lateinit var productItemBackgroundColor: ImageView
     private lateinit var productItemBackgroundColorBorder: LinearLayout
@@ -71,9 +72,9 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private val boldTextOnCheckedChangedListener = object : CompoundButton.OnCheckedChangeListener {
+    private val boldProductNameOnCheckedChangedListener = object : CompoundButton.OnCheckedChangeListener {
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-            setBoldText(isChecked)
+            setBoldProductName(isChecked)
         }
     }
 
@@ -91,7 +92,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private var name = ""
     private var icon = Icon.TRASH_BIN
-    private var boldText = true
+    private var boldProductName = true
     private var productItemBackgroundAlphaValue: String? = ""
     private var productItemBackgroundColorValue: String? = ""
     private var productItemTextColorValue: Int? = DEFAULT_TEXT_COLOR
@@ -191,7 +192,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         productItemButtonDelete = findViewById(R.id.product_button_delete)
         iconTrashBin = findViewById(R.id.create_theme_icon_trash_bin)
         iconCross = findViewById(R.id.create_theme_icon_cross)
-        boldTextSwitch = findViewById(R.id.create_theme_bold_switch)
+        boldProductNameSwitch = findViewById(R.id.create_theme_bold_switch)
         backgroundTransparencySlider = findViewById(R.id.create_theme_product_background_transparency)
         productItemBackgroundColor = findViewById(R.id.create_theme_background_color)
         productItemBackgroundColorBorder = findViewById(R.id.create_theme_background_color_border)
@@ -201,7 +202,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         deleteIconColorBorder = findViewById(R.id.create_theme_delete_icon_color_border)
         nextButton = findViewById(R.id.create_theme_next)
 
-        boldTextSwitch.setOnCheckedChangeListener(boldTextOnCheckedChangedListener)
+        boldProductNameSwitch.setOnCheckedChangeListener(boldProductNameOnCheckedChangedListener)
 
         backgroundTransparencySlider.addOnChangeListener(backgroundTransparencySliderValueChangedListener)
 
@@ -225,8 +226,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             selectIcon(Icon.CROSS)
         }
 
-        boldTextSwitch.setOnClickListener {
-            boldText = !boldText
+        boldProductNameSwitch.setOnClickListener {
+            boldProductName = !boldProductName
         }
 
         nextButton.setOnClickListener {
@@ -252,10 +253,12 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private fun setProductItemBackground() {
         if (productItemBackgroundColorValue != null) {
-            val colorValue = "#$productItemBackgroundAlphaValue$productItemBackgroundColorValue"
+            val colorValue = getProductItemBackgroundValue()
             productItemBackground.background.setTint(Color.parseColor(colorValue))
         }
     }
+
+    private fun getProductItemBackgroundValue() = "#$productItemBackgroundAlphaValue$productItemBackgroundColorValue"
 
     private fun setProductItemTextColor(color: Int) {
         productItemTextColorValue = color
@@ -290,7 +293,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         themeName = findViewById(R.id.create_theme_name)
 
         saveButton.setOnClickListener {
-            keepCurrentStepData()
             if (validateCurrentStep()) {
                 saveTheme()
             }
@@ -301,22 +303,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun keepCurrentStepData() {
-        when (creatorSteps[currentCreatorStep]) {
-            R.layout.activity_create_theme_first_step -> {
-                // nothing to keep - everything is up to date
-            }
-            R.layout.activity_create_theme_second_step -> {
-                // nothing to keep - everything is up to date
-            }
-            R.layout.activity_create_theme_last_step -> {
-                name = themeName.text.toString()
-            }
-        }
-    }
-
     private fun nextStep() {
-        keepCurrentStepData()
         if (validateCurrentStep()) {
             currentCreatorStep++
             changeView()
@@ -382,7 +369,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun saveTheme() {
-        val name = ""
+        val name = themeName.text.toString()
 
         val result = presenter.saveTheme(
             name,
@@ -552,7 +539,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun setBoldText(bold: Boolean) {
+    private fun setBoldProductName(bold: Boolean) {
         if (bold) {
             productItemNameLabel.typeface = Typeface.DEFAULT_BOLD
         } else {
@@ -642,7 +629,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
      */
     private fun validateCurrentStep(): Boolean {
         val validationResult = when (creatorSteps[currentCreatorStep]) {
-            R.layout.activity_create_theme_first_step -> presenter.validateFirstStep(
+            R.layout.activity_create_theme_first_step -> presenter.validateFirstStep()
+            R.layout.activity_create_theme_second_step -> presenter.validateSecondStep(
                 productListPortraitBackgroundImage,
                 productListLandscapeBackgroundImage,
                 addProductPortraitBackgroundImage,
@@ -650,9 +638,13 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 productListPortraitBackgroundColor,
                 productListLandscapeBackgroundColor,
                 addProductPortraitBackgroundColor,
-                addProductLandscapeBackgroundColor
+                addProductLandscapeBackgroundColor,
+                getProductItemBackgroundValue(),
+                productItemTextColorValue,
+                deleteIconColorValue,
+                icon,
+                boldProductName
             )
-            R.layout.activity_create_theme_second_step -> presenter.validateSecondStep()
             R.layout.activity_create_theme_last_step -> presenter.validateLastStep(name)
             else -> false
         }
@@ -697,9 +689,4 @@ private enum class ElementType(val elementTypeId: Int) {
             return null
         }
     }
-}
-
-private enum class Icon(val iconId: Int) {
-    TRASH_BIN(101),
-    CROSS(102)
 }

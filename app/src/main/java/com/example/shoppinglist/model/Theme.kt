@@ -13,3 +13,8 @@ data class Theme(
     val addProductBackgroundColorPortrait: Int?,
     val addProductBackgroundColorLandscape: Int?
 )
+
+enum class Icon(val iconId: Int) {
+    TRASH_BIN(101),
+    CROSS(102)
+}

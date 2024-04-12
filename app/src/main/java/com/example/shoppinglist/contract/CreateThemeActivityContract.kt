@@ -1,6 +1,7 @@
 package com.example.shoppinglist.contract
 
 import com.example.shoppinglist.ValidationResult
+import com.example.shoppinglist.model.Icon
 
 interface CreateThemeActivityContract {
 
@@ -17,18 +18,24 @@ interface CreateThemeActivityContract {
             addProductBackgroundColorLandscape: Int?
         ): ValidationResult
 
-        fun validateFirstStep(
-            listBackgroundPortrait: ByteArray?,
-            listBackgroundLandscape: ByteArray?,
-            addProductBackgroundPortrait: ByteArray?,
-            addProductBackgroundLandscape: ByteArray?,
-            listBackgroundColorPortrait: Int?,
-            listBackgroundColorLandscape: Int?,
-            addProductBackgroundColorPortrait: Int?,
-            addProductBackgroundColorLandscape: Int?
+        fun validateFirstStep(): ValidationResult
+
+        fun validateSecondStep(
+            productListPortraitBackgroundImage: ByteArray?,
+            productListLandscapeBackgroundImage: ByteArray?,
+            addProductPortraitBackgroundImage: ByteArray?,
+            addProductLandscapeBackgroundImage: ByteArray?,
+            productListPortraitBackgroundColor: Int?,
+            productListLandscapeBackgroundColor: Int?,
+            addProductPortraitBackgroundColor: Int?,
+            addProductLandscapeBackgroundColor: Int?,
+            productItemBackgroundValue: String,
+            productItemTextColorValue: Int?,
+            deleteIconColorValue: Int?,
+            icon: Icon,
+            boldProductName: Boolean
         ): ValidationResult
 
-        fun validateSecondStep(): ValidationResult
         fun validateLastStep(themeName: String): ValidationResult
     }
 
@@ -45,18 +52,24 @@ interface CreateThemeActivityContract {
             addProductBackgroundColorLandscape: Int?
         ): ValidationResult
 
-        fun validateFirstStep(
-            listBackgroundImagePortrait: ByteArray?,
-            listBackgroundImageLandscape: ByteArray?,
-            addProductBackgroundImagePortrait: ByteArray?,
-            addProductBackgroundImageLandscape: ByteArray?,
-            listBackgroundColorPortrait: Int?,
-            listBackgroundColorLandscape: Int?,
-            addProductBackgroundColorPortrait: Int?,
-            addProductBackgroundColorLandscape: Int?
+        fun validateFirstStep(): ValidationResult
+
+        fun validateSecondStep(
+            productListPortraitBackgroundImage: ByteArray?,
+            productListLandscapeBackgroundImage: ByteArray?,
+            addProductPortraitBackgroundImage: ByteArray?,
+            addProductLandscapeBackgroundImage: ByteArray?,
+            productListPortraitBackgroundColor: Int?,
+            productListLandscapeBackgroundColor: Int?,
+            addProductPortraitBackgroundColor: Int?,
+            addProductLandscapeBackgroundColor: Int?,
+            productItemBackgroundValue: String,
+            productItemTextColorValue: Int?,
+            deleteIconColorValue: Int?,
+            icon: Icon,
+            boldProductName: Boolean
         ): ValidationResult
 
-        fun validateSecondStep(): ValidationResult
         fun validateLastStep(themeName: String): ValidationResult
     }
 
