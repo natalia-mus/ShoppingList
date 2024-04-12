@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.graphics.Color
 import androidx.core.content.contentValuesOf
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.database.getIntOrNull
@@ -34,7 +35,7 @@ object TableInfo {
     const val COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE = "addProductBackgroundColorLandscape"
     const val COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE = "productItemBackgroundValue"
     const val COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE = "productItemTextColorValue"
-    const val COLUM_DELETE_ICON_COLOR_VALUE = "deleteIconColorValue"
+    const val COLUMN_DELETE_ICON_COLOR_VALUE = "deleteIconColorValue"
     const val COLUMN_DELETE_ICON = "deleteIcon"
     const val COLUMN_BOLD_PRODUCT_NAME = "boldProductName"
 }
@@ -59,11 +60,11 @@ object BasicSQLCommands {
             "${TableInfo.COLUMN_LIST_BACKGROUND_COLOR_PORTRAIT} INTEGER, " +
             "${TableInfo.COLUMN_LIST_BACKGROUND_COLOR_LANDSCAPE} INTEGER, " +
             "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT} INTEGER, " +
-            "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE} INTEGER" +
-            "${TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE} TEXT" +
-            "${TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE} INTEGER" +
-            "${TableInfo.COLUM_DELETE_ICON_COLOR_VALUE} INTEGER" +
-            "${TableInfo.COLUMN_DELETE_ICON} INTEGER" +
+            "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE} INTEGER, " +
+            "${TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE} TEXT, " +
+            "${TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE} INTEGER, " +
+            "${TableInfo.COLUMN_DELETE_ICON_COLOR_VALUE} INTEGER, " +
+            "${TableInfo.COLUMN_DELETE_ICON} INTEGER, " +
             "${TableInfo.COLUMN_BOLD_PRODUCT_NAME} INTEGER" +
             ")"
 
@@ -195,6 +196,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         listBackgroundColorLandscape: Int?,
         addProductBackgroundColorPortrait: Int?,
         addProductBackgroundColorLandscape: Int?,
+        productItemBackgroundValue: String,
+        productItemTextColorValue: Int,
+        deleteIconColorValue: Int,
+        deleteIcon: Icon,
+        boldProductName: Boolean,
         database: SQLiteDatabase? = null
     ) {
         val theme = ContentValues()
@@ -210,6 +216,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         theme.put(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT, addProductBackgroundColorPortrait)
         theme.put(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE, addProductBackgroundColorLandscape)
 
+
+        theme.put(TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE, productItemBackgroundValue)
+        theme.put(TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE, productItemTextColorValue)
+        theme.put(TableInfo.COLUMN_DELETE_ICON_COLOR_VALUE, deleteIconColorValue)
+        theme.put(TableInfo.COLUMN_DELETE_ICON, deleteIcon.iconId)
+        theme.put(TableInfo.COLUMN_BOLD_PRODUCT_NAME, boldProductName)
+
         val db = database ?: this.writableDatabase
         db.insert(TableInfo.TABLE_NAME_THEMES, null, theme)
 
@@ -219,6 +232,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
     }
 
     private fun createThemes(database: SQLiteDatabase) {
+        val productItemBackgroundValue = resources.getString(R.color.transparent_black, null)
+        val productItemTextColorValue = Color.WHITE
+        val deleteIconColorValue = resources.getColor(R.color.sea_blue_light, null)
+
+
         saveTheme(resources.getString(R.string.theme_grocery),
             true,
             getImageAsByteArray(R.drawable.theme_grocery_list_portrait),
@@ -229,6 +247,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             null,
             null,
             null,
+            productItemBackgroundValue,
+            productItemTextColorValue,
+            deleteIconColorValue,
+            Icon.TRASH_BIN,
+            true,
             database)
 
         saveTheme(resources.getString(R.string.theme_marketplace),
@@ -241,6 +264,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             null,
             null,
             null,
+            productItemBackgroundValue,
+            productItemTextColorValue,
+            deleteIconColorValue,
+            Icon.TRASH_BIN,
+            true,
             database)
 
         saveTheme(resources.getString(R.string.theme_fashion),
@@ -253,6 +281,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             null,
             null,
             null,
+            productItemBackgroundValue,
+            productItemTextColorValue,
+            deleteIconColorValue,
+            Icon.TRASH_BIN,
+            true,
             database)
 
         saveTheme(resources.getString(R.string.theme_christmas),
@@ -265,6 +298,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             null,
             null,
             null,
+            productItemBackgroundValue,
+            productItemTextColorValue,
+            deleteIconColorValue,
+            Icon.TRASH_BIN,
+            true,
             database)
     }
 
@@ -296,7 +334,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
 
         val productItemBackgroundValue = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE))
         val productItemTextColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE))
-        val deleteIconColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUM_DELETE_ICON_COLOR_VALUE))
+        val deleteIconColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_DELETE_ICON_COLOR_VALUE))
         val deleteIcon = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_DELETE_ICON))
         val boldProductName = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_BOLD_PRODUCT_NAME))
 

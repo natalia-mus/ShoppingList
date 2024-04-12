@@ -19,10 +19,10 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         addProductBackgroundColorPortrait: Int?,
         addProductBackgroundColorLandscape: Int?
     ): ValidationResult {
-        database?.saveTheme(
-            name, false, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
-            listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape
-        )
+//        database?.saveTheme(
+//            name, false, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
+//            listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape
+//        )
 
         return ValidationResult.VALID
     }
