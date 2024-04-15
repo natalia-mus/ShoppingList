@@ -23,12 +23,17 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         listBackgroundColorPortrait: Int?,
         listBackgroundColorLandscape: Int?,
         addProductBackgroundColorPortrait: Int?,
-        addProductBackgroundColorLandscape: Int?
-
-    ): ValidationResult {
-        return model.saveTheme(
+        addProductBackgroundColorLandscape: Int?,
+        productItemBackgroundValue: String,
+        productItemTextColorValue: Int,
+        deleteIconColorValue: Int,
+        deleteIcon: Icon,
+        boldProductName: Boolean
+    ) {
+        model.saveTheme(
             name, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
-            listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape
+            listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape, productItemBackgroundValue,
+            productItemTextColorValue, deleteIconColorValue, deleteIcon, boldProductName
         )
     }
 

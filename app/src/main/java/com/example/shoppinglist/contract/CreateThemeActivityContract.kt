@@ -15,8 +15,13 @@ interface CreateThemeActivityContract {
             listBackgroundColorPortrait: Int?,
             listBackgroundColorLandscape: Int?,
             addProductBackgroundColorPortrait: Int?,
-            addProductBackgroundColorLandscape: Int?
-        ): ValidationResult
+            addProductBackgroundColorLandscape: Int?,
+            productItemBackgroundValue: String,
+            productItemTextColorValue: Int,
+            deleteIconColorValue: Int,
+            deleteIcon: Icon,
+            boldProductName: Boolean
+        )
 
         fun validateFirstStep(): ValidationResult
 
@@ -49,8 +54,13 @@ interface CreateThemeActivityContract {
             listBackgroundColorPortrait: Int?,
             listBackgroundColorLandscape: Int?,
             addProductBackgroundColorPortrait: Int?,
-            addProductBackgroundColorLandscape: Int?
-        ): ValidationResult
+            addProductBackgroundColorLandscape: Int?,
+            productItemBackgroundValue: String,
+            productItemTextColorValue: Int,
+            deleteIconColorValue: Int,
+            deleteIcon: Icon,
+            boldProductName: Boolean
+        )
 
         fun validateFirstStep(): ValidationResult
 

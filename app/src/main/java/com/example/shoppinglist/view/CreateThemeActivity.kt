@@ -376,9 +376,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun saveTheme() {
-        val name = themeName.text.toString()
-
-        val result = presenter.saveTheme(
+        presenter.saveTheme(
             name,
             productListPortraitBackgroundImage,
             productListLandscapeBackgroundImage,
@@ -387,18 +385,15 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             productListPortraitBackgroundColor,
             productListLandscapeBackgroundColor,
             addProductPortraitBackgroundColor,
-            addProductLandscapeBackgroundColor
+            addProductLandscapeBackgroundColor,
+            getProductItemBackgroundValue(),
+            productItemTextColorValue,
+            getDeleteIconColorValue(),
+            deleteIcon,
+            boldProductName
         )
 
-        when (result) {
-            ValidationResult.EMPTY_NAME -> {
-                Toast.makeText(this, resources.getString(R.string.empty_theme_name), Toast.LENGTH_LONG).show()
-            }
-            ValidationResult.MISSING_BACKGROUNDS -> {
-                Toast.makeText(this, resources.getString(R.string.missing_backgrounds), Toast.LENGTH_LONG).show()
-            }
-            else -> finish()
-        }
+        finish()
     }
 
     private fun selectBackgroundType(backgroundType: BackgroundType) {
@@ -652,8 +647,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 deleteIcon,
                 boldProductName
             )
-            R.layout.activity_create_theme_last_step -> presenter.validateLastStep(name)
-            else -> false
+            R.layout.activity_create_theme_last_step -> {
+                name = themeName.text.toString()
+                presenter.validateLastStep(name)
+            }
+            else -> true
         }
 
         return when (validationResult) {
@@ -661,8 +659,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 Toast.makeText(this, resources.getString(R.string.empty_theme_name), Toast.LENGTH_LONG).show()
                 false
             }
-            ValidationResult.MISSING_BACKGROUNDS -> {
-                Toast.makeText(this, resources.getString(R.string.missing_backgrounds), Toast.LENGTH_LONG).show()
+            ValidationResult.NO_DIFFERENCE -> {
+                Toast.makeText(this, resources.getString(R.string.no_difference), Toast.LENGTH_LONG).show()
                 false
             }
             else -> true
