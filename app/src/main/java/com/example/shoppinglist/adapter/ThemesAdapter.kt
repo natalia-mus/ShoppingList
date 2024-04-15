@@ -2,12 +2,14 @@ package com.example.shoppinglist.adapter
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.shoppinglist.ImageUtils
@@ -55,32 +57,28 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
         }
     }
 
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun setImage(imageView: ImageView, position: Int) {
         val theme = themes[position]
         // find first existing background in theme
         val thumbnail = if (theme.listBackgroundImagePortrait != null) {
             ImageUtils.getImageAsBitmap(theme.listBackgroundImagePortrait)
-        } else if (theme.listBackgroundColorPortrait != null) {
-            theme.listBackgroundColorPortrait
-        } else if (theme.listBackgroundImageLandscape != null) {
-            ImageUtils.getImageAsBitmap(theme.listBackgroundImageLandscape)
-        } else if (theme.listBackgroundColorLandscape != null) {
-            theme.listBackgroundColorLandscape
-        } else if (theme.addProductBackgroundImagePortrait != null) {
-            ImageUtils.getImageAsBitmap(theme.addProductBackgroundImagePortrait)
-        } else if (theme.addProductBackgroundColorPortrait != null) {
-            theme.addProductBackgroundColorPortrait
-        } else if (theme.addProductBackgroundImageLandscape != null) {
-            ImageUtils.getImageAsBitmap(theme.addProductBackgroundImageLandscape)
-        } else if (theme.addProductBackgroundColorLandscape != null) {
-            theme.addProductBackgroundColorLandscape
-        } else {
-            null
-        }
+        } else theme.listBackgroundColorPortrait
+            ?: if (theme.listBackgroundImageLandscape != null) {
+                ImageUtils.getImageAsBitmap(theme.listBackgroundImageLandscape)
+            } else theme.listBackgroundColorLandscape
+                ?: if (theme.addProductBackgroundImagePortrait != null) {
+                    ImageUtils.getImageAsBitmap(theme.addProductBackgroundImagePortrait)
+                } else theme.addProductBackgroundColorPortrait
+                    ?: if (theme.addProductBackgroundImageLandscape != null) {
+                        ImageUtils.getImageAsBitmap(theme.addProductBackgroundImageLandscape)
+                    } else theme.addProductBackgroundColorLandscape ?:
+                    ResourcesCompat.getDrawable(context.resources, R.drawable.theme_grocery_list_portrait, null)    // default background
 
-        if (thumbnail != null) {
-            if (thumbnail is Bitmap) imageView.setImageBitmap(thumbnail)
-            else if (thumbnail is Int) imageView.setBackgroundColor(thumbnail)
+        when (thumbnail) {
+            is Bitmap -> imageView.setImageBitmap(thumbnail)
+            is Int -> imageView.setBackgroundColor(thumbnail)
+            is Drawable -> imageView.setImageDrawable(thumbnail)
         }
     }
 
