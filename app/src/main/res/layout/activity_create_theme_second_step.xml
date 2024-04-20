@@ -225,7 +225,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="1dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_baseline_delete_24"
+                            android:src="@drawable/ic_trash_bin"
                             app:tint="@color/sea_blue_light" />
 
                     </LinearLayout>
@@ -255,7 +255,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="1dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_cancel"
+                            android:src="@drawable/ic_cross"
                             app:tint="@color/sea_blue_light" />
 
                     </LinearLayout>

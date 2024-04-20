@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/product_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
@@ -100,7 +101,7 @@
             android:id="@+id/product_button_delete"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/ic_baseline_delete_24"
+            android:background="@drawable/ic_trash_bin"
             android:backgroundTint="@color/sea_blue_light" />
 
     </LinearLayout>

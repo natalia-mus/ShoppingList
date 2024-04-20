@@ -463,12 +463,12 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             Icon.TRASH_BIN -> {
                 iconToSelect = iconTrashBin
                 iconToUnselect = iconCross
-                iconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_delete_24, null)
+                iconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_trash_bin, null)
             }
             Icon.CROSS -> {
                 iconToSelect = iconCross
                 iconToUnselect = iconTrashBin
-                iconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_cancel, null)
+                iconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_cross, null)
             }
         }
 

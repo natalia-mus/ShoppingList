@@ -30,6 +30,8 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
         DBHelper.getInstance(this)
     }
 
+    override fun getAppTheme() = presenter.getTheme()
+
     abstract override fun provideTheme(theme: Theme?)
 
     protected fun setTheme(theme: Theme?, destination: View, activity: ThemeProvidingActivity) {

@@ -38,7 +38,7 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
         val data = presenter.returnData()
 
         shopping_list.layoutManager = LinearLayoutManager(this)
-        shopping_list.adapter = data?.let { ProductAdapter(this, it, this) }
+        shopping_list.adapter = data?.let { ProductAdapter(this, it, this, getAppTheme()) }
     }
 
     override fun deleteItem(id: Int) {
