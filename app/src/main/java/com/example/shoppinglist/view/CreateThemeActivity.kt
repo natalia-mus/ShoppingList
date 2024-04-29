@@ -413,39 +413,73 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             backgroundTypePanel.dismiss()
         }
 
-        var visible = View.GONE
+        var copyOptionVisibility = View.GONE
+        var copyOptionLabel = resources.getString(R.string.copy_portrait_background)
+        var removeOptionVisibility = View.GONE
         when (backgroundType) {
             BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 if (productListPortraitBackgroundImage != null || productListPortraitBackgroundColor != null) {
-                    visible = View.VISIBLE
+                    removeOptionVisibility = View.VISIBLE
+                }
+
+                if (productListLandscapeBackgroundImage != null || productListLandscapeBackgroundColor != null) {
+                    copyOptionVisibility = View.VISIBLE
+                    copyOptionLabel = resources.getString(R.string.copy_landscape_background)
                 }
             }
             BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 if (productListLandscapeBackgroundImage != null || productListLandscapeBackgroundColor != null) {
-                    visible = View.VISIBLE
+                    removeOptionVisibility = View.VISIBLE
+                }
+
+                if (productListPortraitBackgroundImage != null || productListPortraitBackgroundColor != null) {
+                    copyOptionVisibility = View.VISIBLE
                 }
             }
             BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 if (addProductPortraitBackgroundImage != null || addProductPortraitBackgroundColor != null) {
-                    visible = View.VISIBLE
+                    removeOptionVisibility = View.VISIBLE
+                }
+
+                if (addProductLandscapeBackgroundImage != null || addProductLandscapeBackgroundColor != null) {
+                    copyOptionVisibility = View.VISIBLE
+                    copyOptionLabel = resources.getString(R.string.copy_landscape_background)
                 }
             }
             BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 if (addProductLandscapeBackgroundImage != null || addProductLandscapeBackgroundColor != null) {
-                    visible = View.VISIBLE
+                    removeOptionVisibility = View.VISIBLE
+                }
+
+                if (addProductPortraitBackgroundImage != null || addProductPortraitBackgroundColor != null) {
+                    copyOptionVisibility = View.VISIBLE
                 }
             }
         }
 
 
         backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_remove).apply {
-            visibility = visible
-            if (visible == View.VISIBLE) {
+            visibility = removeOptionVisibility
+            if (removeOptionVisibility == View.VISIBLE) {
                 setOnClickListener {
                     removeBackground(backgroundType)
                     backgroundTypePanel.dismiss()
                 }
             }
+        }
+
+
+        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_copy).apply {
+            visibility = copyOptionVisibility
+            if (copyOptionVisibility == View.VISIBLE) {
+                setOnClickListener {
+                    // todo
+                }
+            }
+        }
+
+        if (copyOptionVisibility == View.VISIBLE) {
+            backgroundTypePanelView.findViewById<TextView>(R.id.panel_background_type_copy_label).text = copyOptionLabel
         }
 
         backgroundTypePanel.setContentView(backgroundTypePanelView)

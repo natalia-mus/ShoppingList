@@ -42,4 +42,6 @@
     <string name="delete_icon_color">delete icon color</string>
     <string name="delete_icon">delete icon:</string>
     <string name="bold_product_name">bold product name</string>
+    <string name="copy_landscape_background">copy landscape background</string>
+    <string name="copy_portrait_background">copy portrait background</string>
 </resources>
