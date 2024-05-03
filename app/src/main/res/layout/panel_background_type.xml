@@ -110,7 +110,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
-                    android:src="@drawable/ic_color"
+                    android:src="@drawable/ic_copy_background"
                     app:tint="@color/sea_blue_dark" />
 
                 <TextView

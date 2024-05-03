@@ -154,6 +154,47 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
+    private fun copyBackground(backgroundToSet: BackgroundType) {
+        when (backgroundToSet) {
+            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                if (productListLandscapeBackgroundImage != null) {
+                    productListPortraitBackgroundImage = productListLandscapeBackgroundImage
+                    setImageBackground(productListPortraitBackground, productListPortraitBackgroundImage)
+
+                } else if (productListLandscapeBackgroundColor != null) {
+                    setColor(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListLandscapeBackgroundColor)
+                }
+            }
+            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                if (productListPortraitBackgroundImage != null) {
+                    productListLandscapeBackgroundImage = productListPortraitBackgroundImage
+                    setImageBackground(productListLandscapeBackground, productListLandscapeBackgroundImage)
+
+                } else if (productListPortraitBackgroundColor != null) {
+                    setColor(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListPortraitBackgroundColor)
+                }
+            }
+            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                if (addProductLandscapeBackgroundImage != null) {
+                    addProductPortraitBackgroundImage = addProductLandscapeBackgroundImage
+                    setImageBackground(addProductPortraitBackground, addProductPortraitBackgroundImage)
+
+                } else if (addProductLandscapeBackgroundColor != null) {
+                    setColor(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductLandscapeBackgroundColor)
+                }
+            }
+            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                if (addProductPortraitBackgroundImage != null) {
+                    addProductLandscapeBackgroundImage = addProductPortraitBackgroundImage
+                    setImageBackground(addProductLandscapeBackground, addProductLandscapeBackgroundImage)
+
+                } else if (addProductPortraitBackgroundColor != null) {
+                    setColor(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductPortraitBackgroundColor)
+                }
+            }
+        }
+    }
+
     private fun getInitialColor(elementType: ElementType): Int {
         val result: Int? = when (elementType) {
             ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
@@ -371,6 +412,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
 
         val background = ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null)
+        backgroundControl.background = null
         backgroundControl.setImageDrawable(background)
         border.background?.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
     }
@@ -473,7 +515,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             visibility = copyOptionVisibility
             if (copyOptionVisibility == View.VISIBLE) {
                 setOnClickListener {
-                    // todo
+                    copyBackground(backgroundType)
+                    backgroundTypePanel.dismiss()
                 }
             }
         }
@@ -554,19 +597,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 when (requestCode) {
                     ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND.elementTypeId -> {
                         productListPortraitBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
-                        productListPortraitBackground.setImageURI(uri)
+                        setImageBackground(productListPortraitBackground, productListPortraitBackgroundImage)
                     }
                     ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND.elementTypeId -> {
                         productListLandscapeBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
-                        productListLandscapeBackground.setImageURI(uri)
+                        setImageBackground(productListLandscapeBackground, productListLandscapeBackgroundImage)
                     }
                     ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND.elementTypeId -> {
                         addProductPortraitBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
-                        addProductPortraitBackground.setImageURI(uri)
+                        setImageBackground(addProductPortraitBackground, addProductPortraitBackgroundImage)
                     }
                     ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND.elementTypeId -> {
                         addProductLandscapeBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
-                        addProductLandscapeBackground.setImageURI(uri)
+                        setImageBackground(addProductLandscapeBackground, addProductLandscapeBackgroundImage)
                     }
                 }
             }
@@ -580,6 +623,14 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             productItemNameLabel.typeface = Typeface.DEFAULT_BOLD
         } else {
             productItemNameLabel.typeface = Typeface.DEFAULT
+        }
+    }
+
+    private fun setImageBackground(imageView: ImageView, background: ByteArray?) {
+        imageView.setImageDrawable(null)
+        if (background != null) {
+            val drawable = ImageUtils.getImageAsDrawable(this, background)
+            imageView.background = drawable
         }
     }
 
