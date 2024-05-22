@@ -16,6 +16,7 @@ import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
+import com.example.shoppinglist.control.BackgroundPicker
 import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -38,14 +39,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var cancelButton: Button
     private lateinit var nextButton: Button
     private lateinit var themeName: EditText
-    private lateinit var productListPortraitBackground: ImageView
-    private lateinit var productListLandscapeBackground: ImageView
-    private lateinit var addProductPortraitBackground: ImageView
-    private lateinit var addProductLandscapeBackground: ImageView
-    private lateinit var productListPortraitBackgroundBorder: LinearLayout
-    private lateinit var productListLandscapeBackgroundBorder: LinearLayout
-    private lateinit var addProductPortraitBackgroundBorder: LinearLayout
-    private lateinit var addProductLandscapeBackgroundBorder: LinearLayout
+    private lateinit var productListPortraitBackground: BackgroundPicker
+    private lateinit var productListLandscapeBackground: BackgroundPicker
+    private lateinit var addProductPortraitBackground: BackgroundPicker
+    private lateinit var addProductLandscapeBackground: BackgroundPicker
     private lateinit var productItemNameLabel: TextView
     private lateinit var productItemQuantityLabel: TextView
     private lateinit var productItemPriorityLabel: TextView
@@ -114,10 +111,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         productListLandscapeBackground = findViewById(R.id.create_theme_product_list_landscape_background)
         addProductPortraitBackground = findViewById(R.id.create_theme_add_product_portrait_background)
         addProductLandscapeBackground = findViewById(R.id.create_theme_add_product_landscape_background)
-        productListPortraitBackgroundBorder = findViewById(R.id.create_theme_product_list_portrait_background_border)
-        productListLandscapeBackgroundBorder = findViewById(R.id.create_theme_product_list_landscape_background_border)
-        addProductPortraitBackgroundBorder = findViewById(R.id.create_theme_add_product_portrait_background_border)
-        addProductLandscapeBackgroundBorder = findViewById(R.id.create_theme_add_product_landscape_background_border)
 
         nextButton.setOnClickListener {
             nextStep()
@@ -159,7 +152,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 if (productListLandscapeBackgroundImage != null) {
                     productListPortraitBackgroundImage = productListLandscapeBackgroundImage
-                    setImageBackground(productListPortraitBackground, productListPortraitBackgroundImage)
+                    //setImageBackground(productListPortraitBackground, productListPortraitBackgroundImage)
 
                 } else if (productListLandscapeBackgroundColor != null) {
                     setColor(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListLandscapeBackgroundColor)
@@ -168,7 +161,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 if (productListPortraitBackgroundImage != null) {
                     productListLandscapeBackgroundImage = productListPortraitBackgroundImage
-                    setImageBackground(productListLandscapeBackground, productListLandscapeBackgroundImage)
+                    //setImageBackground(productListLandscapeBackground, productListLandscapeBackgroundImage)
 
                 } else if (productListPortraitBackgroundColor != null) {
                     setColor(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListPortraitBackgroundColor)
@@ -177,7 +170,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 if (addProductLandscapeBackgroundImage != null) {
                     addProductPortraitBackgroundImage = addProductLandscapeBackgroundImage
-                    setImageBackground(addProductPortraitBackground, addProductPortraitBackgroundImage)
+                    //setImageBackground(addProductPortraitBackground, addProductPortraitBackgroundImage)
 
                 } else if (addProductLandscapeBackgroundColor != null) {
                     setColor(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductLandscapeBackgroundColor)
@@ -186,7 +179,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 if (addProductPortraitBackgroundImage != null) {
                     addProductLandscapeBackgroundImage = addProductPortraitBackgroundImage
-                    setImageBackground(addProductLandscapeBackground, addProductLandscapeBackgroundImage)
+                    //setImageBackground(addProductLandscapeBackground, addProductLandscapeBackgroundImage)
 
                 } else if (addProductPortraitBackgroundColor != null) {
                     setColor(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductPortraitBackgroundColor)
@@ -381,40 +374,40 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun removeBackground(backgroundType: BackgroundType) {
-        var backgroundControl: ImageView? = null
-        var border: LinearLayout? = null
+        //var backgroundControl: ImageView? = null
+        //var border: LinearLayout? = null
 
         when (backgroundType) {
             BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundImage = null
                 productListPortraitBackgroundColor = null
-                backgroundControl = productListPortraitBackground
-                border = productListPortraitBackgroundBorder
+                //backgroundControl = productListPortraitBackground
+                //border = productListPortraitBackgroundBorder
             }
             BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListLandscapeBackgroundImage = null
                 productListLandscapeBackgroundColor = null
-                backgroundControl = productListLandscapeBackground
-                border = productListLandscapeBackgroundBorder
+                //backgroundControl = productListLandscapeBackground
+                //border = productListLandscapeBackgroundBorder
             }
             BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductPortraitBackgroundImage = null
                 addProductPortraitBackgroundColor = null
-                backgroundControl = addProductPortraitBackground
-                border = addProductPortraitBackgroundBorder
+                //backgroundControl = addProductPortraitBackground
+                //border = addProductPortraitBackgroundBorder
             }
             BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundImage = null
                 addProductLandscapeBackgroundColor = null
-                backgroundControl = addProductLandscapeBackground
-                border = addProductLandscapeBackgroundBorder
+                //backgroundControl = addProductLandscapeBackground
+                //border = addProductLandscapeBackgroundBorder
             }
         }
 
         val background = ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null)
-        backgroundControl.background = null
-        backgroundControl.setImageDrawable(background)
-        border.background?.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
+        //backgroundControl.background = null
+        //backgroundControl.setImageDrawable(background)
+        //border.background?.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
     }
 
     private fun saveTheme() {
@@ -597,19 +590,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 when (requestCode) {
                     ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND.elementTypeId -> {
                         productListPortraitBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
-                        setImageBackground(productListPortraitBackground, productListPortraitBackgroundImage)
+                        //setImageBackground(productListPortraitBackground, productListPortraitBackgroundImage)
                     }
                     ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND.elementTypeId -> {
                         productListLandscapeBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
-                        setImageBackground(productListLandscapeBackground, productListLandscapeBackgroundImage)
+                        //setImageBackground(productListLandscapeBackground, productListLandscapeBackgroundImage)
                     }
                     ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND.elementTypeId -> {
                         addProductPortraitBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
-                        setImageBackground(addProductPortraitBackground, addProductPortraitBackgroundImage)
+                        //setImageBackground(addProductPortraitBackground, addProductPortraitBackgroundImage)
                     }
                     ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND.elementTypeId -> {
                         addProductLandscapeBackgroundImage = ImageUtils.getImageAsByteArray(this, uri)
-                        setImageBackground(addProductLandscapeBackground, addProductLandscapeBackgroundImage)
+                        //setImageBackground(addProductLandscapeBackground, addProductLandscapeBackgroundImage)
                     }
                 }
             }
@@ -636,42 +629,42 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private fun setSelectedColor(backgroundType: ElementType, color: Int) {
         val imageView: ImageView
-        val border: LinearLayout
+        //val border: LinearLayout
 
         when (backgroundType) {
             ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                imageView = productListPortraitBackground
-                border = productListPortraitBackgroundBorder
+                //imageView = productListPortraitBackground
+                //border = productListPortraitBackgroundBorder
             }
             ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                imageView = productListLandscapeBackground
-                border = productListLandscapeBackgroundBorder
+                //imageView = productListLandscapeBackground
+                //border = productListLandscapeBackgroundBorder
             }
             ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                imageView = addProductPortraitBackground
-                border = addProductPortraitBackgroundBorder
+                //imageView = addProductPortraitBackground
+                //border = addProductPortraitBackgroundBorder
             }
             ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                imageView = addProductLandscapeBackground
-                border = addProductLandscapeBackgroundBorder
+                //imageView = addProductLandscapeBackground
+                //border = addProductLandscapeBackgroundBorder
             }
             ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
-                imageView = productItemBackgroundColor
-                border = productItemBackgroundColorBorder
+                //imageView = productItemBackgroundColor
+                //border = productItemBackgroundColorBorder
             }
             ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
-                imageView = productItemTextColor
-                border = productItemTextColorBorder
+                //imageView = productItemTextColor
+                //border = productItemTextColorBorder
             }
             ElementType.DELETE_ICON_COLOR -> {
-                imageView = deleteIconColor
-                border = deleteIconColorBorder
+                //imageView = deleteIconColor
+                //border = deleteIconColorBorder
             }
         }
 
-        imageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
-        imageView.drawable.setTint(color)
-        border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
+        //imageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
+        //imageView.drawable.setTint(color)
+        //border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
     }
 
     private fun setVisualizationBackground(view: View) {
