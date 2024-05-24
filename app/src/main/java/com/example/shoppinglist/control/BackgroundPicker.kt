@@ -1,6 +1,7 @@
 package com.example.shoppinglist.control
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -16,6 +17,7 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.view.BackgroundType
 import com.example.shoppinglist.view.ElementType
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import yuku.ambilwarna.AmbilWarnaDialog
 
 class BackgroundPicker @JvmOverloads constructor(
     context: Context,
@@ -28,6 +30,10 @@ class BackgroundPicker @JvmOverloads constructor(
     private val backgroundType = BackgroundType.getByBackgroundTypeId(attributes.getInt(R.styleable.BackgroundPicker_backgroundType, BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND.backgroundTypeId))
     private val labelColor = attributes.getColor(R.styleable.BackgroundPicker_labelColor, ResourcesCompat.getColor(resources, R.color.gray, null))
     private val label = attributes.getString(R.styleable.BackgroundPicker_label)
+
+    private lateinit var border: LinearLayout
+    private lateinit var labelView: TextView
+    private lateinit var thumbnail: ImageView
 
     private var onClick = OnClickListener {
         backgroundType?.let { it1 -> selectBackgroundType(it1) }
@@ -42,13 +48,20 @@ class BackgroundPicker @JvmOverloads constructor(
 
 
     private fun createView() {
-        val icon = ImageView(context)
-        icon.layoutParams = LayoutParams(getDP(80), getDP(80))
-        icon.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null))
-        icon.scaleType = ImageView.ScaleType.CENTER_CROP
+        border = LinearLayout(context)
+        border.layoutParams = LayoutParams(getDP(82), getDP(82))
+        border.gravity = Gravity.CENTER
+        border.setBackgroundResource(R.drawable.round_background)
+
+        thumbnail = ImageView(context)
+        thumbnail.layoutParams = LayoutParams(getDP(80), getDP(80))
+        thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null))
+        thumbnail.scaleType = ImageView.ScaleType.CENTER_CROP
+
+        border.addView(thumbnail)
 
 
-        val labelView = TextView(context)
+        labelView = TextView(context)
         labelView.gravity = Gravity.CENTER
         labelView.setPadding(0, getDP(8), 0, 0)
         labelView.setTextColor(labelColor)
@@ -57,11 +70,21 @@ class BackgroundPicker @JvmOverloads constructor(
         labelView.text = label
 
 
-        addView(icon)
+        addView(border)
         addView(labelView)
     }
 
     private fun getDP(dp: Int) = (dp * resources.displayMetrics.density).toInt()
+
+    private fun openColorPicker(elementType: ElementType) {
+        AmbilWarnaDialog(context, Color.MAGENTA, object : AmbilWarnaDialog.OnAmbilWarnaListener {
+            override fun onCancel(dialog: AmbilWarnaDialog?) {}
+
+            override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
+                setColor(elementType, color)
+            }
+        }).show()
+    }
 
     private fun selectBackgroundType(backgroundType: BackgroundType) {
         val backgroundTypePanel = BottomSheetDialog(context)
@@ -75,7 +98,7 @@ class BackgroundPicker @JvmOverloads constructor(
         backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_color).setOnClickListener {
             val elementType = ElementType.getByElementTypeId(backgroundType.backgroundTypeId)
             if (elementType != null) {
-                //openColorPicker(elementType)
+                openColorPicker(elementType)
             }
             backgroundTypePanel.dismiss()
         }
@@ -152,5 +175,45 @@ class BackgroundPicker @JvmOverloads constructor(
 
         backgroundTypePanel.setContentView(backgroundTypePanelView)
         backgroundTypePanel.show()
+    }
+
+    private fun setColor(elementType: ElementType, color: Int?) {
+        when (elementType) {
+            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                //productListPortraitBackgroundColor = color
+            }
+            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                //productListLandscapeBackgroundColor = color
+            }
+            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                //addProductPortraitBackgroundColor = color
+            }
+            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                //addProductLandscapeBackgroundColor = color
+            }
+            ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
+                if (color != null) {
+                    //setProductItemBackgroundColor(color)
+                }
+            }
+            ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
+                if (color != null) {
+                    //setProductItemTextColor(color)
+                }
+            }
+            ElementType.DELETE_ICON_COLOR -> {
+                if (color != null) {
+                    //setDeleteIconColor(color)
+                }
+            }
+        }
+
+        if (color != null) setSelectedColor(color)
+    }
+
+    private fun setSelectedColor(color: Int) {
+        thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
+        thumbnail.drawable.setTint(color)
+        border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
     }
 }
