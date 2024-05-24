@@ -19,7 +19,6 @@ import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.control.BackgroundPicker
 import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.slider.Slider
 import kotlinx.android.synthetic.main.product_item.*
 import yuku.ambilwarna.AmbilWarnaDialog
@@ -114,22 +113,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         nextButton.setOnClickListener {
             nextStep()
-        }
-
-        productListPortraitBackground.setOnClickListener {
-            selectBackgroundType(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
-        }
-
-        productListLandscapeBackground.setOnClickListener {
-            selectBackgroundType(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
-        }
-
-        addProductPortraitBackground.setOnClickListener {
-            selectBackgroundType(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
-        }
-
-        addProductLandscapeBackground.setOnClickListener {
-            selectBackgroundType(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
         }
     }
 
@@ -431,97 +414,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         finish()
     }
 
-    private fun selectBackgroundType(backgroundType: BackgroundType) {
-        val backgroundTypePanel = BottomSheetDialog(this)
-        val backgroundTypePanelView = LayoutInflater.from(this).inflate(R.layout.panel_background_type, findViewById(R.id.panel_background_type_container))
-
-        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_image).setOnClickListener {
-            openGallery(backgroundType)
-            backgroundTypePanel.dismiss()
-        }
-
-        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_color).setOnClickListener {
-            val elementType = ElementType.getByElementTypeId(backgroundType.backgroundTypeId)
-            if (elementType != null) {
-                openColorPicker(elementType)
-            }
-            backgroundTypePanel.dismiss()
-        }
-
-        var copyOptionVisibility = View.GONE
-        var copyOptionLabel = resources.getString(R.string.copy_portrait_background)
-        var removeOptionVisibility = View.GONE
-        when (backgroundType) {
-            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                if (productListPortraitBackgroundImage != null || productListPortraitBackgroundColor != null) {
-                    removeOptionVisibility = View.VISIBLE
-                }
-
-                if (productListLandscapeBackgroundImage != null || productListLandscapeBackgroundColor != null) {
-                    copyOptionVisibility = View.VISIBLE
-                    copyOptionLabel = resources.getString(R.string.copy_landscape_background)
-                }
-            }
-            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                if (productListLandscapeBackgroundImage != null || productListLandscapeBackgroundColor != null) {
-                    removeOptionVisibility = View.VISIBLE
-                }
-
-                if (productListPortraitBackgroundImage != null || productListPortraitBackgroundColor != null) {
-                    copyOptionVisibility = View.VISIBLE
-                }
-            }
-            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                if (addProductPortraitBackgroundImage != null || addProductPortraitBackgroundColor != null) {
-                    removeOptionVisibility = View.VISIBLE
-                }
-
-                if (addProductLandscapeBackgroundImage != null || addProductLandscapeBackgroundColor != null) {
-                    copyOptionVisibility = View.VISIBLE
-                    copyOptionLabel = resources.getString(R.string.copy_landscape_background)
-                }
-            }
-            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                if (addProductLandscapeBackgroundImage != null || addProductLandscapeBackgroundColor != null) {
-                    removeOptionVisibility = View.VISIBLE
-                }
-
-                if (addProductPortraitBackgroundImage != null || addProductPortraitBackgroundColor != null) {
-                    copyOptionVisibility = View.VISIBLE
-                }
-            }
-        }
-
-
-        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_remove).apply {
-            visibility = removeOptionVisibility
-            if (removeOptionVisibility == View.VISIBLE) {
-                setOnClickListener {
-                    removeBackground(backgroundType)
-                    backgroundTypePanel.dismiss()
-                }
-            }
-        }
-
-
-        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_copy).apply {
-            visibility = copyOptionVisibility
-            if (copyOptionVisibility == View.VISIBLE) {
-                setOnClickListener {
-                    copyBackground(backgroundType)
-                    backgroundTypePanel.dismiss()
-                }
-            }
-        }
-
-        if (copyOptionVisibility == View.VISIBLE) {
-            backgroundTypePanelView.findViewById<TextView>(R.id.panel_background_type_copy_label).text = copyOptionLabel
-        }
-
-        backgroundTypePanel.setContentView(backgroundTypePanelView)
-        backgroundTypePanel.show()
-    }
-
     private fun selectIcon(icon: Icon) {
         deleteIcon = icon
 
@@ -746,14 +638,25 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 }
 
-private enum class BackgroundType(val backgroundTypeId: Int) {
+enum class BackgroundType(val backgroundTypeId: Int) {
     PRODUCT_LIST_PORTRAIT_BACKGROUND(101),
     PRODUCT_LIST_LANDSCAPE_BACKGROUND(102),
     ADD_PRODUCT_PORTRAIT_BACKGROUND(103),
-    ADD_PRODUCT_LANDSCAPE_BACKGROUND(104)
+    ADD_PRODUCT_LANDSCAPE_BACKGROUND(104);
+
+    companion object {
+        fun getByBackgroundTypeId(backgroundTypeId: Int): BackgroundType? {
+            for (backgroundType in values()) {
+                if (backgroundType.backgroundTypeId == backgroundTypeId) {
+                    return backgroundType
+                }
+            }
+            return null
+        }
+    }
 }
 
-private enum class ElementType(val elementTypeId: Int) {
+enum class ElementType(val elementTypeId: Int) {
     PRODUCT_LIST_PORTRAIT_BACKGROUND(101),
     PRODUCT_LIST_LANDSCAPE_BACKGROUND(102),
     ADD_PRODUCT_PORTRAIT_BACKGROUND(103),
