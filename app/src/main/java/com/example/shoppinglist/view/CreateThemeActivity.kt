@@ -74,6 +74,15 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
+    private val onBackgroundSetListener = object : BackgroundPicker.OnBackgroundSetListener {
+        override fun onBackgroundSet(backgroundType: BackgroundType?, color: Int) {
+            if (backgroundType != null) {
+                val elementType = ElementType.getByElementTypeId(backgroundType.backgroundTypeId)
+                setColor(elementType, color)
+            }
+        }
+    }
+
     private val creatorSteps = ArrayList<Int>()
 
     private var productListPortraitBackgroundImage: ByteArray? = null
@@ -114,6 +123,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         nextButton.setOnClickListener {
             nextStep()
         }
+
+        productListPortraitBackground.setOnBackgroundSetListener(onBackgroundSetListener)
+        productListLandscapeBackground.setOnBackgroundSetListener(onBackgroundSetListener)
+        addProductPortraitBackground.setOnBackgroundSetListener(onBackgroundSetListener)
+        addProductLandscapeBackground.setOnBackgroundSetListener(onBackgroundSetListener)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -440,7 +454,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         setColor(ElementType.DELETE_ICON_COLOR, deleteIconColorValue)
     }
 
-    private fun setColor(elementType: ElementType, color: Int?) {
+    private fun setColor(elementType: ElementType?, color: Int?) {
         when (elementType) {
             ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundColor = color
@@ -471,7 +485,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             }
         }
 
-        if (color != null) setSelectedColor(elementType, color)
+        //if (color != null) setSelectedColor(elementType, color)
     }
 
     private fun setBackgroundSource(requestCode: Int, resultCode: Int, data: Intent?) {

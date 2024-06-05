@@ -39,6 +39,8 @@ class BackgroundPicker @JvmOverloads constructor(
         backgroundType?.let { it1 -> selectBackgroundType(it1) }
     }
 
+    private var onBackgroundSetListener: OnBackgroundSetListener? = null
+
 
     init {
         orientation = VERTICAL
@@ -46,6 +48,10 @@ class BackgroundPicker @JvmOverloads constructor(
         setOnClickListener(onClick)
     }
 
+
+    fun setOnBackgroundSetListener(onBackgroundSetListener: OnBackgroundSetListener) {
+        this.onBackgroundSetListener = onBackgroundSetListener
+    }
 
     private fun createView() {
         border = LinearLayout(context)
@@ -81,7 +87,7 @@ class BackgroundPicker @JvmOverloads constructor(
             override fun onCancel(dialog: AmbilWarnaDialog?) {}
 
             override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
-                setColor(elementType, color)
+                setSelectedColor(color)
             }
         }).show()
     }
@@ -177,43 +183,14 @@ class BackgroundPicker @JvmOverloads constructor(
         backgroundTypePanel.show()
     }
 
-    private fun setColor(elementType: ElementType, color: Int?) {
-        when (elementType) {
-            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                //productListPortraitBackgroundColor = color
-            }
-            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                //productListLandscapeBackgroundColor = color
-            }
-            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                //addProductPortraitBackgroundColor = color
-            }
-            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                //addProductLandscapeBackgroundColor = color
-            }
-            ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
-                if (color != null) {
-                    //setProductItemBackgroundColor(color)
-                }
-            }
-            ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
-                if (color != null) {
-                    //setProductItemTextColor(color)
-                }
-            }
-            ElementType.DELETE_ICON_COLOR -> {
-                if (color != null) {
-                    //setDeleteIconColor(color)
-                }
-            }
-        }
-
-        if (color != null) setSelectedColor(color)
-    }
-
     private fun setSelectedColor(color: Int) {
         thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
         thumbnail.drawable.setTint(color)
         border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
+        onBackgroundSetListener?.onBackgroundSet(backgroundType, color)
+    }
+
+    interface OnBackgroundSetListener {
+        fun onBackgroundSet(backgroundType: BackgroundType?, color: Int)
     }
 }
