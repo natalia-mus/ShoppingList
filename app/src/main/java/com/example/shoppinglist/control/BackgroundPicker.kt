@@ -1,8 +1,14 @@
 package com.example.shoppinglist.control
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Bundle
+import android.os.Handler
+import android.os.Parcelable
+import android.os.ResultReceiver
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -92,12 +98,27 @@ class BackgroundPicker @JvmOverloads constructor(
         }).show()
     }
 
+    private val resultReceiver = object : ResultReceiver(Handler()) {
+        override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+            super.onReceiveResult(resultCode, resultData)
+        }
+    }
+
+    private fun openGallery() {
+        if (backgroundType != null) {
+            val intent = Intent(context, GalleryActivity::class.java)
+            intent.putExtra(GalleryActivity.RESULT_RECEIVER, resultReceiver)
+            intent.putExtra(GalleryActivity.BACKGROUND_TYPE_ID, backgroundType.backgroundTypeId)
+            (context as Activity).startActivity(intent)
+        }
+    }
+
     private fun selectBackgroundType(backgroundType: BackgroundType) {
         val backgroundTypePanel = BottomSheetDialog(context)
         val backgroundTypePanelView = LayoutInflater.from(context).inflate(R.layout.panel_background_type, findViewById(R.id.panel_background_type_container))
 
         backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_image).setOnClickListener {
-            //openGallery(backgroundType)
+            openGallery()
             backgroundTypePanel.dismiss()
         }
 
@@ -192,5 +213,34 @@ class BackgroundPicker @JvmOverloads constructor(
 
     interface OnBackgroundSetListener {
         fun onBackgroundSet(backgroundType: BackgroundType?, color: Int)
+    }
+}
+
+class GalleryActivity : Activity() {
+
+    companion object {
+        const val BACKGROUND_TYPE_ID = "background_type_id"
+        const val RESULT_RECEIVER = "result_receiver"
+        private const val INTENT_TYPE_IMAGE = "image/*"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (intent.hasExtra(BACKGROUND_TYPE_ID)) {
+            val backgroundTypeId = intent.getIntExtra(BACKGROUND_TYPE_ID, BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND.backgroundTypeId)
+
+            if (backgroundTypeId != 0) {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = INTENT_TYPE_IMAGE
+                startActivityForResult(intent, backgroundTypeId)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        (intent.getParcelableExtra<Parcelable>(RESULT_RECEIVER) as ResultReceiver).send(RESULT_OK, Bundle())
+        finish()
     }
 }

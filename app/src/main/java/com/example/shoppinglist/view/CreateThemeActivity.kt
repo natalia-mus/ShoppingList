@@ -29,7 +29,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         private const val DEFAULT_BACKGROUND_COLOR = Color.BLACK
         private const val DEFAULT_BACKGROUND_ALFA = 0.3f
         private const val DEFAULT_TEXT_COLOR = Color.WHITE
-        private const val INTENT_TYPE_IMAGE = "image/*"
     }
 
     private lateinit var presenter: CreateThemeActivityContract.CreateThemeActivityPresenter
@@ -356,12 +355,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 setColor(elementType, color)
             }
         }).show()
-    }
-
-    private fun openGallery(backgroundType: BackgroundType) {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = INTENT_TYPE_IMAGE
-        startActivityForResult(intent, backgroundType.backgroundTypeId)
     }
 
     private fun populateCreatorStepsList() {
