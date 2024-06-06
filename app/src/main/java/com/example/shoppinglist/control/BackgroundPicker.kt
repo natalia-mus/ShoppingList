@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Parcelable
@@ -18,7 +19,9 @@ import android.view.View.OnClickListener
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.view.BackgroundType
 import com.example.shoppinglist.view.ElementType
@@ -101,6 +104,8 @@ class BackgroundPicker @JvmOverloads constructor(
     private val resultReceiver = object : ResultReceiver(Handler()) {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
             super.onReceiveResult(resultCode, resultData)
+            val imageUri = resultData?.getString(GalleryActivity.IMAGE_URI)
+            setBackgroundSource(resultCode, imageUri)
         }
     }
 
@@ -204,15 +209,37 @@ class BackgroundPicker @JvmOverloads constructor(
         backgroundTypePanel.show()
     }
 
+    private fun setBackgroundSource(resultCode: Int, imageUri: String?) {
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            if (imageUri != null) {
+                val image = ImageUtils.getImageAsByteArray(context, Uri.parse(imageUri))
+                setImageBackground(thumbnail, image)
+
+                if (backgroundType != null) {
+                    onBackgroundSetListener?.onImageSet(backgroundType, image)
+                }
+            }
+        }
+    }
+
+    private fun setImageBackground(imageView: ImageView, background: ByteArray?) {
+        imageView.setImageDrawable(null)
+        if (background != null) {
+            val drawable = ImageUtils.getImageAsDrawable(context, background)
+            imageView.background = drawable
+        }
+    }
+
     private fun setSelectedColor(color: Int) {
         thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
         thumbnail.drawable.setTint(color)
         border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
-        onBackgroundSetListener?.onBackgroundSet(backgroundType, color)
+        onBackgroundSetListener?.onColorSet(backgroundType, color)
     }
 
     interface OnBackgroundSetListener {
-        fun onBackgroundSet(backgroundType: BackgroundType?, color: Int)
+        fun onColorSet(backgroundType: BackgroundType?, color: Int)
+        fun onImageSet(backgroundType: BackgroundType?, image: ByteArray)
     }
 }
 
@@ -220,6 +247,7 @@ class GalleryActivity : Activity() {
 
     companion object {
         const val BACKGROUND_TYPE_ID = "background_type_id"
+        const val IMAGE_URI = "image_uri"
         const val RESULT_RECEIVER = "result_receiver"
         private const val INTENT_TYPE_IMAGE = "image/*"
     }
@@ -240,7 +268,8 @@ class GalleryActivity : Activity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        (intent.getParcelableExtra<Parcelable>(RESULT_RECEIVER) as ResultReceiver).send(RESULT_OK, Bundle())
+        val imageUri = data?.data.toString()
+        (intent.getParcelableExtra<Parcelable>(RESULT_RECEIVER) as ResultReceiver).send(RESULT_OK, Bundle().apply { putString(IMAGE_URI, imageUri) })
         finish()
     }
 }
