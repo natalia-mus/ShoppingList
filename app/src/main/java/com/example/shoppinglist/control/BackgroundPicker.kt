@@ -24,7 +24,6 @@ import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.view.BackgroundType
-import com.example.shoppinglist.view.ElementType
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import yuku.ambilwarna.AmbilWarnaDialog
 
@@ -91,7 +90,7 @@ class BackgroundPicker @JvmOverloads constructor(
 
     private fun getDP(dp: Int) = (dp * resources.displayMetrics.density).toInt()
 
-    private fun openColorPicker(elementType: ElementType) {
+    private fun openColorPicker() {
         AmbilWarnaDialog(context, Color.MAGENTA, object : AmbilWarnaDialog.OnAmbilWarnaListener {
             override fun onCancel(dialog: AmbilWarnaDialog?) {}
 
@@ -128,10 +127,7 @@ class BackgroundPicker @JvmOverloads constructor(
         }
 
         backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_color).setOnClickListener {
-            val elementType = ElementType.getByElementTypeId(backgroundType.backgroundTypeId)
-            if (elementType != null) {
-                openColorPicker(elementType)
-            }
+            openColorPicker()
             backgroundTypePanel.dismiss()
         }
 

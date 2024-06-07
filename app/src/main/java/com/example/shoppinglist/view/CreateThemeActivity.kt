@@ -451,15 +451,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         when (elementType) {
             ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundColor = color
+                productListPortraitBackgroundImage = null
             }
             ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListLandscapeBackgroundColor = color
+                productListLandscapeBackgroundImage = null
             }
             ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductPortraitBackgroundColor = color
+                addProductPortraitBackgroundImage = null
             }
             ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundColor = color
+                addProductLandscapeBackgroundImage = null
             }
             ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
                 if (color != null) {
@@ -485,15 +489,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         when (backgroundType) {
             BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundImage = image
+                productListPortraitBackgroundColor = null
             }
             BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListLandscapeBackgroundImage = image
+                productListLandscapeBackgroundColor = null
             }
             BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductPortraitBackgroundImage = image
+                addProductPortraitBackgroundColor = null
             }
             BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundImage = image
+                addProductLandscapeBackgroundColor = null
             }
         }
     }
