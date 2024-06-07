@@ -14,7 +14,6 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.OnClickListener
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -43,8 +42,10 @@ class BackgroundPicker @JvmOverloads constructor(
     private lateinit var labelView: TextView
     private lateinit var thumbnail: ImageView
 
+    private var isValueSet = false
+
     private var onClick = OnClickListener {
-        backgroundType?.let { it1 -> selectBackgroundType(it1) }
+        selectBackgroundType()
     }
 
     private var onBackgroundSetListener: OnBackgroundSetListener? = null
@@ -117,7 +118,15 @@ class BackgroundPicker @JvmOverloads constructor(
         }
     }
 
-    private fun selectBackgroundType(backgroundType: BackgroundType) {
+    private fun removeBackground() {
+        val background = ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null)
+        thumbnail.background = null
+        thumbnail.setImageDrawable(background)
+        border.background?.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
+        isValueSet = false
+    }
+
+    private fun selectBackgroundType() {
         val backgroundTypePanel = BottomSheetDialog(context)
         val backgroundTypePanelView = LayoutInflater.from(context).inflate(R.layout.panel_background_type, findViewById(R.id.panel_background_type_container))
 
@@ -131,75 +140,15 @@ class BackgroundPicker @JvmOverloads constructor(
             backgroundTypePanel.dismiss()
         }
 
-        var copyOptionVisibility = View.GONE
-        var copyOptionLabel = resources.getString(R.string.copy_portrait_background)
-        var removeOptionVisibility = View.GONE
-//        when (backgroundType) {
-//            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-//                if (productListPortraitBackgroundImage != null || productListPortraitBackgroundColor != null) {
-//                    removeOptionVisibility = View.VISIBLE
-//                }
-//
-//                if (productListLandscapeBackgroundImage != null || productListLandscapeBackgroundColor != null) {
-//                    copyOptionVisibility = View.VISIBLE
-//                    copyOptionLabel = resources.getString(R.string.copy_landscape_background)
-//                }
-//            }
-//            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-//                if (productListLandscapeBackgroundImage != null || productListLandscapeBackgroundColor != null) {
-//                    removeOptionVisibility = View.VISIBLE
-//                }
-//
-//                if (productListPortraitBackgroundImage != null || productListPortraitBackgroundColor != null) {
-//                    copyOptionVisibility = View.VISIBLE
-//                }
-//            }
-//            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-//                if (addProductPortraitBackgroundImage != null || addProductPortraitBackgroundColor != null) {
-//                    removeOptionVisibility = View.VISIBLE
-//                }
-//
-//                if (addProductLandscapeBackgroundImage != null || addProductLandscapeBackgroundColor != null) {
-//                    copyOptionVisibility = View.VISIBLE
-//                    copyOptionLabel = resources.getString(R.string.copy_landscape_background)
-//                }
-//            }
-//            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-//                if (addProductLandscapeBackgroundImage != null || addProductLandscapeBackgroundColor != null) {
-//                    removeOptionVisibility = View.VISIBLE
-//                }
-//
-//                if (addProductPortraitBackgroundImage != null || addProductPortraitBackgroundColor != null) {
-//                    copyOptionVisibility = View.VISIBLE
-//                }
-//            }
-//        }
-
-
-//        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_remove).apply {
-//            visibility = removeOptionVisibility
-//            if (removeOptionVisibility == View.VISIBLE) {
-//                setOnClickListener {
-//                    removeBackground(backgroundType)
-//                    backgroundTypePanel.dismiss()
-//                }
-//            }
-//        }
-
-
-//        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_copy).apply {
-//            visibility = copyOptionVisibility
-//            if (copyOptionVisibility == View.VISIBLE) {
-//                setOnClickListener {
-//                    copyBackground(backgroundType)
-//                    backgroundTypePanel.dismiss()
-//                }
-//            }
-//        }
-
-//        if (copyOptionVisibility == View.VISIBLE) {
-//            backgroundTypePanelView.findViewById<TextView>(R.id.panel_background_type_copy_label).text = copyOptionLabel
-//        }
+        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_remove).apply {
+            visibility = if (isValueSet) VISIBLE else GONE
+            if (isValueSet) {
+                setOnClickListener {
+                    removeBackground()
+                    backgroundTypePanel.dismiss()
+                }
+            }
+        }
 
         backgroundTypePanel.setContentView(backgroundTypePanelView)
         backgroundTypePanel.show()
@@ -209,7 +158,7 @@ class BackgroundPicker @JvmOverloads constructor(
         if (resultCode == AppCompatActivity.RESULT_OK) {
             if (imageUri != null) {
                 val image = ImageUtils.getImageAsByteArray(context, Uri.parse(imageUri))
-                setImageBackground(thumbnail, image)
+                setSelectedImage(thumbnail, image)
 
                 if (backgroundType != null) {
                     onBackgroundSetListener?.onImageSet(backgroundType, image)
@@ -218,11 +167,12 @@ class BackgroundPicker @JvmOverloads constructor(
         }
     }
 
-    private fun setImageBackground(imageView: ImageView, background: ByteArray?) {
-        imageView.setImageDrawable(null)
+    private fun setSelectedImage(imageView: ImageView, background: ByteArray?) {
         if (background != null) {
+            imageView.setImageDrawable(null)
             val drawable = ImageUtils.getImageAsDrawable(context, background)
             imageView.background = drawable
+            isValueSet = true
         }
     }
 
@@ -231,6 +181,7 @@ class BackgroundPicker @JvmOverloads constructor(
         thumbnail.drawable.setTint(color)
         border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
         onBackgroundSetListener?.onColorSet(backgroundType, color)
+        isValueSet = true
     }
 
     interface OnBackgroundSetListener {
