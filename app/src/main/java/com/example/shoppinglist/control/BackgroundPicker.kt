@@ -62,6 +62,27 @@ class BackgroundPicker @JvmOverloads constructor(
         this.onBackgroundSetListener = onBackgroundSetListener
     }
 
+    fun setSelectedColor(color: Int) {
+        thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
+        thumbnail.drawable.setTint(color)
+        border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
+        onBackgroundSetListener?.onColorSet(backgroundType, color)
+        isValueSet = true
+    }
+
+    fun setSelectedImage(background: ByteArray?) {
+        if (background != null) {
+            thumbnail.setImageDrawable(null)
+            val drawable = ImageUtils.getImageAsDrawable(context, background)
+            thumbnail.background = drawable
+            isValueSet = true
+        }
+    }
+
+    private fun copyBackground() {
+        onBackgroundSetListener?.onCopyBackground(backgroundType)
+    }
+
     private fun createView() {
         border = LinearLayout(context)
         border.layoutParams = LayoutParams(getDP(82), getDP(82))
@@ -150,6 +171,16 @@ class BackgroundPicker @JvmOverloads constructor(
             }
         }
 
+        backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_copy).apply {
+            visibility = if (isValueSet) VISIBLE else GONE
+            if (isValueSet) {
+                setOnClickListener {
+                    copyBackground()
+                    backgroundTypePanel.dismiss()
+                }
+            }
+        }
+
         backgroundTypePanel.setContentView(backgroundTypePanelView)
         backgroundTypePanel.show()
     }
@@ -158,7 +189,7 @@ class BackgroundPicker @JvmOverloads constructor(
         if (resultCode == AppCompatActivity.RESULT_OK) {
             if (imageUri != null) {
                 val image = ImageUtils.getImageAsByteArray(context, Uri.parse(imageUri))
-                setSelectedImage(thumbnail, image)
+                setSelectedImage(image)
 
                 if (backgroundType != null) {
                     onBackgroundSetListener?.onImageSet(backgroundType, image)
@@ -167,24 +198,8 @@ class BackgroundPicker @JvmOverloads constructor(
         }
     }
 
-    private fun setSelectedImage(imageView: ImageView, background: ByteArray?) {
-        if (background != null) {
-            imageView.setImageDrawable(null)
-            val drawable = ImageUtils.getImageAsDrawable(context, background)
-            imageView.background = drawable
-            isValueSet = true
-        }
-    }
-
-    private fun setSelectedColor(color: Int) {
-        thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
-        thumbnail.drawable.setTint(color)
-        border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
-        onBackgroundSetListener?.onColorSet(backgroundType, color)
-        isValueSet = true
-    }
-
     interface OnBackgroundSetListener {
+        fun onCopyBackground(backgroundType: BackgroundType?)
         fun onColorSet(backgroundType: BackgroundType?, color: Int)
         fun onImageSet(backgroundType: BackgroundType?, image: ByteArray)
     }

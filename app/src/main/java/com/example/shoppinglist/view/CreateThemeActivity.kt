@@ -73,6 +73,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private val onBackgroundSetListener = object : BackgroundPicker.OnBackgroundSetListener {
+        override fun onCopyBackground(backgroundType: BackgroundType?) {
+            copyBackground(backgroundType)
+        }
+
         override fun onColorSet(backgroundType: BackgroundType?, color: Int) {
             if (backgroundType != null) {
                 val elementType = ElementType.getByElementTypeId(backgroundType.backgroundTypeId)
@@ -143,42 +147,46 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun copyBackground(backgroundToSet: BackgroundType) {
-        when (backgroundToSet) {
+    private fun copyBackground(backgroundType: BackgroundType?) {
+        when (backgroundType) {
             BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 if (productListLandscapeBackgroundImage != null) {
-                    productListPortraitBackgroundImage = productListLandscapeBackgroundImage
-                    //setImageBackground(productListPortraitBackground, productListPortraitBackgroundImage)
+                    setImage(backgroundType, productListLandscapeBackgroundImage!!)
+                    productListPortraitBackground.setSelectedImage(productListLandscapeBackgroundImage)
 
                 } else if (productListLandscapeBackgroundColor != null) {
                     setColor(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListLandscapeBackgroundColor)
+                    productListPortraitBackground.setSelectedColor(productListLandscapeBackgroundColor!!)
                 }
             }
             BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 if (productListPortraitBackgroundImage != null) {
-                    productListLandscapeBackgroundImage = productListPortraitBackgroundImage
-                    //setImageBackground(productListLandscapeBackground, productListLandscapeBackgroundImage)
+                    setImage(backgroundType, productListPortraitBackgroundImage!!)
+                    productListPortraitBackground.setSelectedImage(productListPortraitBackgroundImage)
 
                 } else if (productListPortraitBackgroundColor != null) {
                     setColor(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListPortraitBackgroundColor)
+                    productListPortraitBackground.setSelectedColor(productListPortraitBackgroundColor!!)
                 }
             }
             BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 if (addProductLandscapeBackgroundImage != null) {
-                    addProductPortraitBackgroundImage = addProductLandscapeBackgroundImage
-                    //setImageBackground(addProductPortraitBackground, addProductPortraitBackgroundImage)
+                    setImage(backgroundType, addProductLandscapeBackgroundImage!!)
+                    productListPortraitBackground.setSelectedImage(addProductLandscapeBackgroundImage)
 
                 } else if (addProductLandscapeBackgroundColor != null) {
                     setColor(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductLandscapeBackgroundColor)
+                    productListPortraitBackground.setSelectedColor(addProductLandscapeBackgroundColor!!)
                 }
             }
             BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 if (addProductPortraitBackgroundImage != null) {
-                    addProductLandscapeBackgroundImage = addProductPortraitBackgroundImage
-                    //setImageBackground(addProductLandscapeBackground, addProductLandscapeBackgroundImage)
+                    setImage(backgroundType, addProductPortraitBackgroundImage!!)
+                    productListPortraitBackground.setSelectedImage(addProductPortraitBackgroundImage)
 
                 } else if (addProductPortraitBackgroundColor != null) {
                     setColor(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductPortraitBackgroundColor)
+                    productListPortraitBackground.setSelectedColor(addProductPortraitBackgroundColor!!)
                 }
             }
         }
