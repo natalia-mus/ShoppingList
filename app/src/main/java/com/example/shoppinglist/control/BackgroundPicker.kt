@@ -35,6 +35,7 @@ class BackgroundPicker @JvmOverloads constructor(
     private val attributes = context.obtainStyledAttributes(attrs, R.styleable.BackgroundPicker)
 
     private val backgroundType = BackgroundType.getByBackgroundTypeId(attributes.getInt(R.styleable.BackgroundPicker_backgroundType, BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND.backgroundTypeId))
+    private val copyOptionLabel = attributes.getString(R.styleable.BackgroundPicker_copyOptionLabel)
     private val labelColor = attributes.getColor(R.styleable.BackgroundPicker_labelColor, ResourcesCompat.getColor(resources, R.color.gray, null))
     private val label = attributes.getString(R.styleable.BackgroundPicker_label)
 
@@ -43,6 +44,7 @@ class BackgroundPicker @JvmOverloads constructor(
     private lateinit var thumbnail: ImageView
 
     private var isValueSet = false
+    private var showCopyOption = false
 
     private var onClick = OnClickListener {
         selectBackgroundType()
@@ -77,6 +79,10 @@ class BackgroundPicker @JvmOverloads constructor(
             thumbnail.background = drawable
             isValueSet = true
         }
+    }
+
+    fun showCopyOption(show: Boolean) {
+        showCopyOption = show
     }
 
     private fun copyBackground() {
@@ -172,8 +178,9 @@ class BackgroundPicker @JvmOverloads constructor(
         }
 
         backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_copy).apply {
-            visibility = if (isValueSet) VISIBLE else GONE
+            visibility = if (showCopyOption) VISIBLE else GONE
             if (isValueSet) {
+                backgroundTypePanelView.findViewById<TextView>(R.id.panel_background_type_copy_label).text = copyOptionLabel
                 setOnClickListener {
                     copyBackground()
                     backgroundTypePanel.dismiss()

@@ -81,12 +81,14 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             if (backgroundType != null) {
                 val elementType = ElementType.getByElementTypeId(backgroundType.backgroundTypeId)
                 setColor(elementType, color)
+                setCopyOptionVisibility(backgroundType, true)
             }
         }
 
         override fun onImageSet(backgroundType: BackgroundType?, image: ByteArray) {
             if (backgroundType != null) {
                 setImage(backgroundType, image)
+                setCopyOptionVisibility(backgroundType, true)
             }
         }
     }
@@ -482,6 +484,23 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             productItemNameLabel.typeface = Typeface.DEFAULT_BOLD
         } else {
             productItemNameLabel.typeface = Typeface.DEFAULT
+        }
+    }
+
+    private fun setCopyOptionVisibility(backgroundType: BackgroundType, visible: Boolean) {
+        when (backgroundType) {
+            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                productListLandscapeBackground.showCopyOption(visible)
+            }
+            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                productListPortraitBackground.showCopyOption(visible)
+            }
+            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                addProductLandscapeBackground.showCopyOption(visible)
+            }
+            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                addProductPortraitBackground.showCopyOption(visible)
+            }
         }
     }
 
