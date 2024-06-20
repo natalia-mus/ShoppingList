@@ -145,14 +145,6 @@ class BackgroundPicker @JvmOverloads constructor(
         }
     }
 
-    private fun removeBackground() {
-        val background = ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null)
-        thumbnail.background = null
-        thumbnail.setImageDrawable(background)
-        border.background?.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
-        isValueSet = false
-    }
-
     private fun selectBackgroundType() {
         val backgroundTypePanel = BottomSheetDialog(context)
         val backgroundTypePanelView = LayoutInflater.from(context).inflate(R.layout.panel_background_type, findViewById(R.id.panel_background_type_container))
@@ -171,7 +163,6 @@ class BackgroundPicker @JvmOverloads constructor(
             visibility = if (isValueSet) VISIBLE else GONE
             if (isValueSet) {
                 setOnClickListener {
-                    removeBackground()
                     backgroundTypePanel.dismiss()
                 }
             }
@@ -179,7 +170,7 @@ class BackgroundPicker @JvmOverloads constructor(
 
         backgroundTypePanelView.findViewById<LinearLayout>(R.id.panel_background_type_copy).apply {
             visibility = if (showCopyOption) VISIBLE else GONE
-            if (isValueSet) {
+            if (showCopyOption) {
                 backgroundTypePanelView.findViewById<TextView>(R.id.panel_background_type_copy_label).text = copyOptionLabel
                 setOnClickListener {
                     copyBackground()

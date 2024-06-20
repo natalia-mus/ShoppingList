@@ -150,45 +150,47 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun copyBackground(backgroundType: BackgroundType?) {
-        when (backgroundType) {
-            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                if (productListLandscapeBackgroundImage != null) {
-                    setImage(backgroundType, productListLandscapeBackgroundImage!!)
-                    productListPortraitBackground.setSelectedImage(productListLandscapeBackgroundImage)
+        if (backgroundType != null) {
+            when (backgroundType) {
+                BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                    if (productListLandscapeBackgroundImage != null) {
+                        setImage(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundImage!!)
+                        productListPortraitBackground.setSelectedImage(productListLandscapeBackgroundImage)
 
-                } else if (productListLandscapeBackgroundColor != null) {
-                    setColor(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListLandscapeBackgroundColor)
-                    productListPortraitBackground.setSelectedColor(productListLandscapeBackgroundColor!!)
+                    } else if (productListLandscapeBackgroundColor != null) {
+                        setColor(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundColor)
+                        productListPortraitBackground.setSelectedColor(productListLandscapeBackgroundColor!!)
+                    }
                 }
-            }
-            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                if (productListPortraitBackgroundImage != null) {
-                    setImage(backgroundType, productListPortraitBackgroundImage!!)
-                    productListPortraitBackground.setSelectedImage(productListPortraitBackgroundImage)
+                BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                    if (productListPortraitBackgroundImage != null) {
+                        setImage(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundImage!!)
+                        productListLandscapeBackground.setSelectedImage(productListPortraitBackgroundImage)
 
-                } else if (productListPortraitBackgroundColor != null) {
-                    setColor(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListPortraitBackgroundColor)
-                    productListPortraitBackground.setSelectedColor(productListPortraitBackgroundColor!!)
+                    } else if (productListPortraitBackgroundColor != null) {
+                        setColor(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundColor)
+                        productListLandscapeBackground.setSelectedColor(productListPortraitBackgroundColor!!)
+                    }
                 }
-            }
-            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                if (addProductLandscapeBackgroundImage != null) {
-                    setImage(backgroundType, addProductLandscapeBackgroundImage!!)
-                    productListPortraitBackground.setSelectedImage(addProductLandscapeBackgroundImage)
+                BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                    if (addProductLandscapeBackgroundImage != null) {
+                        setImage(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundImage!!)
+                        addProductPortraitBackground.setSelectedImage(addProductLandscapeBackgroundImage)
 
-                } else if (addProductLandscapeBackgroundColor != null) {
-                    setColor(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductLandscapeBackgroundColor)
-                    productListPortraitBackground.setSelectedColor(addProductLandscapeBackgroundColor!!)
+                    } else if (addProductLandscapeBackgroundColor != null) {
+                        setColor(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundColor)
+                        addProductPortraitBackground.setSelectedColor(addProductLandscapeBackgroundColor!!)
+                    }
                 }
-            }
-            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                if (addProductPortraitBackgroundImage != null) {
-                    setImage(backgroundType, addProductPortraitBackgroundImage!!)
-                    productListPortraitBackground.setSelectedImage(addProductPortraitBackgroundImage)
+                BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                    if (addProductPortraitBackgroundImage != null) {
+                        setImage(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundImage!!)
+                        addProductLandscapeBackground.setSelectedImage(addProductPortraitBackgroundImage)
 
-                } else if (addProductPortraitBackgroundColor != null) {
-                    setColor(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductPortraitBackgroundColor)
-                    productListPortraitBackground.setSelectedColor(addProductPortraitBackgroundColor!!)
+                    } else if (addProductPortraitBackgroundColor != null) {
+                        setColor(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundColor)
+                        addProductLandscapeBackground.setSelectedColor(addProductPortraitBackgroundColor!!)
+                    }
                 }
             }
         }
