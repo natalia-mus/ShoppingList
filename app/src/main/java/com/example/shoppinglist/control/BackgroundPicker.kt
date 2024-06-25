@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
+import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.view.BackgroundType
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import yuku.ambilwarna.AmbilWarnaDialog
@@ -64,7 +65,7 @@ class BackgroundPicker @JvmOverloads constructor(
         val background = ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null)
         thumbnail.background = null
         thumbnail.setImageDrawable(background)
-        border.background?.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
+        setBorderVisibility(false)
         isValueSet = false
     }
 
@@ -75,7 +76,7 @@ class BackgroundPicker @JvmOverloads constructor(
     fun setSelectedColor(color: Int) {
         thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
         thumbnail.drawable.setTint(color)
-        border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
+        setBorderVisibility(true)
         onBackgroundSetListener?.onColorSet(backgroundType, color)
         isValueSet = true
     }
@@ -102,6 +103,7 @@ class BackgroundPicker @JvmOverloads constructor(
         border.layoutParams = LayoutParams(getDP(82), getDP(82))
         border.gravity = Gravity.CENTER
         border.setBackgroundResource(R.drawable.round_background)
+        setBorderVisibility(false)
 
         thumbnail = ImageView(context)
         thumbnail.layoutParams = LayoutParams(getDP(80), getDP(80))
@@ -195,7 +197,7 @@ class BackgroundPicker @JvmOverloads constructor(
 
     private fun setBackgroundSource(resultCode: Int, imageUri: String?) {
         if (resultCode == AppCompatActivity.RESULT_OK) {
-            if (imageUri != null) {
+            if (imageUri != null && imageUri != Constants.NULL) {
                 val image = ImageUtils.getImageAsByteArray(context, Uri.parse(imageUri))
                 setSelectedImage(image)
 
@@ -203,6 +205,14 @@ class BackgroundPicker @JvmOverloads constructor(
                     onBackgroundSetListener?.onImageSet(backgroundType, image)
                 }
             }
+        }
+    }
+
+    private fun setBorderVisibility(visible: Boolean) {
+        if (visible) {
+            border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
+        } else {
+            border.background?.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
         }
     }
 
