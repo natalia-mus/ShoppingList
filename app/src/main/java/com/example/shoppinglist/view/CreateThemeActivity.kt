@@ -91,6 +91,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 setCopyOptionVisibility(backgroundType, true)
             }
         }
+
+        override fun onRemoveBackground(backgroundType: BackgroundType?) {
+            removeBackground(backgroundType)
+        }
     }
 
     private val creatorSteps = ArrayList<Int>()
@@ -153,6 +157,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         if (backgroundType != null) {
             when (backgroundType) {
                 BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                    removeBackground(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
                     if (productListLandscapeBackgroundImage != null) {
                         setImage(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundImage!!)
                         productListPortraitBackground.setSelectedImage(productListLandscapeBackgroundImage)
@@ -163,6 +168,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                     }
                 }
                 BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                    removeBackground(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
                     if (productListPortraitBackgroundImage != null) {
                         setImage(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundImage!!)
                         productListLandscapeBackground.setSelectedImage(productListPortraitBackgroundImage)
@@ -173,6 +179,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                     }
                 }
                 BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                    removeBackground(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
                     if (addProductLandscapeBackgroundImage != null) {
                         setImage(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundImage!!)
                         addProductPortraitBackground.setSelectedImage(addProductLandscapeBackgroundImage)
@@ -183,6 +190,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                     }
                 }
                 BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                    removeBackground(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
                     if (addProductPortraitBackgroundImage != null) {
                         setImage(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundImage!!)
                         addProductLandscapeBackground.setSelectedImage(addProductPortraitBackgroundImage)
@@ -373,6 +381,35 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         creatorSteps.add(0, R.layout.activity_create_theme_first_step)
         creatorSteps.add(1, R.layout.activity_create_theme_second_step)
         creatorSteps.add(2, R.layout.activity_create_theme_last_step)
+    }
+
+    private fun removeBackground(backgroundType: BackgroundType?) {
+        when (backgroundType) {
+            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                productListPortraitBackgroundColor = null
+                productListPortraitBackgroundImage = null
+                productListPortraitBackground.removeBackground()
+                productListLandscapeBackground.showCopyOption(false)
+            }
+            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                productListLandscapeBackgroundColor = null
+                productListLandscapeBackgroundImage = null
+                productListLandscapeBackground.removeBackground()
+                productListPortraitBackground.showCopyOption(false)
+            }
+            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                addProductPortraitBackgroundColor = null
+                addProductPortraitBackgroundImage = null
+                addProductPortraitBackground.removeBackground()
+                addProductLandscapeBackground.showCopyOption(false)
+            }
+            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                addProductLandscapeBackgroundColor = null
+                addProductLandscapeBackgroundImage = null
+                addProductLandscapeBackground.removeBackground()
+                addProductPortraitBackground.showCopyOption(false)
+            }
+        }
     }
 
     private fun saveTheme() {

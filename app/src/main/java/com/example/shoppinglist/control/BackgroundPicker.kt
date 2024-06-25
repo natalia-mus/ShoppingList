@@ -60,6 +60,14 @@ class BackgroundPicker @JvmOverloads constructor(
     }
 
 
+    fun removeBackground() {
+        val background = ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null)
+        thumbnail.background = null
+        thumbnail.setImageDrawable(background)
+        border.background?.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
+        isValueSet = false
+    }
+
     fun setOnBackgroundSetListener(onBackgroundSetListener: OnBackgroundSetListener) {
         this.onBackgroundSetListener = onBackgroundSetListener
     }
@@ -163,6 +171,8 @@ class BackgroundPicker @JvmOverloads constructor(
             visibility = if (isValueSet) VISIBLE else GONE
             if (isValueSet) {
                 setOnClickListener {
+                    removeBackground()
+                    onBackgroundSetListener?.onRemoveBackground(backgroundType)
                     backgroundTypePanel.dismiss()
                 }
             }
@@ -200,6 +210,7 @@ class BackgroundPicker @JvmOverloads constructor(
         fun onCopyBackground(backgroundType: BackgroundType?)
         fun onColorSet(backgroundType: BackgroundType?, color: Int)
         fun onImageSet(backgroundType: BackgroundType?, image: ByteArray)
+        fun onRemoveBackground(backgroundType: BackgroundType?)
     }
 }
 
