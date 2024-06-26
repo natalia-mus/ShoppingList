@@ -24,21 +24,22 @@ import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.view.BackgroundType
+import com.example.shoppinglist.view.ElementType
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import yuku.ambilwarna.AmbilWarnaDialog
 
-class BackgroundPicker @JvmOverloads constructor(
+class ImageColorPicker @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private val attributes = context.obtainStyledAttributes(attrs, R.styleable.BackgroundPicker)
+    private val attributes = context.obtainStyledAttributes(attrs, R.styleable.ImageColorPicker)
 
-    private val backgroundType = BackgroundType.getByBackgroundTypeId(attributes.getInt(R.styleable.BackgroundPicker_backgroundType, BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND.backgroundTypeId))
-    private val copyOptionLabel = attributes.getString(R.styleable.BackgroundPicker_copyOptionLabel)
-    private val labelColor = attributes.getColor(R.styleable.BackgroundPicker_labelColor, ResourcesCompat.getColor(resources, R.color.gray, null))
-    private val label = attributes.getString(R.styleable.BackgroundPicker_label)
+    private val copyOptionLabel = attributes.getString(R.styleable.ImageColorPicker_copyOptionLabel)
+    private val elementType = ElementType.getByElementTypeId(attributes.getInt(R.styleable.ImageColorPicker_elementType, ElementType.PRODUCT_ITEM_TEXT_COLOR.elementTypeId))
+    private val labelColor = attributes.getColor(R.styleable.ImageColorPicker_labelColor, ResourcesCompat.getColor(resources, R.color.gray, null))
+    private val label = attributes.getString(R.styleable.ImageColorPicker_label)
 
     private lateinit var border: LinearLayout
     private lateinit var labelView: TextView
@@ -48,7 +49,11 @@ class BackgroundPicker @JvmOverloads constructor(
     private var showCopyOption = false
 
     private var onClick = OnClickListener {
-        selectBackgroundType()
+        if (canSetImageOrColor()) {
+            selectBackgroundType()
+        } else {
+            openColorPicker()
+        }
     }
 
     private var onBackgroundSetListener: OnBackgroundSetListener? = null
@@ -56,6 +61,7 @@ class BackgroundPicker @JvmOverloads constructor(
 
     init {
         orientation = VERTICAL
+        gravity = Gravity.CENTER
         createView()
         setOnClickListener(onClick)
     }
@@ -77,7 +83,7 @@ class BackgroundPicker @JvmOverloads constructor(
         thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
         thumbnail.drawable.setTint(color)
         setBorderVisibility(true)
-        onBackgroundSetListener?.onColorSet(backgroundType, color)
+        onBackgroundSetListener?.onColorSet(elementType, color)
         isValueSet = true
     }
 
@@ -94,8 +100,12 @@ class BackgroundPicker @JvmOverloads constructor(
         showCopyOption = show
     }
 
+    private fun canSetImageOrColor(): Boolean {
+        return elementType != null && (BackgroundType.getByBackgroundTypeId(elementType.elementTypeId) != null)
+    }
+
     private fun copyBackground() {
-        onBackgroundSetListener?.onCopyBackground(backgroundType)
+        onBackgroundSetListener?.onCopyBackground(elementType)
     }
 
     private fun createView() {
@@ -107,6 +117,7 @@ class BackgroundPicker @JvmOverloads constructor(
 
         thumbnail = ImageView(context)
         thumbnail.layoutParams = LayoutParams(getDP(80), getDP(80))
+        thumbnail.scaleType = ImageView.ScaleType.FIT_XY
         thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null))
         thumbnail.scaleType = ImageView.ScaleType.CENTER_CROP
 
@@ -147,10 +158,10 @@ class BackgroundPicker @JvmOverloads constructor(
     }
 
     private fun openGallery() {
-        if (backgroundType != null) {
+        if (elementType != null) {
             val intent = Intent(context, GalleryActivity::class.java)
             intent.putExtra(GalleryActivity.RESULT_RECEIVER, resultReceiver)
-            intent.putExtra(GalleryActivity.BACKGROUND_TYPE_ID, backgroundType.backgroundTypeId)
+            intent.putExtra(GalleryActivity.BACKGROUND_TYPE_ID, elementType.elementTypeId)
             (context as Activity).startActivity(intent)
         }
     }
@@ -174,7 +185,7 @@ class BackgroundPicker @JvmOverloads constructor(
             if (isValueSet) {
                 setOnClickListener {
                     removeBackground()
-                    onBackgroundSetListener?.onRemoveBackground(backgroundType)
+                    onBackgroundSetListener?.onRemoveBackground(elementType)
                     backgroundTypePanel.dismiss()
                 }
             }
@@ -201,8 +212,8 @@ class BackgroundPicker @JvmOverloads constructor(
                 val image = ImageUtils.getImageAsByteArray(context, Uri.parse(imageUri))
                 setSelectedImage(image)
 
-                if (backgroundType != null) {
-                    onBackgroundSetListener?.onImageSet(backgroundType, image)
+                if (elementType != null) {
+                    onBackgroundSetListener?.onImageSet(elementType, image)
                 }
             }
         }
@@ -217,10 +228,10 @@ class BackgroundPicker @JvmOverloads constructor(
     }
 
     interface OnBackgroundSetListener {
-        fun onCopyBackground(backgroundType: BackgroundType?)
-        fun onColorSet(backgroundType: BackgroundType?, color: Int)
-        fun onImageSet(backgroundType: BackgroundType?, image: ByteArray)
-        fun onRemoveBackground(backgroundType: BackgroundType?)
+        fun onCopyBackground(elementType: ElementType?)
+        fun onColorSet(elementType: ElementType?, color: Int)
+        fun onImageSet(elementType: ElementType?, image: ByteArray)
+        fun onRemoveBackground(elementType: ElementType?)
     }
 }
 

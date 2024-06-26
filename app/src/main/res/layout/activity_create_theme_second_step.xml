@@ -49,136 +49,44 @@
                 app:labelBehavior="gone"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <LinearLayout
                 android:id="@+id/create_theme_colors_section"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal"
-                android:weightSum="2"
+                android:weightSum="3"
                 app:layout_constraintTop_toBottomOf="@id/create_theme_product_background_transparency">
 
-                <LinearLayout
+                <com.example.shoppinglist.control.ImageColorPicker
+                    android:id="@+id/create_theme_background_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:elementType="product_item_background_color"
+                    app:label="@string/background_color"
+                    app:labelColor="@color/white" />
 
-                    <LinearLayout
-                        android:id="@+id/create_theme_background_color_border"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/round_background"
-                        android:backgroundTint="@color/transparent">
-
-                        <ImageView
-                            android:id="@+id/create_theme_background_color"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_create_theme" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/background_color"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <com.example.shoppinglist.control.ImageColorPicker
+                    android:id="@+id/create_theme_text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/create_theme_text_color_border"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/round_background"
-                        android:backgroundTint="@color/transparent">
-
-                        <ImageView
-                            android:id="@+id/create_theme_text_color"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_create_theme" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/text_color"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </LinearLayout>
+                    app:elementType="product_item_text_color"
+                    app:label="@string/text_color"
+                    app:labelColor="@color/white" />
 
 
-                <LinearLayout
+                <com.example.shoppinglist.control.ImageColorPicker
+                    android:id="@+id/create_theme_delete_icon_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/create_theme_delete_icon_color_border"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/round_background"
-                        android:backgroundTint="@color/transparent">
-
-                        <ImageView
-                            android:id="@+id/create_theme_delete_icon_color"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_create_theme" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/delete_icon_color"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </LinearLayout>
+                    app:elementType="delete_icon_color"
+                    app:label="@string/delete_icon_color"
+                    app:labelColor="@color/white" />
 
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/create_theme_icons_section_label"

@@ -36,13 +36,13 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.example.shoppinglist.control.BackgroundPicker
+                <com.example.shoppinglist.control.ImageColorPicker
                     android:id="@+id/create_theme_product_list_portrait_background"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:backgroundType="product_list_portrait_background"
                     app:copyOptionLabel="@string/copy_landscape_background"
+                    app:elementType="product_list_portrait_background"
                     app:label="@string/portrait" />
 
             </LinearLayout>
@@ -54,13 +54,13 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.example.shoppinglist.control.BackgroundPicker
+                <com.example.shoppinglist.control.ImageColorPicker
                     android:id="@+id/create_theme_product_list_landscape_background"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:backgroundType="product_list_landscape_background"
                     app:copyOptionLabel="@string/copy_portrait_background"
+                    app:elementType="product_list_landscape_background"
                     app:label="@string/landscape" />
 
             </LinearLayout>
@@ -94,13 +94,13 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.example.shoppinglist.control.BackgroundPicker
+                <com.example.shoppinglist.control.ImageColorPicker
                     android:id="@+id/create_theme_add_product_portrait_background"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:backgroundType="add_product_portrait_background"
                     app:copyOptionLabel="@string/copy_landscape_background"
+                    app:elementType="add_product_portrait_background"
                     app:label="@string/portrait" />
 
             </LinearLayout>
@@ -112,13 +112,13 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.example.shoppinglist.control.BackgroundPicker
+                <com.example.shoppinglist.control.ImageColorPicker
                     android:id="@+id/create_theme_add_product_landscape_background"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    app:backgroundType="add_product_landscape_background"
                     app:copyOptionLabel="@string/copy_portrait_background"
+                    app:elementType="add_product_landscape_background"
                     app:label="@string/landscape" />
 
             </LinearLayout>

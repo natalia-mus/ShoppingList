@@ -15,12 +15,11 @@ import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
-import com.example.shoppinglist.control.BackgroundPicker
+import com.example.shoppinglist.control.ImageColorPicker
 import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.slider.Slider
 import kotlinx.android.synthetic.main.product_item.*
-import yuku.ambilwarna.AmbilWarnaDialog
 
 class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.CreateThemeActivityView {
 
@@ -36,10 +35,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var cancelButton: Button
     private lateinit var nextButton: Button
     private lateinit var themeName: EditText
-    private lateinit var productListPortraitBackground: BackgroundPicker
-    private lateinit var productListLandscapeBackground: BackgroundPicker
-    private lateinit var addProductPortraitBackground: BackgroundPicker
-    private lateinit var addProductLandscapeBackground: BackgroundPicker
+    private lateinit var productListPortraitBackground: ImageColorPicker
+    private lateinit var productListLandscapeBackground: ImageColorPicker
+    private lateinit var addProductPortraitBackground: ImageColorPicker
+    private lateinit var addProductLandscapeBackground: ImageColorPicker
     private lateinit var productItemNameLabel: TextView
     private lateinit var productItemQuantityLabel: TextView
     private lateinit var productItemPriorityLabel: TextView
@@ -51,12 +50,9 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var iconCross: LinearLayout
     private lateinit var boldProductNameSwitch: SwitchCompat
     private lateinit var backgroundTransparencySlider: Slider
-    private lateinit var productItemBackgroundColor: ImageView
-    private lateinit var productItemBackgroundColorBorder: LinearLayout
-    private lateinit var productItemTextColor: ImageView
-    private lateinit var productItemTextColorBorder: LinearLayout
-    private lateinit var deleteIconColor: ImageView
-    private lateinit var deleteIconColorBorder: LinearLayout
+    private lateinit var productItemBackgroundColor: ImageColorPicker
+    private lateinit var productItemTextColor: ImageColorPicker
+    private lateinit var deleteIconColor: ImageColorPicker
 
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
@@ -72,28 +68,25 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private val onBackgroundSetListener = object : BackgroundPicker.OnBackgroundSetListener {
-        override fun onCopyBackground(backgroundType: BackgroundType?) {
-            copyBackground(backgroundType)
+    private val onBackgroundSetListener = object : ImageColorPicker.OnBackgroundSetListener {
+        override fun onCopyBackground(elementType: ElementType?) {
+            copyBackground(elementType)
         }
 
-        override fun onColorSet(backgroundType: BackgroundType?, color: Int) {
-            if (backgroundType != null) {
-                val elementType = ElementType.getByElementTypeId(backgroundType.backgroundTypeId)
-                setColor(elementType, color)
-                setCopyOptionVisibility(backgroundType, true)
+        override fun onColorSet(elementType: ElementType?, color: Int) {
+            setColor(elementType, color)
+            setCopyOptionVisibility(elementType, true)
+        }
+
+        override fun onImageSet(elementType: ElementType?, image: ByteArray) {
+            if (elementType != null) {
+                setImage(elementType, image)
+                setCopyOptionVisibility(elementType, true)
             }
         }
 
-        override fun onImageSet(backgroundType: BackgroundType?, image: ByteArray) {
-            if (backgroundType != null) {
-                setImage(backgroundType, image)
-                setCopyOptionVisibility(backgroundType, true)
-            }
-        }
-
-        override fun onRemoveBackground(backgroundType: BackgroundType?) {
-            removeBackground(backgroundType)
+        override fun onRemoveBackground(elementType: ElementType?) {
+            removeBackground(elementType)
         }
     }
 
@@ -153,52 +146,50 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun copyBackground(backgroundType: BackgroundType?) {
-        if (backgroundType != null) {
-            when (backgroundType) {
-                BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                    removeBackground(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
-                    if (productListLandscapeBackgroundImage != null) {
-                        setImage(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundImage!!)
-                        productListPortraitBackground.setSelectedImage(productListLandscapeBackgroundImage)
+    private fun copyBackground(elementType: ElementType?) {
+        when (elementType) {
+            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                removeBackground(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
+                if (productListLandscapeBackgroundImage != null) {
+                    setImage(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundImage!!)
+                    productListPortraitBackground.setSelectedImage(productListLandscapeBackgroundImage)
 
-                    } else if (productListLandscapeBackgroundColor != null) {
-                        setColor(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundColor)
-                        productListPortraitBackground.setSelectedColor(productListLandscapeBackgroundColor!!)
-                    }
+                } else if (productListLandscapeBackgroundColor != null) {
+                    setColor(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundColor)
+                    productListPortraitBackground.setSelectedColor(productListLandscapeBackgroundColor!!)
                 }
-                BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                    removeBackground(BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
-                    if (productListPortraitBackgroundImage != null) {
-                        setImage(BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundImage!!)
-                        productListLandscapeBackground.setSelectedImage(productListPortraitBackgroundImage)
+            }
+            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                removeBackground(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
+                if (productListPortraitBackgroundImage != null) {
+                    setImage(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundImage!!)
+                    productListLandscapeBackground.setSelectedImage(productListPortraitBackgroundImage)
 
-                    } else if (productListPortraitBackgroundColor != null) {
-                        setColor(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundColor)
-                        productListLandscapeBackground.setSelectedColor(productListPortraitBackgroundColor!!)
-                    }
+                } else if (productListPortraitBackgroundColor != null) {
+                    setColor(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundColor)
+                    productListLandscapeBackground.setSelectedColor(productListPortraitBackgroundColor!!)
                 }
-                BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                    removeBackground(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
-                    if (addProductLandscapeBackgroundImage != null) {
-                        setImage(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundImage!!)
-                        addProductPortraitBackground.setSelectedImage(addProductLandscapeBackgroundImage)
+            }
+            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                removeBackground(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
+                if (addProductLandscapeBackgroundImage != null) {
+                    setImage(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundImage!!)
+                    addProductPortraitBackground.setSelectedImage(addProductLandscapeBackgroundImage)
 
-                    } else if (addProductLandscapeBackgroundColor != null) {
-                        setColor(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundColor)
-                        addProductPortraitBackground.setSelectedColor(addProductLandscapeBackgroundColor!!)
-                    }
+                } else if (addProductLandscapeBackgroundColor != null) {
+                    setColor(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundColor)
+                    addProductPortraitBackground.setSelectedColor(addProductLandscapeBackgroundColor!!)
                 }
-                BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                    removeBackground(BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
-                    if (addProductPortraitBackgroundImage != null) {
-                        setImage(BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundImage!!)
-                        addProductLandscapeBackground.setSelectedImage(addProductPortraitBackgroundImage)
+            }
+            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                removeBackground(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
+                if (addProductPortraitBackgroundImage != null) {
+                    setImage(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundImage!!)
+                    addProductLandscapeBackground.setSelectedImage(addProductPortraitBackgroundImage)
 
-                    } else if (addProductPortraitBackgroundColor != null) {
-                        setColor(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundColor)
-                        addProductLandscapeBackground.setSelectedColor(addProductPortraitBackgroundColor!!)
-                    }
+                } else if (addProductPortraitBackgroundColor != null) {
+                    setColor(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundColor)
+                    addProductLandscapeBackground.setSelectedColor(addProductPortraitBackgroundColor!!)
                 }
             }
         }
@@ -245,28 +236,13 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         boldProductNameSwitch = findViewById(R.id.create_theme_bold_switch)
         backgroundTransparencySlider = findViewById(R.id.create_theme_product_background_transparency)
         productItemBackgroundColor = findViewById(R.id.create_theme_background_color)
-        productItemBackgroundColorBorder = findViewById(R.id.create_theme_background_color_border)
         productItemTextColor = findViewById(R.id.create_theme_text_color)
-        productItemTextColorBorder = findViewById(R.id.create_theme_text_color_border)
         deleteIconColor = findViewById(R.id.create_theme_delete_icon_color)
-        deleteIconColorBorder = findViewById(R.id.create_theme_delete_icon_color_border)
         nextButton = findViewById(R.id.create_theme_next)
 
         boldProductNameSwitch.setOnCheckedChangeListener(boldProductNameOnCheckedChangedListener)
 
         backgroundTransparencySlider.addOnChangeListener(backgroundTransparencySliderValueChangedListener)
-
-        productItemBackgroundColor.setOnClickListener {
-            openColorPicker(ElementType.PRODUCT_ITEM_BACKGROUND_COLOR)
-        }
-
-        productItemTextColor.setOnClickListener {
-            openColorPicker(ElementType.PRODUCT_ITEM_TEXT_COLOR)
-        }
-
-        deleteIconColor.setOnClickListener {
-            openColorPicker(ElementType.DELETE_ICON_COLOR)
-        }
 
         iconTrashBin.setOnClickListener {
             selectIcon(Icon.TRASH_BIN)
@@ -367,43 +343,33 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun openColorPicker(elementType: ElementType) {
-        AmbilWarnaDialog(this, getInitialColor(elementType), object : AmbilWarnaDialog.OnAmbilWarnaListener {
-            override fun onCancel(dialog: AmbilWarnaDialog?) {}
-
-            override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
-                setColor(elementType, color)
-            }
-        }).show()
-    }
-
     private fun populateCreatorStepsList() {
         creatorSteps.add(0, R.layout.activity_create_theme_first_step)
         creatorSteps.add(1, R.layout.activity_create_theme_second_step)
         creatorSteps.add(2, R.layout.activity_create_theme_last_step)
     }
 
-    private fun removeBackground(backgroundType: BackgroundType?) {
+    private fun removeBackground(backgroundType: ElementType?) {
         when (backgroundType) {
-            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundColor = null
                 productListPortraitBackgroundImage = null
                 productListPortraitBackground.removeBackground()
                 productListLandscapeBackground.showCopyOption(false)
             }
-            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListLandscapeBackgroundColor = null
                 productListLandscapeBackgroundImage = null
                 productListLandscapeBackground.removeBackground()
                 productListPortraitBackground.showCopyOption(false)
             }
-            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductPortraitBackgroundColor = null
                 addProductPortraitBackgroundImage = null
                 addProductPortraitBackground.removeBackground()
                 addProductLandscapeBackground.showCopyOption(false)
             }
-            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundColor = null
                 addProductLandscapeBackgroundImage = null
                 addProductLandscapeBackground.removeBackground()
@@ -493,25 +459,23 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 }
             }
         }
-
-        //if (color != null) setSelectedColor(elementType, color)
     }
 
-    private fun setImage(backgroundType: BackgroundType, image: ByteArray) {
-        when (backgroundType) {
-            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+    private fun setImage(elementType: ElementType, image: ByteArray) {
+        when (elementType) {
+            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundImage = image
                 productListPortraitBackgroundColor = null
             }
-            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListLandscapeBackgroundImage = image
                 productListLandscapeBackgroundColor = null
             }
-            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductPortraitBackgroundImage = image
                 addProductPortraitBackgroundColor = null
             }
-            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundImage = image
                 addProductLandscapeBackgroundColor = null
             }
@@ -526,61 +490,21 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun setCopyOptionVisibility(backgroundType: BackgroundType, visible: Boolean) {
-        when (backgroundType) {
-            BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+    private fun setCopyOptionVisibility(elementType: ElementType?, visible: Boolean) {
+        when (elementType) {
+            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListLandscapeBackground.showCopyOption(visible)
             }
-            BackgroundType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListPortraitBackground.showCopyOption(visible)
             }
-            BackgroundType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductLandscapeBackground.showCopyOption(visible)
             }
-            BackgroundType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductPortraitBackground.showCopyOption(visible)
             }
         }
-    }
-
-    private fun setSelectedColor(backgroundType: ElementType, color: Int) {
-        val imageView: ImageView
-        //val border: LinearLayout
-
-        when (backgroundType) {
-            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                //imageView = productListPortraitBackground
-                //border = productListPortraitBackgroundBorder
-            }
-            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                //imageView = productListLandscapeBackground
-                //border = productListLandscapeBackgroundBorder
-            }
-            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                //imageView = addProductPortraitBackground
-                //border = addProductPortraitBackgroundBorder
-            }
-            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                //imageView = addProductLandscapeBackground
-                //border = addProductLandscapeBackgroundBorder
-            }
-            ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
-                //imageView = productItemBackgroundColor
-                //border = productItemBackgroundColorBorder
-            }
-            ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
-                //imageView = productItemTextColor
-                //border = productItemTextColorBorder
-            }
-            ElementType.DELETE_ICON_COLOR -> {
-                //imageView = deleteIconColor
-                //border = deleteIconColorBorder
-            }
-        }
-
-        //imageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
-        //imageView.drawable.setTint(color)
-        //border.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_black, null))
     }
 
     private fun setVisualizationBackground(view: View) {
