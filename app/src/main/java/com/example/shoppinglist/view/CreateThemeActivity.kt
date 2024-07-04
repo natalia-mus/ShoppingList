@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.alpha
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
@@ -26,7 +27,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     companion object {
         private const val DEFAULT_BACKGROUND_COLOR = Color.BLACK
         private const val DEFAULT_BACKGROUND_ALFA = 0.3f
-        private const val DEFAULT_TEXT_COLOR = Color.WHITE
     }
 
     private lateinit var presenter: CreateThemeActivityContract.CreateThemeActivityPresenter
@@ -107,7 +107,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var boldProductName = true
     private var productItemBackgroundAlphaValue: String? = ""
     private var productItemBackgroundColorValue: String? = ""
-    private var productItemTextColorValue: Int = DEFAULT_TEXT_COLOR
+    private var productItemTextColorValue: Int? = null
     private var deleteIconColorValue: Int? = null
 
     private var currentCreatorStep = 0
@@ -260,23 +260,25 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             nextStep()
         }
 
+        setDefaultColors()
+
         val background = findViewById<ScrollView>(R.id.create_theme_second_step)
         setVisualizationBackground(background)
-        setProductItemBackgroundColor(DEFAULT_BACKGROUND_COLOR)
-        setProductItemBackgroundAlpha(DEFAULT_BACKGROUND_ALFA)
-        setColor(ElementType.PRODUCT_ITEM_BACKGROUND_COLOR, DEFAULT_BACKGROUND_COLOR)
-        setProductItemTextColor(DEFAULT_TEXT_COLOR)
-        setColor(ElementType.PRODUCT_ITEM_TEXT_COLOR, DEFAULT_TEXT_COLOR)
-        getDeleteIconColorValue()
-        setColor(ElementType.DELETE_ICON_COLOR, deleteIconColorValue)
         backgroundTransparencySlider.value = DEFAULT_BACKGROUND_ALFA
     }
 
     private fun getDeleteIconColorValue(): Int {
         if (deleteIconColorValue == null) {
-            deleteIconColorValue = ResourcesCompat.getColor(resources, R.color.sea_blue_light, null)
+            setDefaultDeleteIconColor()
         }
         return deleteIconColorValue!!
+    }
+
+    private fun getProductItemTextColorValue(): Int {
+        if (productItemTextColorValue == null) {
+            setDefaultProductItemTextColor()
+        }
+        return productItemTextColorValue!!
     }
 
     private fun setDeleteIconColor(color: Int) {
@@ -284,14 +286,27 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         productItemButtonDelete.background.setTint(color)
     }
 
-    private fun setProductItemBackground() {
-        if (productItemBackgroundColorValue != null) {
-            val colorValue = getProductItemBackgroundValue()
-            productItemBackground.background.setTint(Color.parseColor(colorValue))
+    private fun getProductItemBackgroundValue(): String {
+        if (productItemBackgroundAlphaValue == null || productItemBackgroundColorValue == null) {
+            setDefaultProductItemBackgroundValue()
         }
+
+        return "#$productItemBackgroundAlphaValue$productItemBackgroundColorValue"
     }
 
-    private fun getProductItemBackgroundValue() = "#$productItemBackgroundAlphaValue$productItemBackgroundColorValue"
+    private fun setDefaultProductItemBackgroundValue() {
+        val defaultProductItemBackgroundValue = presenter.getDefaultProductItemBackgroundValue()
+
+        defaultProductItemBackgroundValue?.let {
+            val color = Color.parseColor(it)
+            val colorWithoutAlpha = Color.rgb(Color.red(color), Color.green(color), Color.blue(color))
+
+            productItemBackgroundColor.setSelectedColor(colorWithoutAlpha)
+            productItemBackgroundColorValue = it
+
+            setProductItemBackgroundAlpha(color.alpha)
+        }
+    }
 
     private fun setProductItemTextColor(color: Int) {
         productItemTextColorValue = color
@@ -302,22 +317,17 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         productItemPriorityValue.setTextColor(color)
     }
 
-    private fun setProductItemBackgroundColor(color: Int) {
-        val colorValue = Integer.toHexString(color)
-        val alpha = if (colorValue.length == 8) 2 else 0
-        productItemBackgroundColorValue = colorValue.drop(alpha)
-        setProductItemBackground()
-    }
-
     private fun setProductItemBackgroundAlpha(alphaPercentage: Float) {
         val alpha = (255 * alphaPercentage).toInt()
+        setProductItemBackgroundAlpha(alpha)
+    }
+
+    private fun setProductItemBackgroundAlpha(alpha: Int) {
         productItemBackgroundAlphaValue = Integer.toHexString(alpha)
 
         if (productItemBackgroundAlphaValue?.length == 1) {
             productItemBackgroundAlphaValue = "0$productItemBackgroundAlphaValue"
         }
-
-        setProductItemBackground()
     }
 
     private fun initLastStepView() {
@@ -390,7 +400,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             addProductPortraitBackgroundColor,
             addProductLandscapeBackgroundColor,
             getProductItemBackgroundValue(),
-            productItemTextColorValue,
+            getProductItemTextColorValue(),
             getDeleteIconColorValue(),
             deleteIcon,
             boldProductName
@@ -445,7 +455,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             }
             ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
                 if (color != null) {
-                    setProductItemBackgroundColor(color)
+                    //setProductItemBackgroundColor(color)
                 }
             }
             ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
@@ -459,6 +469,30 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 }
             }
         }
+    }
+
+    private fun setDefaultProductItemTextColor() {
+        val defaultProductItemTextColor = presenter.getDefaultProductItemTextColorValue()
+
+        defaultProductItemTextColor?.let {
+            productItemTextColor.setSelectedColor(it)
+            productItemTextColorValue = it
+        }
+    }
+
+    private fun setDefaultDeleteIconColor() {
+        val defaultDeleteIconColor = presenter.getDefaultDeleteIconColorValue()
+
+        defaultDeleteIconColor?.let {
+            deleteIconColor.setSelectedColor(it)
+            deleteIconColorValue = it
+        }
+    }
+
+    private fun setDefaultColors() {
+        setDefaultProductItemBackgroundValue()
+        setDefaultProductItemTextColor()
+        setDefaultDeleteIconColor()
     }
 
     private fun setImage(elementType: ElementType, image: ByteArray) {
@@ -560,7 +594,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 addProductPortraitBackgroundColor,
                 addProductLandscapeBackgroundColor,
                 getProductItemBackgroundValue(),
-                productItemTextColorValue,
+                getProductItemTextColorValue(),
                 getDeleteIconColorValue(),
                 deleteIcon,
                 boldProductName
@@ -582,24 +616,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 false
             }
             else -> true
-        }
-    }
-}
-
-enum class BackgroundType(val backgroundTypeId: Int) {
-    PRODUCT_LIST_PORTRAIT_BACKGROUND(101),
-    PRODUCT_LIST_LANDSCAPE_BACKGROUND(102),
-    ADD_PRODUCT_PORTRAIT_BACKGROUND(103),
-    ADD_PRODUCT_LANDSCAPE_BACKGROUND(104);
-
-    companion object {
-        fun getByBackgroundTypeId(backgroundTypeId: Int): BackgroundType? {
-            for (backgroundType in values()) {
-                if (backgroundType.backgroundTypeId == backgroundTypeId) {
-                    return backgroundType
-                }
-            }
-            return null
         }
     }
 }

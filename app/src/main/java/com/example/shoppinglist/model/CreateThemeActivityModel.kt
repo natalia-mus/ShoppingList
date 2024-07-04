@@ -9,6 +9,20 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
 
     private val database = DBHelper.getInstance()
 
+    private var defaultTheme: Theme? = null
+
+    override fun getDefaultDeleteIconColorValue(): Int? {
+        return getDefaultTheme()?.deleteIconColorValue
+    }
+
+    override fun getDefaultProductItemBackgroundValue(): String? {
+        return getDefaultTheme()?.productItemBackgroundValue
+    }
+
+    override fun getDefaultProductItemTextColorValue(): Int? {
+        return getDefaultTheme()?.productItemTextColorValue
+    }
+
     override fun saveTheme(
         name: String,
         listBackgroundImagePortrait: ByteArray?,
@@ -51,7 +65,7 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         deleteIcon: Icon,
         boldProductName: Boolean
     ): ValidationResult {
-        val defaultTheme = database?.getTheme(Constants.DEFAULT_THEME_ID)
+        val defaultTheme = getDefaultTheme()
 
         val differsFromDefaultTheme = productListPortraitBackgroundImage != null
                 || productListLandscapeBackgroundImage != null
@@ -75,5 +89,12 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         return if (themeName.isEmpty()) {
             ValidationResult.EMPTY_NAME
         } else return ValidationResult.VALID
+    }
+
+    private fun getDefaultTheme(): Theme? {
+        if (defaultTheme == null) {
+            defaultTheme = database?.getTheme(Constants.DEFAULT_THEME_ID)
+        }
+        return defaultTheme
     }
 }

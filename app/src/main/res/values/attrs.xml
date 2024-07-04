@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ImageColorPicker">
+        <attr name="copyOptionLabel" format="string" />
         <attr name="elementType" format="enum">
             <enum name="product_list_portrait_background" value="101" />
             <enum name="product_list_landscape_background" value="102" />
@@ -10,7 +11,6 @@
             <enum name="product_item_text_color" value="106" />
             <enum name="delete_icon_color" value="107" />
         </attr>
-        <attr name="copyOptionLabel" format="string" />
         <attr name="label" format="string" />
         <attr name="labelColor" format="color" />
     </declare-styleable>

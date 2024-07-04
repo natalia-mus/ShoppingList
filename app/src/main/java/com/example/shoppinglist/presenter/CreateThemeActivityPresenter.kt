@@ -14,6 +14,18 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         view.initView()
     }
 
+    override fun getDefaultDeleteIconColorValue(): Int? {
+        return model.getDefaultDeleteIconColorValue()
+    }
+
+    override fun getDefaultProductItemBackgroundValue(): String? {
+        return model.getDefaultProductItemBackgroundValue()
+    }
+
+    override fun getDefaultProductItemTextColorValue(): Int? {
+        return model.getDefaultProductItemTextColorValue()
+    }
+
     override fun saveTheme(
         name: String,
         listBackgroundImagePortrait: ByteArray?,

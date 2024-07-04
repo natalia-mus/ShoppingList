@@ -76,7 +76,6 @@
                     app:label="@string/text_color"
                     app:labelColor="@color/white" />
 
-
                 <com.example.shoppinglist.control.ImageColorPicker
                     android:id="@+id/create_theme_delete_icon_color"
                     android:layout_width="wrap_content"

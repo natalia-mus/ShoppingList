@@ -6,6 +6,10 @@ import com.example.shoppinglist.model.Icon
 interface CreateThemeActivityContract {
 
     interface CreateThemeActivityModel {
+        fun getDefaultDeleteIconColorValue(): Int?
+        fun getDefaultProductItemBackgroundValue(): String?
+        fun getDefaultProductItemTextColorValue(): Int?
+
         fun saveTheme(
             name: String,
             listBackgroundImagePortrait: ByteArray?,
@@ -45,6 +49,10 @@ interface CreateThemeActivityContract {
     }
 
     interface CreateThemeActivityPresenter {
+        fun getDefaultDeleteIconColorValue(): Int?
+        fun getDefaultProductItemBackgroundValue(): String?
+        fun getDefaultProductItemTextColorValue(): Int?
+
         fun saveTheme(
             name: String,
             listBackgroundImagePortrait: ByteArray?,

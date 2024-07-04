@@ -23,7 +23,6 @@ import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.view.BackgroundType
 import com.example.shoppinglist.view.ElementType
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import yuku.ambilwarna.AmbilWarnaDialog
@@ -45,6 +44,7 @@ class ImageColorPicker @JvmOverloads constructor(
     private lateinit var labelView: TextView
     private lateinit var thumbnail: ImageView
 
+    private var color = Color.WHITE
     private var isValueSet = false
     private var showCopyOption = false
 
@@ -84,6 +84,7 @@ class ImageColorPicker @JvmOverloads constructor(
         thumbnail.drawable.setTint(color)
         setBorderVisibility(true)
         onBackgroundSetListener?.onColorSet(elementType, color)
+        this.color = color
         isValueSet = true
     }
 
@@ -101,7 +102,11 @@ class ImageColorPicker @JvmOverloads constructor(
     }
 
     private fun canSetImageOrColor(): Boolean {
-        return elementType != null && (BackgroundType.getByBackgroundTypeId(elementType.elementTypeId) != null)
+        return elementType != null
+                && elementType == ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND
+                || elementType == ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND
+                || elementType == ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND
+                || elementType == ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND
     }
 
     private fun copyBackground() {
@@ -113,13 +118,15 @@ class ImageColorPicker @JvmOverloads constructor(
         border.layoutParams = LayoutParams(getDP(82), getDP(82))
         border.gravity = Gravity.CENTER
         border.setBackgroundResource(R.drawable.round_background)
-        setBorderVisibility(false)
+        setBorderVisibility(!canSetImageOrColor())
 
         thumbnail = ImageView(context)
         thumbnail.layoutParams = LayoutParams(getDP(80), getDP(80))
         thumbnail.scaleType = ImageView.ScaleType.FIT_XY
-        thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null))
         thumbnail.scaleType = ImageView.ScaleType.CENTER_CROP
+
+        thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null))
+        thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null))
 
         border.addView(thumbnail)
 
@@ -140,7 +147,7 @@ class ImageColorPicker @JvmOverloads constructor(
     private fun getDP(dp: Int) = (dp * resources.displayMetrics.density).toInt()
 
     private fun openColorPicker() {
-        AmbilWarnaDialog(context, Color.MAGENTA, object : AmbilWarnaDialog.OnAmbilWarnaListener {
+        AmbilWarnaDialog(context, color, object : AmbilWarnaDialog.OnAmbilWarnaListener {
             override fun onCancel(dialog: AmbilWarnaDialog?) {}
 
             override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
@@ -248,7 +255,7 @@ class GalleryActivity : Activity() {
         super.onCreate(savedInstanceState)
 
         if (intent.hasExtra(BACKGROUND_TYPE_ID)) {
-            val backgroundTypeId = intent.getIntExtra(BACKGROUND_TYPE_ID, BackgroundType.PRODUCT_LIST_PORTRAIT_BACKGROUND.backgroundTypeId)
+            val backgroundTypeId = intent.getIntExtra(BACKGROUND_TYPE_ID, ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND.elementTypeId)
 
             if (backgroundTypeId != 0) {
                 val intent = Intent(Intent.ACTION_PICK)
