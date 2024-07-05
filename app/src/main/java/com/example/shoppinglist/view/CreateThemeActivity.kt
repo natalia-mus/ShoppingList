@@ -68,8 +68,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private val onBackgroundSetListener = object : ImageColorPicker.OnBackgroundSetListener {
-        override fun onCopyBackground(elementType: ElementType?) {
+    private val onImageColorSetListener = object : ImageColorPicker.OnImageColorSetListener {
+        override fun onCopyImage(elementType: ElementType?) {
             copyBackground(elementType)
         }
 
@@ -85,7 +85,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             }
         }
 
-        override fun onRemoveBackground(elementType: ElementType?) {
+        override fun onRemoveImage(elementType: ElementType?) {
             removeBackground(elementType)
         }
     }
@@ -131,10 +131,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             nextStep()
         }
 
-        productListPortraitBackground.setOnBackgroundSetListener(onBackgroundSetListener)
-        productListLandscapeBackground.setOnBackgroundSetListener(onBackgroundSetListener)
-        addProductPortraitBackground.setOnBackgroundSetListener(onBackgroundSetListener)
-        addProductLandscapeBackground.setOnBackgroundSetListener(onBackgroundSetListener)
+        productListPortraitBackground.setOnImageColorSetListener(onImageColorSetListener)
+        productListLandscapeBackground.setOnImageColorSetListener(onImageColorSetListener)
+        addProductPortraitBackground.setOnImageColorSetListener(onImageColorSetListener)
+        addProductLandscapeBackground.setOnImageColorSetListener(onImageColorSetListener)
     }
 
     private fun changeView() {
@@ -244,6 +244,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         backgroundTransparencySlider.addOnChangeListener(backgroundTransparencySliderValueChangedListener)
 
+        productItemBackgroundColor.setOnImageColorSetListener(onImageColorSetListener)
+        productItemTextColor.setOnImageColorSetListener(onImageColorSetListener)
+        deleteIconColor.setOnImageColorSetListener(onImageColorSetListener)
+
         iconTrashBin.setOnClickListener {
             selectIcon(Icon.TRASH_BIN)
         }
@@ -286,6 +290,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         productItemButtonDelete.background.setTint(color)
     }
 
+    private fun setProductItemBackground() {
+        val colorValue = getProductItemBackgroundValue()
+        productItemBackground.background.setTint(Color.parseColor(colorValue))
+    }
+
     private fun getProductItemBackgroundValue(): String {
         if (productItemBackgroundAlphaValue == null || productItemBackgroundColorValue == null) {
             setDefaultProductItemBackgroundValue()
@@ -302,8 +311,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             val colorWithoutAlpha = Color.rgb(Color.red(color), Color.green(color), Color.blue(color))
 
             productItemBackgroundColor.setSelectedColor(colorWithoutAlpha)
-            productItemBackgroundColorValue = it
-
+            setProductItemBackgroundColor(color)
             setProductItemBackgroundAlpha(color.alpha)
         }
     }
@@ -317,6 +325,13 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         productItemPriorityValue.setTextColor(color)
     }
 
+    private fun setProductItemBackgroundColor(color: Int) {
+        val colorValue = Integer.toHexString(color)
+        val alpha = if (colorValue.length == 8) 2 else 0
+        productItemBackgroundColorValue = colorValue.drop(alpha)
+        setProductItemBackground()
+    }
+
     private fun setProductItemBackgroundAlpha(alphaPercentage: Float) {
         val alpha = (255 * alphaPercentage).toInt()
         setProductItemBackgroundAlpha(alpha)
@@ -328,6 +343,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         if (productItemBackgroundAlphaValue?.length == 1) {
             productItemBackgroundAlphaValue = "0$productItemBackgroundAlphaValue"
         }
+
+        setProductItemBackground()
     }
 
     private fun initLastStepView() {
@@ -455,7 +472,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             }
             ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
                 if (color != null) {
-                    //setProductItemBackgroundColor(color)
+                    setProductItemBackgroundColor(color)
                 }
             }
             ElementType.PRODUCT_ITEM_TEXT_COLOR -> {

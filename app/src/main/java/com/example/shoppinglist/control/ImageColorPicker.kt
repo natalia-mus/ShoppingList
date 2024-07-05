@@ -56,7 +56,7 @@ class ImageColorPicker @JvmOverloads constructor(
         }
     }
 
-    private var onBackgroundSetListener: OnBackgroundSetListener? = null
+    private var onImageColorSetListener: OnImageColorSetListener? = null
 
 
     init {
@@ -75,15 +75,15 @@ class ImageColorPicker @JvmOverloads constructor(
         isValueSet = false
     }
 
-    fun setOnBackgroundSetListener(onBackgroundSetListener: OnBackgroundSetListener) {
-        this.onBackgroundSetListener = onBackgroundSetListener
+    fun setOnImageColorSetListener(onImageColorSetListener: OnImageColorSetListener) {
+        this.onImageColorSetListener = onImageColorSetListener
     }
 
     fun setSelectedColor(color: Int) {
         thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
         thumbnail.drawable.setTint(color)
         setBorderVisibility(true)
-        onBackgroundSetListener?.onColorSet(elementType, color)
+        onImageColorSetListener?.onColorSet(elementType, color)
         this.color = color
         isValueSet = true
     }
@@ -110,7 +110,7 @@ class ImageColorPicker @JvmOverloads constructor(
     }
 
     private fun copyBackground() {
-        onBackgroundSetListener?.onCopyBackground(elementType)
+        onImageColorSetListener?.onCopyImage(elementType)
     }
 
     private fun createView() {
@@ -123,9 +123,6 @@ class ImageColorPicker @JvmOverloads constructor(
         thumbnail = ImageView(context)
         thumbnail.layoutParams = LayoutParams(getDP(80), getDP(80))
         thumbnail.scaleType = ImageView.ScaleType.FIT_XY
-        thumbnail.scaleType = ImageView.ScaleType.CENTER_CROP
-
-        thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null))
         thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null))
 
         border.addView(thumbnail)
@@ -192,7 +189,7 @@ class ImageColorPicker @JvmOverloads constructor(
             if (isValueSet) {
                 setOnClickListener {
                     removeBackground()
-                    onBackgroundSetListener?.onRemoveBackground(elementType)
+                    onImageColorSetListener?.onRemoveImage(elementType)
                     backgroundTypePanel.dismiss()
                 }
             }
@@ -220,7 +217,7 @@ class ImageColorPicker @JvmOverloads constructor(
                 setSelectedImage(image)
 
                 if (elementType != null) {
-                    onBackgroundSetListener?.onImageSet(elementType, image)
+                    onImageColorSetListener?.onImageSet(elementType, image)
                 }
             }
         }
@@ -234,11 +231,12 @@ class ImageColorPicker @JvmOverloads constructor(
         }
     }
 
-    interface OnBackgroundSetListener {
-        fun onCopyBackground(elementType: ElementType?)
+
+    interface OnImageColorSetListener {
+        fun onCopyImage(elementType: ElementType?)
         fun onColorSet(elementType: ElementType?, color: Int)
         fun onImageSet(elementType: ElementType?, image: ByteArray)
-        fun onRemoveBackground(elementType: ElementType?)
+        fun onRemoveImage(elementType: ElementType?)
     }
 }
 
