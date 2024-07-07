@@ -28,7 +28,7 @@
     <string name="save">save</string>
     <string name="cancel">cancel</string>
     <string name="empty_theme_name">Theme name can not be empty</string>
-    <string name="no_difference">New theme has no changes</string>
+    <string name="nothing_to_keep">New theme has no changes</string>
     <string name="error_message">Something went wrong. Try again</string>
     <string name="image">image</string>
     <string name="color">color</string>

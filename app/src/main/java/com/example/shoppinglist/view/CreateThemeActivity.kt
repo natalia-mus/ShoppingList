@@ -600,8 +600,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 Toast.makeText(this, resources.getString(R.string.empty_theme_name), Toast.LENGTH_LONG).show()
                 false
             }
-            ValidationResult.NO_DIFFERENCE -> {
-                Toast.makeText(this, resources.getString(R.string.no_difference), Toast.LENGTH_LONG).show()
+            ValidationResult.NOTHING_TO_KEEP -> {
+                Toast.makeText(this, resources.getString(R.string.nothing_to_keep), Toast.LENGTH_LONG).show()
                 false
             }
             else -> true

@@ -82,7 +82,7 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
                 || deleteIcon != defaultTheme.deleteIcon
                 || boldProductName != defaultTheme.boldProductName)
 
-        return if (differsFromDefaultTheme) ValidationResult.VALID else ValidationResult.NO_DIFFERENCE
+        return if (differsFromDefaultTheme) ValidationResult.VALID else ValidationResult.NOTHING_TO_KEEP
     }
 
     override fun validateLastStep(themeName: String): ValidationResult {

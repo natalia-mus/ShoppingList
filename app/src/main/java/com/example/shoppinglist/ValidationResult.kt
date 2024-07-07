@@ -4,5 +4,5 @@ enum class ValidationResult {
     VALID,
     EMPTY_NAME,
     EMPTY_PRIORITY,
-    NO_DIFFERENCE
+    NOTHING_TO_KEEP
 }

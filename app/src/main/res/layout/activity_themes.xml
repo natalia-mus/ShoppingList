@@ -8,7 +8,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/buttons_section_height"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -56,11 +55,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <include
-        layout="@layout/buttons_section"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/buttons_section_height"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
