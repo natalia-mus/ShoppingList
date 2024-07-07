@@ -17,6 +17,7 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.control.ImageColorPicker
+import com.example.shoppinglist.model.ElementType
 import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.slider.Slider
@@ -25,7 +26,6 @@ import kotlinx.android.synthetic.main.product_item.*
 class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.CreateThemeActivityView {
 
     companion object {
-        private const val DEFAULT_BACKGROUND_COLOR = Color.BLACK
         private const val DEFAULT_BACKGROUND_ALFA = 0.3f
     }
 
@@ -193,34 +193,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 }
             }
         }
-    }
-
-    private fun getInitialColor(elementType: ElementType): Int {
-        val result: Int? = when (elementType) {
-            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                productListPortraitBackgroundColor
-            }
-            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                productListLandscapeBackgroundColor
-            }
-            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                addProductPortraitBackgroundColor
-            }
-            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                addProductLandscapeBackgroundColor
-            }
-            ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
-                Color.parseColor("#$productItemBackgroundColorValue")
-            }
-            ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
-                productItemTextColorValue
-            }
-            ElementType.DELETE_ICON_COLOR -> {
-                deleteIconColorValue
-            }
-        }
-
-        return result ?: ResourcesCompat.getColor(resources, R.color.sea_blue_dark, null)
     }
 
     private fun initSecondStepView() {
@@ -633,27 +605,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 false
             }
             else -> true
-        }
-    }
-}
-
-enum class ElementType(val elementTypeId: Int) {
-    PRODUCT_LIST_PORTRAIT_BACKGROUND(101),
-    PRODUCT_LIST_LANDSCAPE_BACKGROUND(102),
-    ADD_PRODUCT_PORTRAIT_BACKGROUND(103),
-    ADD_PRODUCT_LANDSCAPE_BACKGROUND(104),
-    PRODUCT_ITEM_BACKGROUND_COLOR(105),
-    PRODUCT_ITEM_TEXT_COLOR(106),
-    DELETE_ICON_COLOR(107);
-
-    companion object {
-        fun getByElementTypeId(elementTypeId: Int): ElementType? {
-            for (elementType in values()) {
-                if (elementType.elementTypeId == elementTypeId) {
-                    return elementType
-                }
-            }
-            return null
         }
     }
 }

@@ -23,7 +23,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.view.ElementType
+import com.example.shoppinglist.model.ElementType
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import yuku.ambilwarna.AmbilWarnaDialog
 
