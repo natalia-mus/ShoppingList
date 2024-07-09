@@ -33,6 +33,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
+    private lateinit var previousButton: Button
     private lateinit var nextButton: Button
     private lateinit var themeName: EditText
     private lateinit var productListPortraitBackground: ImageColorPicker
@@ -121,28 +122,16 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     override fun initView() {
-        nextButton = findViewById(R.id.create_theme_next)
-        productListPortraitBackground = findViewById(R.id.create_theme_product_list_portrait_background)
-        productListLandscapeBackground = findViewById(R.id.create_theme_product_list_landscape_background)
-        addProductPortraitBackground = findViewById(R.id.create_theme_add_product_portrait_background)
-        addProductLandscapeBackground = findViewById(R.id.create_theme_add_product_landscape_background)
-
-        nextButton.setOnClickListener {
-            nextStep()
-        }
-
-        productListPortraitBackground.setOnImageColorSetListener(onImageColorSetListener)
-        productListLandscapeBackground.setOnImageColorSetListener(onImageColorSetListener)
-        addProductPortraitBackground.setOnImageColorSetListener(onImageColorSetListener)
-        addProductLandscapeBackground.setOnImageColorSetListener(onImageColorSetListener)
+        prepareFirstStep()
     }
 
     private fun changeView() {
         setContentView(creatorSteps[currentCreatorStep])
 
         when (creatorSteps[currentCreatorStep]) {
-            R.layout.activity_create_theme_second_step -> initSecondStepView()
-            R.layout.activity_create_theme_last_step -> initLastStepView()
+            R.layout.activity_create_theme_first_step -> prepareFirstStep()
+            R.layout.activity_create_theme_second_step -> prepareSecondStep()
+            R.layout.activity_create_theme_last_step -> prepareLastStep()
         }
     }
 
@@ -193,54 +182,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 }
             }
         }
-    }
-
-    private fun initSecondStepView() {
-        productItemBackground = findViewById(R.id.create_theme_product_item_visualization)
-        productItemNameLabel = findViewById(R.id.product_name)
-        productItemQuantityLabel = findViewById(R.id.product_quantity_label)
-        productItemPriorityLabel = findViewById(R.id.product_priority_label)
-        productItemQuantityValue = findViewById(R.id.product_quantity)
-        productItemPriorityValue = findViewById(R.id.product_priority)
-        productItemButtonDelete = findViewById(R.id.product_button_delete)
-        iconTrashBin = findViewById(R.id.create_theme_icon_trash_bin)
-        iconCross = findViewById(R.id.create_theme_icon_cross)
-        boldProductNameSwitch = findViewById(R.id.create_theme_bold_switch)
-        backgroundTransparencySlider = findViewById(R.id.create_theme_product_background_transparency)
-        productItemBackgroundColor = findViewById(R.id.create_theme_background_color)
-        productItemTextColor = findViewById(R.id.create_theme_text_color)
-        deleteIconColor = findViewById(R.id.create_theme_delete_icon_color)
-        nextButton = findViewById(R.id.create_theme_next)
-
-        boldProductNameSwitch.setOnCheckedChangeListener(boldProductNameOnCheckedChangedListener)
-
-        backgroundTransparencySlider.addOnChangeListener(backgroundTransparencySliderValueChangedListener)
-
-        productItemBackgroundColor.setOnImageColorSetListener(onImageColorSetListener)
-        productItemTextColor.setOnImageColorSetListener(onImageColorSetListener)
-        deleteIconColor.setOnImageColorSetListener(onImageColorSetListener)
-
-        iconTrashBin.setOnClickListener {
-            selectIcon(Icon.TRASH_BIN)
-        }
-
-        iconCross.setOnClickListener {
-            selectIcon(Icon.CROSS)
-        }
-
-        boldProductNameSwitch.setOnClickListener {
-            boldProductName = !boldProductName
-        }
-
-        nextButton.setOnClickListener {
-            nextStep()
-        }
-
-        setDefaultColors()
-
-        val background = findViewById<ScrollView>(R.id.create_theme_second_step)
-        setVisualizationBackground(background)
-        backgroundTransparencySlider.value = DEFAULT_BACKGROUND_ALFA
     }
 
     private fun getDeleteIconColorValue(): Int {
@@ -319,10 +260,98 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         setProductItemBackground()
     }
 
-    private fun initLastStepView() {
+    private fun prepareFirstStep() {
+        nextButton = findViewById(R.id.create_theme_next)
+        productListPortraitBackground = findViewById(R.id.create_theme_product_list_portrait_background)
+        productListLandscapeBackground = findViewById(R.id.create_theme_product_list_landscape_background)
+        addProductPortraitBackground = findViewById(R.id.create_theme_add_product_portrait_background)
+        addProductLandscapeBackground = findViewById(R.id.create_theme_add_product_landscape_background)
+
+        nextButton.setOnClickListener {
+            nextStep()
+        }
+
+        productListPortraitBackground.setOnImageColorSetListener(onImageColorSetListener)
+        productListLandscapeBackground.setOnImageColorSetListener(onImageColorSetListener)
+        addProductPortraitBackground.setOnImageColorSetListener(onImageColorSetListener)
+        addProductLandscapeBackground.setOnImageColorSetListener(onImageColorSetListener)
+
+
+        productListPortraitBackgroundImage?.let { productListPortraitBackground.setSelectedImage(it) }
+        productListPortraitBackgroundColor?.let { productListPortraitBackground.setSelectedColor(it) }
+
+        productListLandscapeBackgroundImage?.let { productListLandscapeBackground.setSelectedImage(it) }
+        productListLandscapeBackgroundColor?.let { productListLandscapeBackground.setSelectedColor(it) }
+
+        addProductPortraitBackgroundImage?.let { addProductPortraitBackground.setSelectedImage(it) }
+        addProductPortraitBackgroundColor?.let { addProductPortraitBackground.setSelectedColor(it) }
+
+        addProductLandscapeBackgroundImage?.let { addProductLandscapeBackground.setSelectedImage(it) }
+        addProductLandscapeBackgroundColor?.let { addProductLandscapeBackground.setSelectedColor(it) }
+    }
+
+    private fun prepareSecondStep() {
+        productItemBackground = findViewById(R.id.create_theme_product_item_visualization)
+        productItemNameLabel = findViewById(R.id.product_name)
+        productItemQuantityLabel = findViewById(R.id.product_quantity_label)
+        productItemPriorityLabel = findViewById(R.id.product_priority_label)
+        productItemQuantityValue = findViewById(R.id.product_quantity)
+        productItemPriorityValue = findViewById(R.id.product_priority)
+        productItemButtonDelete = findViewById(R.id.product_button_delete)
+        iconTrashBin = findViewById(R.id.create_theme_icon_trash_bin)
+        iconCross = findViewById(R.id.create_theme_icon_cross)
+        boldProductNameSwitch = findViewById(R.id.create_theme_bold_switch)
+        backgroundTransparencySlider = findViewById(R.id.create_theme_product_background_transparency)
+        productItemBackgroundColor = findViewById(R.id.create_theme_background_color)
+        productItemTextColor = findViewById(R.id.create_theme_text_color)
+        deleteIconColor = findViewById(R.id.create_theme_delete_icon_color)
+        previousButton = findViewById(R.id.create_theme_previous)
+        nextButton = findViewById(R.id.create_theme_next)
+
+        boldProductNameSwitch.setOnCheckedChangeListener(boldProductNameOnCheckedChangedListener)
+
+        backgroundTransparencySlider.addOnChangeListener(backgroundTransparencySliderValueChangedListener)
+
+        productItemBackgroundColor.setOnImageColorSetListener(onImageColorSetListener)
+        productItemTextColor.setOnImageColorSetListener(onImageColorSetListener)
+        deleteIconColor.setOnImageColorSetListener(onImageColorSetListener)
+
+        iconTrashBin.setOnClickListener {
+            selectIcon(Icon.TRASH_BIN)
+        }
+
+        iconCross.setOnClickListener {
+            selectIcon(Icon.CROSS)
+        }
+
+        boldProductNameSwitch.setOnClickListener {
+            boldProductName = !boldProductName
+        }
+
+        previousButton.setOnClickListener {
+            previousStep()
+        }
+
+        nextButton.setOnClickListener {
+            nextStep()
+        }
+
+        setDefaultColors()
+
+        val background = findViewById<ScrollView>(R.id.create_theme_second_step)
+        setVisualizationBackground(background)
+        backgroundTransparencySlider.value = DEFAULT_BACKGROUND_ALFA
+    }
+
+    private fun prepareLastStep() {
+        themeName = findViewById(R.id.create_theme_name)
+        previousButton = findViewById(R.id.create_theme_previous)
         saveButton = findViewById(R.id.button_save)
         cancelButton = findViewById(R.id.button_cancel)
-        themeName = findViewById(R.id.create_theme_name)
+
+        previousButton.setOnClickListener {
+            previousStep()
+        }
 
         saveButton.setOnClickListener {
             if (validateCurrentStep()) {
@@ -346,6 +375,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         creatorSteps.add(0, R.layout.activity_create_theme_first_step)
         creatorSteps.add(1, R.layout.activity_create_theme_second_step)
         creatorSteps.add(2, R.layout.activity_create_theme_last_step)
+    }
+
+    private fun previousStep() {
+        currentCreatorStep--
+        changeView()
     }
 
     private fun removeBackground(backgroundType: ElementType?) {
