@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -59,6 +61,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
         @SuppressLint("RestrictedApi")
         override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
+            productItemBackgroundAlphaPercentageValue = value
             setProductItemBackgroundAlpha(value)
         }
     }
@@ -106,12 +109,14 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var name = ""
     private var deleteIcon = Icon.TRASH_BIN
     private var boldProductName = true
+    private var productItemBackgroundAlphaPercentageValue = DEFAULT_BACKGROUND_ALFA
     private var productItemBackgroundAlphaValue: String? = ""
     private var productItemBackgroundColorValue: String? = ""
     private var productItemTextColorValue: Int? = null
     private var deleteIconColorValue: Int? = null
 
     private var currentCreatorStep = 0
+    private var secondStepInitialized = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -336,11 +341,27 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             nextStep()
         }
 
-        setDefaultColors()
+
+        if (!secondStepInitialized) {
+            setDefaultColors()
+            backgroundTransparencySlider.value = DEFAULT_BACKGROUND_ALFA
+
+            secondStepInitialized = true
+
+        } else {
+            backgroundTransparencySlider.value = productItemBackgroundAlphaPercentageValue
+
+            val color = if (productItemBackgroundColorValue != null) Color.parseColor("#$productItemBackgroundColorValue") else null
+            color?.let { productItemBackgroundColor.setSelectedColor(it) }
+
+            productItemTextColorValue?.let { productItemTextColor.setSelectedColor(it) }
+            deleteIconColorValue?.let { deleteIconColor.setSelectedColor(it) }
+            boldProductNameSwitch.isChecked = boldProductName
+            selectIcon(deleteIcon)
+        }
 
         val background = findViewById<ScrollView>(R.id.create_theme_second_step)
         setVisualizationBackground(background)
-        backgroundTransparencySlider.value = DEFAULT_BACKGROUND_ALFA
     }
 
     private fun prepareLastStep() {
@@ -362,6 +383,18 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         cancelButton.setOnClickListener {
             finish()
         }
+
+        themeName.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) { }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                name = themeName.text.toString()
+            }
+        })
+
+        themeName.setText(name)
     }
 
     private fun nextStep() {
@@ -623,7 +656,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 boldProductName
             )
             R.layout.activity_create_theme_last_step -> {
-                name = themeName.text.toString()
                 presenter.validateLastStep(name)
             }
             else -> true
