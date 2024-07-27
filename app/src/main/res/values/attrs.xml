@@ -10,6 +10,8 @@
             <enum name="product_item_background_color" value="105" />
             <enum name="product_item_text_color" value="106" />
             <enum name="delete_icon_color" value="107" />
+            <enum name="add_product_text_color" value="108" />
+            <enum name="add_product_label_color" value="109" />
         </attr>
         <attr name="label" format="string" />
         <attr name="labelColor" format="color" />

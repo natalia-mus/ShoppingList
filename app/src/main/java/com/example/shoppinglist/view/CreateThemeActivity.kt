@@ -120,6 +120,9 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var productItemTextColorValue: Int? = null
     private var deleteIconColorValue: Int? = null
 
+    private var addProductTextColorValue: Int? = null
+    private var addProductLabelColorValue: Int? = null
+
     private var currentCreatorStep = 0
     private var secondStepInitialized = false
 
@@ -207,6 +210,16 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             setDefaultProductItemTextColor()
         }
         return productItemTextColorValue!!
+    }
+
+    private fun setAddProductTextColor(color: Int) {
+        addProductTextColorValue = color
+        addProductText.setTextColor(color)
+    }
+
+    private fun setAddProductLabelColor(color: Int) {
+        addProductLabelColorValue = color
+        addProductLabel.setTextColor(color)
     }
 
     private fun setDeleteIconColor(color: Int) {
@@ -542,6 +555,16 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             ElementType.DELETE_ICON_COLOR -> {
                 if (color != null) {
                     setDeleteIconColor(color)
+                }
+            }
+            ElementType.ADD_PRODUCT_TEXT_COLOR -> {
+                if (color != null) {
+                    setAddProductTextColor(color)
+                }
+            }
+            ElementType.ADD_PRODUCT_LABEL_COLOR -> {
+                if (color != null) {
+                    setAddProductLabelColor(color)
                 }
             }
         }

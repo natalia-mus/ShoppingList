@@ -7,7 +7,10 @@ enum class ElementType(val elementTypeId: Int) {
     ADD_PRODUCT_LANDSCAPE_BACKGROUND(104),
     PRODUCT_ITEM_BACKGROUND_COLOR(105),
     PRODUCT_ITEM_TEXT_COLOR(106),
-    DELETE_ICON_COLOR(107);
+    DELETE_ICON_COLOR(107),
+    ADD_PRODUCT_TEXT_COLOR(108),
+    ADD_PRODUCT_LABEL_COLOR(109);
+
 
     companion object {
         fun getByElementTypeId(elementTypeId: Int): ElementType? {
