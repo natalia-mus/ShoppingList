@@ -12,6 +12,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.alpha
 import com.example.shoppinglist.ImageUtils
@@ -56,6 +57,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var productItemBackgroundColor: ImageColorPicker
     private lateinit var productItemTextColor: ImageColorPicker
     private lateinit var deleteIconColor: ImageColorPicker
+    private lateinit var addProductText: EditText
+    private lateinit var addProductLabel: TextView
+    private lateinit var addProductTextColor: ImageColorPicker
+    private lateinit var addProductLabelColor: ImageColorPicker
 
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
@@ -136,6 +141,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         when (creatorSteps[currentCreatorStep]) {
             R.layout.activity_create_theme_first_step -> prepareFirstStep()
             R.layout.activity_create_theme_second_step -> prepareSecondStep()
+            R.layout.activity_create_theme_third_step -> prepareThirdStep()
             R.layout.activity_create_theme_last_step -> prepareLastStep()
         }
     }
@@ -308,7 +314,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         boldProductNameSwitch = findViewById(R.id.create_theme_bold_switch)
         backgroundTransparencySlider = findViewById(R.id.create_theme_product_background_transparency)
         productItemBackgroundColor = findViewById(R.id.create_theme_background_color)
-        productItemTextColor = findViewById(R.id.create_theme_text_color)
+        productItemTextColor = findViewById(R.id.create_theme_add_product_text_color)
         deleteIconColor = findViewById(R.id.create_theme_delete_icon_color)
         previousButton = findViewById(R.id.create_theme_previous)
         nextButton = findViewById(R.id.create_theme_next)
@@ -364,6 +370,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         setVisualizationBackground(background)
     }
 
+    private fun prepareThirdStep() {
+        addProductText = findViewById(R.id.create_theme_edit_text_visualization_add_product_text)
+        addProductLabel = findViewById(R.id.create_theme_edit_text_visualization_add_product_label)
+        addProductTextColor = findViewById(R.id.create_theme_add_product_text_color)
+        addProductLabelColor = findViewById(R.id.create_theme_add_product_label_color)
+
+        addProductTextColor.setOnImageColorSetListener(onImageColorSetListener)
+        addProductLabelColor.setOnImageColorSetListener(onImageColorSetListener)
+
+        val background = findViewById<ConstraintLayout>(R.id.create_theme_third_step)
+        setVisualizationBackground(background)
+    }
+
     private fun prepareLastStep() {
         themeName = findViewById(R.id.create_theme_name)
         previousButton = findViewById(R.id.create_theme_previous)
@@ -407,7 +426,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun populateCreatorStepsList() {
         creatorSteps.add(0, R.layout.activity_create_theme_first_step)
         creatorSteps.add(1, R.layout.activity_create_theme_second_step)
-        creatorSteps.add(2, R.layout.activity_create_theme_last_step)
+        creatorSteps.add(2, R.layout.activity_create_theme_third_step)
+        creatorSteps.add(3, R.layout.activity_create_theme_last_step)
     }
 
     private fun previousStep() {
@@ -655,6 +675,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 deleteIcon,
                 boldProductName
             )
+            //R.layout.activity_create_theme_third_step -> presenter.validateThirdStep()
             R.layout.activity_create_theme_last_step -> {
                 presenter.validateLastStep(name)
             }
