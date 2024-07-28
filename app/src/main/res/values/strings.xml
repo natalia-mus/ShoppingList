@@ -45,4 +45,5 @@
     <string name="copy_landscape_background">copy landscape background</string>
     <string name="copy_portrait_background">copy portrait background</string>
     <string name="label_color">label color</string>
+    <string name="line_color">line color</string>
 </resources>

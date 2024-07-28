@@ -65,7 +65,7 @@
             app:layout_constraintTop_toBottomOf="@id/create_theme_edit_text_visualization">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -77,27 +77,28 @@
                     android:id="@+id/create_theme_add_product_text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
                     android:layout_weight="1"
                     app:elementType="add_product_text_color"
                     app:label="@string/text_color"
-                    app:labelColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/create_theme_add_product_label_color"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:labelColor="@color/white" />
 
                 <com.example.shoppinglist.control.ImageColorPicker
                     android:id="@+id/create_theme_add_product_label_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
                     android:layout_weight="1"
                     app:elementType="add_product_label_color"
                     app:label="@string/label_color"
-                    app:labelColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/create_theme_add_product_text_color"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:labelColor="@color/white" />
+
+                <com.example.shoppinglist.control.ImageColorPicker
+                    android:id="@+id/create_theme_add_product_line_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:elementType="add_product_line_color"
+                    app:label="@string/line_color"
+                    app:labelColor="@color/white" />
 
             </LinearLayout>
 

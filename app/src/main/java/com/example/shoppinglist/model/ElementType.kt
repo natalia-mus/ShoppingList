@@ -9,7 +9,8 @@ enum class ElementType(val elementTypeId: Int) {
     PRODUCT_ITEM_TEXT_COLOR(106),
     DELETE_ICON_COLOR(107),
     ADD_PRODUCT_TEXT_COLOR(108),
-    ADD_PRODUCT_LABEL_COLOR(109);
+    ADD_PRODUCT_LABEL_COLOR(109),
+    ADD_PRODUCT_LINE_COLOR(110);
 
 
     companion object {

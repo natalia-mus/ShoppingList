@@ -61,6 +61,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var addProductLabel: TextView
     private lateinit var addProductTextColor: ImageColorPicker
     private lateinit var addProductLabelColor: ImageColorPicker
+    private lateinit var addProductLineColor: ImageColorPicker
 
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
@@ -122,6 +123,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private var addProductTextColorValue: Int? = null
     private var addProductLabelColorValue: Int? = null
+    private var addProductLineColorValue: Int? = null
 
     private var currentCreatorStep = 0
     private var secondStepInitialized = false
@@ -220,6 +222,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun setAddProductLabelColor(color: Int) {
         addProductLabelColorValue = color
         addProductLabel.setTextColor(color)
+    }
+
+    private fun setAddProductLineColor(color: Int) {
+        addProductLineColorValue = color
+        addProductText.background.setTint(color)
     }
 
     private fun setDeleteIconColor(color: Int) {
@@ -388,9 +395,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         addProductLabel = findViewById(R.id.create_theme_edit_text_visualization_add_product_label)
         addProductTextColor = findViewById(R.id.create_theme_add_product_text_color)
         addProductLabelColor = findViewById(R.id.create_theme_add_product_label_color)
+        addProductLineColor = findViewById(R.id.create_theme_add_product_line_color)
 
         addProductTextColor.setOnImageColorSetListener(onImageColorSetListener)
         addProductLabelColor.setOnImageColorSetListener(onImageColorSetListener)
+        addProductLineColor.setOnImageColorSetListener(onImageColorSetListener)
 
         val background = findViewById<ConstraintLayout>(R.id.create_theme_third_step)
         setVisualizationBackground(background)
@@ -565,6 +574,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             ElementType.ADD_PRODUCT_LABEL_COLOR -> {
                 if (color != null) {
                     setAddProductLabelColor(color)
+                }
+            }
+            ElementType.ADD_PRODUCT_LINE_COLOR -> {
+                if (color != null) {
+                    setAddProductLineColor(color)
                 }
             }
         }
