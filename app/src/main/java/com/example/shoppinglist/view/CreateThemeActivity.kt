@@ -1,6 +1,7 @@
 package com.example.shoppinglist.view
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Typeface
@@ -226,7 +227,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private fun setAddProductLineColor(color: Int) {
         addProductLineColorValue = color
-        addProductText.background.setTint(color)
+        val colorStateList = ColorStateList.valueOf(color)
+        addProductText.backgroundTintList = colorStateList
     }
 
     private fun setDeleteIconColor(color: Int) {
@@ -396,13 +398,27 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         addProductTextColor = findViewById(R.id.create_theme_add_product_text_color)
         addProductLabelColor = findViewById(R.id.create_theme_add_product_label_color)
         addProductLineColor = findViewById(R.id.create_theme_add_product_line_color)
+        previousButton = findViewById(R.id.create_theme_previous)
+        nextButton = findViewById(R.id.create_theme_next)
 
         addProductTextColor.setOnImageColorSetListener(onImageColorSetListener)
         addProductLabelColor.setOnImageColorSetListener(onImageColorSetListener)
         addProductLineColor.setOnImageColorSetListener(onImageColorSetListener)
 
+        previousButton.setOnClickListener {
+            previousStep()
+        }
+
+        nextButton.setOnClickListener {
+            nextStep()
+        }
+
         val background = findViewById<ConstraintLayout>(R.id.create_theme_third_step)
         setVisualizationBackground(background)
+
+        addProductTextColorValue?.let { addProductTextColor.setSelectedColor(it) }
+        addProductLabelColorValue?.let { addProductLabelColor.setSelectedColor(it) }
+        addProductLineColorValue?.let { addProductLineColor.setSelectedColor(it) }
     }
 
     private fun prepareLastStep() {
