@@ -16,7 +16,10 @@ data class Theme(
     val productItemTextColorValue: Int,
     val deleteIconColorValue: Int,
     val deleteIcon: Icon,
-    val boldProductName: Boolean
+    val boldProductName: Boolean,
+    val addProductTextColor: Int,
+    val addProductLabelColor: Int,
+    val addProductLineColor: Int,
 )
 
 enum class Icon(val iconId: Int) {

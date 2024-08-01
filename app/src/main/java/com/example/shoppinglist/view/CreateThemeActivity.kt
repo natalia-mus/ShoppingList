@@ -210,9 +210,24 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private fun getProductItemTextColorValue(): Int {
         if (productItemTextColorValue == null) {
-            setDefaultProductItemTextColor()
+            setDefaultProductItemTextColorValue()
         }
         return productItemTextColorValue!!
+    }
+
+    private fun getAddProductTextColorValue(): Int {
+        // todo
+        return 1
+    }
+
+    private fun getAddProductLabelColorValue(): Int {
+        // todo
+        return 1
+    }
+
+    private fun getAddProductLineColorValue(): Int {
+        // todo
+        return 1
     }
 
     private fun setAddProductTextColor(color: Int) {
@@ -517,7 +532,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             getProductItemTextColorValue(),
             getDeleteIconColorValue(),
             deleteIcon,
-            boldProductName
+            boldProductName,
+            getAddProductTextColorValue(),
+            getAddProductLabelColorValue(),
+            getAddProductLineColorValue()
         )
 
         finish()
@@ -600,13 +618,25 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun setDefaultProductItemTextColor() {
+    private fun setDefaultProductItemTextColorValue() {
         val defaultProductItemTextColor = presenter.getDefaultProductItemTextColorValue()
 
         defaultProductItemTextColor?.let {
             productItemTextColor.setSelectedColor(it)
             productItemTextColorValue = it
         }
+    }
+
+    private fun setDefaultAddProductTextColorValue() {
+        // todo
+    }
+
+    private fun setDefaultAddProductLabelColorValue() {
+        // todo
+    }
+
+    private fun setDefaultAddProductLineColorValue() {
+        // todo
     }
 
     private fun setDefaultDeleteIconColor() {
@@ -620,7 +650,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private fun setDefaultColors() {
         setDefaultProductItemBackgroundValue()
-        setDefaultProductItemTextColor()
+        setDefaultProductItemTextColorValue()
         setDefaultDeleteIconColor()
     }
 

@@ -24,7 +24,10 @@ interface CreateThemeActivityContract {
             productItemTextColorValue: Int,
             deleteIconColorValue: Int,
             deleteIcon: Icon,
-            boldProductName: Boolean
+            boldProductName: Boolean,
+            addProductTextColor: Int,
+            addProductLabelColor: Int,
+            addProductLineColor: Int
         )
 
         fun validateFirstStep(): ValidationResult
@@ -67,7 +70,10 @@ interface CreateThemeActivityContract {
             productItemTextColorValue: Int,
             deleteIconColorValue: Int,
             deleteIcon: Icon,
-            boldProductName: Boolean
+            boldProductName: Boolean,
+            addProductTextColor: Int,
+            addProductLabelColor: Int,
+            addProductLineColor: Int
         )
 
         fun validateFirstStep(): ValidationResult

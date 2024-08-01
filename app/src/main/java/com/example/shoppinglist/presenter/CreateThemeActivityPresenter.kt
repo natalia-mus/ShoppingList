@@ -40,12 +40,15 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         productItemTextColorValue: Int,
         deleteIconColorValue: Int,
         deleteIcon: Icon,
-        boldProductName: Boolean
+        boldProductName: Boolean,
+        addProductTextColor: Int,
+        addProductLabelColor: Int,
+        addProductLineColor: Int
     ) {
         model.saveTheme(
             name, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
             listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape, productItemBackgroundValue,
-            productItemTextColorValue, deleteIconColorValue, deleteIcon, boldProductName
+            productItemTextColorValue, deleteIconColorValue, deleteIcon, boldProductName, addProductTextColor, addProductLabelColor, addProductLineColor
         )
     }
 

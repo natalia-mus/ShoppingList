@@ -38,6 +38,9 @@ object TableInfo {
     const val COLUMN_DELETE_ICON_COLOR_VALUE = "deleteIconColorValue"
     const val COLUMN_DELETE_ICON = "deleteIcon"
     const val COLUMN_BOLD_PRODUCT_NAME = "boldProductName"
+    const val COLUMN_ADD_PRODUCT_TEXT_COLOR = "addProductTextColor"
+    const val COLUMN_ADD_PRODUCT_LABEL_COLOR = "addProductLabelColor"
+    const val COLUMN_ADD_PRODUCT_LINE_COLOR = "addProductLineColor"
 }
 
 object BasicSQLCommands {
@@ -65,7 +68,10 @@ object BasicSQLCommands {
             "${TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE} INTEGER, " +
             "${TableInfo.COLUMN_DELETE_ICON_COLOR_VALUE} INTEGER, " +
             "${TableInfo.COLUMN_DELETE_ICON} INTEGER, " +
-            "${TableInfo.COLUMN_BOLD_PRODUCT_NAME} INTEGER" +
+            "${TableInfo.COLUMN_BOLD_PRODUCT_NAME} INTEGER, " +
+            "${TableInfo.COLUMN_ADD_PRODUCT_TEXT_COLOR} INTEGER, " +
+            "${TableInfo.COLUMN_ADD_PRODUCT_LABEL_COLOR} INTEGER, " +
+            "${TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR} INTEGER" +
             ")"
 
     const val DELETE_TABLE = "DROP TABLE "
@@ -201,6 +207,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         deleteIconColorValue: Int,
         deleteIcon: Icon,
         boldProductName: Boolean,
+        addProductTextColor: Int,
+        addProductLabelColor: Int,
+        addProductLineColor: Int,
         database: SQLiteDatabase? = null
     ) {
         val theme = ContentValues()
@@ -216,12 +225,15 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         theme.put(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT, addProductBackgroundColorPortrait)
         theme.put(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE, addProductBackgroundColorLandscape)
 
-
         theme.put(TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE, productItemBackgroundValue)
         theme.put(TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE, productItemTextColorValue)
         theme.put(TableInfo.COLUMN_DELETE_ICON_COLOR_VALUE, deleteIconColorValue)
         theme.put(TableInfo.COLUMN_DELETE_ICON, deleteIcon.iconId)
         theme.put(TableInfo.COLUMN_BOLD_PRODUCT_NAME, boldProductName)
+
+        theme.put(TableInfo.COLUMN_ADD_PRODUCT_TEXT_COLOR, addProductTextColor)
+        theme.put(TableInfo.COLUMN_ADD_PRODUCT_LABEL_COLOR, addProductLabelColor)
+        theme.put(TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR, addProductLineColor)
 
         val db = database ?: this.writableDatabase
         db.insert(TableInfo.TABLE_NAME_THEMES, null, theme)
@@ -235,6 +247,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         val productItemBackgroundValue = resources.getString(R.color.transparent_black, null)
         val productItemTextColorValue = Color.WHITE
         val deleteIconColorValue = resources.getColor(R.color.sea_blue_light, null)
+        val addProductTextColor = Color.WHITE
+        val addProductLabelColor = Color.WHITE
+        val addProductLineColor = resources.getColor(R.color.transparent_white, null)
 
 
         saveTheme(resources.getString(R.string.theme_grocery),
@@ -252,7 +267,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             deleteIconColorValue,
             Icon.TRASH_BIN,
             true,
-            database)
+            addProductTextColor,
+            addProductLabelColor,
+            addProductLineColor,
+            database
+        )
 
         saveTheme(resources.getString(R.string.theme_marketplace),
             true,
@@ -269,7 +288,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             deleteIconColorValue,
             Icon.TRASH_BIN,
             true,
-            database)
+            addProductTextColor,
+            addProductLabelColor,
+            addProductLineColor,
+            database
+        )
 
         saveTheme(resources.getString(R.string.theme_fashion),
             true,
@@ -286,7 +309,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             deleteIconColorValue,
             Icon.TRASH_BIN,
             true,
-            database)
+            addProductTextColor,
+            addProductLabelColor,
+            addProductLineColor,
+            database
+        )
 
         saveTheme(resources.getString(R.string.theme_christmas),
             true,
@@ -303,7 +330,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             deleteIconColorValue,
             Icon.TRASH_BIN,
             true,
-            database)
+            addProductTextColor,
+            addProductLabelColor,
+            addProductLineColor,
+            database
+        )
     }
 
     private fun delete(tableName: String, id: Int) {
@@ -338,6 +369,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         val deleteIcon = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_DELETE_ICON))
         val boldProductName = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_BOLD_PRODUCT_NAME))
 
+        val addProductTextColor = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_TEXT_COLOR))
+        val addProductLabelColor = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_LABEL_COLOR))
+        val addProductLineColor = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR))
+
 
         return Theme(
             id,
@@ -355,7 +390,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             productItemTextColorValue,
             deleteIconColorValue,
             Icon.getByIconId(deleteIcon)!!,
-            boldProductName != 0
+            boldProductName != 0,
+            addProductTextColor,
+            addProductLabelColor,
+            addProductLineColor
         )
     }
 

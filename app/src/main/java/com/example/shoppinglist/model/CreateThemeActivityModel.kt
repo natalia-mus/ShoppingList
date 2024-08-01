@@ -37,12 +37,15 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         productItemTextColorValue: Int,
         deleteIconColorValue: Int,
         deleteIcon: Icon,
-        boldProductName: Boolean
+        boldProductName: Boolean,
+        addProductTextColor: Int,
+        addProductLabelColor: Int,
+        addProductLineColor: Int
     ) {
         database?.saveTheme(
             name, false, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
             listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape, productItemBackgroundValue,
-            productItemTextColorValue, deleteIconColorValue, deleteIcon, boldProductName
+            productItemTextColorValue, deleteIconColorValue, deleteIcon, boldProductName, addProductTextColor, addProductLabelColor, addProductLineColor
         )
     }
 
