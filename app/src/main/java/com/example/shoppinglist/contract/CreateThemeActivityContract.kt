@@ -9,6 +9,9 @@ interface CreateThemeActivityContract {
         fun getDefaultDeleteIconColorValue(): Int?
         fun getDefaultProductItemBackgroundValue(): String?
         fun getDefaultProductItemTextColorValue(): Int?
+        fun getDefaultAddProductTextColorValue(): Int?
+        fun getDefaultAddProductLabelColorValue(): Int?
+        fun getDefaultAddProductLineColorValue(): Int?
 
         fun saveTheme(
             name: String,
@@ -55,6 +58,9 @@ interface CreateThemeActivityContract {
         fun getDefaultDeleteIconColorValue(): Int?
         fun getDefaultProductItemBackgroundValue(): String?
         fun getDefaultProductItemTextColorValue(): Int?
+        fun getDefaultAddProductTextColorValue(): Int?
+        fun getDefaultAddProductLabelColorValue(): Int?
+        fun getDefaultAddProductLineColorValue(): Int?
 
         fun saveTheme(
             name: String,

@@ -216,18 +216,27 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun getAddProductTextColorValue(): Int {
-        // todo
-        return 1
+        if (addProductTextColorValue == null) {
+            setDefaultAddProductTextColor()
+        }
+
+        return addProductTextColorValue!!
     }
 
     private fun getAddProductLabelColorValue(): Int {
-        // todo
-        return 1
+        if (addProductLabelColorValue == null) {
+            setDefaultAddProductLabelColor()
+        }
+
+        return addProductLabelColorValue!!
     }
 
     private fun getAddProductLineColorValue(): Int {
-        // todo
-        return 1
+        if (addProductLineColorValue == null) {
+            setDefaultAddProductLineColor()
+        }
+
+        return addProductLineColorValue!!
     }
 
     private fun setAddProductTextColor(color: Int) {
@@ -627,22 +636,37 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun setDefaultAddProductTextColorValue() {
-        // todo
+    private fun setDefaultAddProductTextColor() {
+        val defaultAddProductTextColorValue = presenter.getDefaultAddProductTextColorValue()
+
+        defaultAddProductTextColorValue?.let {
+            addProductTextColor.setSelectedColor(it)
+            addProductTextColorValue = it
+        }
     }
 
-    private fun setDefaultAddProductLabelColorValue() {
-        // todo
+    private fun setDefaultAddProductLabelColor() {
+        val defaultAddProductLabelColorValue = presenter.getDefaultAddProductLabelColorValue()
+
+        defaultAddProductLabelColorValue?.let {
+            addProductLabelColor.setSelectedColor(it)
+            addProductLabelColorValue = it
+        }
     }
 
-    private fun setDefaultAddProductLineColorValue() {
-        // todo
+    private fun setDefaultAddProductLineColor() {
+        val defaultAddProductLineColorValue = presenter.getDefaultAddProductLineColorValue()
+
+        defaultAddProductLineColorValue?.let {
+            addProductLineColor.setSelectedColor(it)
+            addProductLineColorValue = it
+        }
     }
 
     private fun setDefaultDeleteIconColor() {
-        val defaultDeleteIconColor = presenter.getDefaultDeleteIconColorValue()
+        val defaultDeleteIconColorValue = presenter.getDefaultDeleteIconColorValue()
 
-        defaultDeleteIconColor?.let {
+        defaultDeleteIconColorValue?.let {
             deleteIconColor.setSelectedColor(it)
             deleteIconColorValue = it
         }

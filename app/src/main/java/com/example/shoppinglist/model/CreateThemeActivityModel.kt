@@ -23,6 +23,18 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         return getDefaultTheme()?.productItemTextColorValue
     }
 
+    override fun getDefaultAddProductTextColorValue(): Int? {
+        return getDefaultTheme()?.addProductTextColorValue
+    }
+
+    override fun getDefaultAddProductLabelColorValue(): Int? {
+        return getDefaultTheme()?.addProductLabelColorValue
+    }
+
+    override fun getDefaultAddProductLineColorValue(): Int? {
+        return getDefaultTheme()?.addProductLineColorValue
+    }
+
     override fun saveTheme(
         name: String,
         listBackgroundImagePortrait: ByteArray?,
