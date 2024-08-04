@@ -1,8 +1,11 @@
 package com.example.shoppinglist.view
 
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.ImageUtils
@@ -41,8 +44,9 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
             var backgroundImage: ByteArray? = null
             var backgroundColor: Int? = null
 
-            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-                if (activity is MainActivity) {
+
+            if (activity is MainActivity) {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (theme.listBackgroundImagePortrait != null) {
                         backgroundImage = theme.listBackgroundImagePortrait
 
@@ -52,21 +56,7 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
                     } else {
                         backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null))
                     }
-
-                } else if (activity is AddProductActivity) {
-                    if (theme.addProductBackgroundImagePortrait != null) {
-                        backgroundImage = theme.addProductBackgroundImagePortrait
-
-                    } else if (theme.addProductBackgroundColorPortrait != null) {
-                        backgroundColor = theme.addProductBackgroundColorPortrait
-
-                    } else {
-                        backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_portrait, null))
-                    }
-                }
-
-            } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                if (activity is MainActivity) {
+                } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     if (theme.listBackgroundImageLandscape != null) {
                         backgroundImage = theme.listBackgroundImageLandscape
 
@@ -76,8 +66,20 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
                     } else {
                         backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_landscape, null))
                     }
+                }
 
-                } else if (activity is AddProductActivity) {
+            } else if (activity is AddProductActivity) {
+                if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    if (theme.addProductBackgroundImagePortrait != null) {
+                        backgroundImage = theme.addProductBackgroundImagePortrait
+
+                    } else if (theme.addProductBackgroundColorPortrait != null) {
+                        backgroundColor = theme.addProductBackgroundColorPortrait
+
+                    } else {
+                        backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_portrait, null))
+                    }
+                } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     if (theme.addProductBackgroundImageLandscape != null) {
                         backgroundImage = theme.addProductBackgroundImageLandscape
 
@@ -88,6 +90,27 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
                         backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_landscape, null))
                     }
                 }
+
+                val addProductNameView = findViewById<EditText>(R.id.add_product_name)
+                val addProductQuantityView = findViewById<EditText>(R.id.add_product_quantity)
+                val addProductPriorityView = findViewById<EditText>(R.id.add_product_priority)
+
+                addProductNameView.setTextColor(theme.addProductTextColorValue)
+                addProductQuantityView.setTextColor(theme.addProductTextColorValue)
+                addProductPriorityView.setTextColor(theme.addProductTextColorValue)
+
+                val colorStateList = ColorStateList.valueOf(theme.addProductLineColorValue)
+                addProductNameView.backgroundTintList = colorStateList
+                addProductQuantityView.backgroundTintList = colorStateList
+                addProductPriorityView.backgroundTintList = colorStateList
+
+                val addProductNameLabel = findViewById<TextView>(R.id.add_product_name_label)
+                val addProductQuantityLabel = findViewById<TextView>(R.id.add_product_quantity_label)
+                val addProductPriorityLabel = findViewById<TextView>(R.id.add_product_priority_label)
+
+                addProductNameLabel.setTextColor(theme.addProductLabelColorValue)
+                addProductQuantityLabel.setTextColor(theme.addProductLabelColorValue)
+                addProductPriorityLabel.setTextColor(theme.addProductLabelColorValue)
             }
 
 
