@@ -46,4 +46,9 @@
     <string name="copy_portrait_background">copy portrait background</string>
     <string name="label_color">label color</string>
     <string name="line_color">line color</string>
+    <string name="text">text</string>
+    <string name="label">label</string>
+    <string name="hint">hint</string>
+    <string name="hint_color">hint color</string>
+    <string name="hint_transparency">hint transparency</string>
 </resources>

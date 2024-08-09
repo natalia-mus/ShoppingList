@@ -437,7 +437,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             nextStep()
         }
 
-        val background = findViewById<ConstraintLayout>(R.id.create_theme_third_step)
+        val background = findViewById<ScrollView>(R.id.create_theme_third_step)
         setVisualizationBackground(background)
 
         addProductTextColorValue?.let { addProductTextColor.setSelectedColor(it) }
