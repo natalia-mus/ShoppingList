@@ -60,9 +60,12 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private lateinit var deleteIconColor: ImageColorPicker
     private lateinit var addProductText: EditText
     private lateinit var addProductLabel: TextView
+    private lateinit var addProductHintText: EditText
+    private lateinit var addProductHintLabel: TextView
     private lateinit var addProductTextColor: ImageColorPicker
     private lateinit var addProductLabelColor: ImageColorPicker
     private lateinit var addProductLineColor: ImageColorPicker
+    private lateinit var addProductHintColor: ImageColorPicker
 
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
@@ -125,6 +128,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var addProductTextColorValue: Int? = null
     private var addProductLabelColorValue: Int? = null
     private var addProductLineColorValue: Int? = null
+    private var addProductHintColorValue: Int? = null
 
     private var currentCreatorStep = 0
     private var secondStepInitialized = false
@@ -247,12 +251,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun setAddProductLabelColor(color: Int) {
         addProductLabelColorValue = color
         addProductLabel.setTextColor(color)
+        addProductHintLabel.setTextColor(color)
     }
 
     private fun setAddProductLineColor(color: Int) {
         addProductLineColorValue = color
         val colorStateList = ColorStateList.valueOf(color)
         addProductText.backgroundTintList = colorStateList
+        addProductHintText.backgroundTintList = colorStateList
+    }
+
+    private fun setAddProductHintColor(color: Int) {
+        addProductHintColorValue = color
+        addProductHintText.setTextColor(color)
     }
 
     private fun setDeleteIconColor(color: Int) {
@@ -419,15 +430,19 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun prepareThirdStep() {
         addProductText = findViewById(R.id.create_theme_edit_text_visualization_add_product_text)
         addProductLabel = findViewById(R.id.create_theme_edit_text_visualization_add_product_label)
+        addProductHintText = findViewById(R.id.create_theme_hint_visualization_add_product_text)
+        addProductHintLabel = findViewById(R.id.create_theme_hint_visualization_add_product_label)
         addProductTextColor = findViewById(R.id.create_theme_add_product_text_color)
         addProductLabelColor = findViewById(R.id.create_theme_add_product_label_color)
         addProductLineColor = findViewById(R.id.create_theme_add_product_line_color)
+        addProductHintColor = findViewById(R.id.create_theme_add_product_hint_color)
         previousButton = findViewById(R.id.create_theme_previous)
         nextButton = findViewById(R.id.create_theme_next)
 
         addProductTextColor.setOnImageColorSetListener(onImageColorSetListener)
         addProductLabelColor.setOnImageColorSetListener(onImageColorSetListener)
         addProductLineColor.setOnImageColorSetListener(onImageColorSetListener)
+        addProductHintColor.setOnImageColorSetListener(onImageColorSetListener)
 
         previousButton.setOnClickListener {
             previousStep()
@@ -443,6 +458,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         addProductTextColorValue?.let { addProductTextColor.setSelectedColor(it) }
         addProductLabelColorValue?.let { addProductLabelColor.setSelectedColor(it) }
         addProductLineColorValue?.let { addProductLineColor.setSelectedColor(it) }
+        addProductHintColorValue?.let { addProductHintColor.setSelectedColor(it) }
     }
 
     private fun prepareLastStep() {
@@ -622,6 +638,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             ElementType.ADD_PRODUCT_LINE_COLOR -> {
                 if (color != null) {
                     setAddProductLineColor(color)
+                }
+            }
+            ElementType.ADD_PRODUCT_HINT_COLOR -> {
+                if (color != null) {
+                    setAddProductHintColor(color)
                 }
             }
         }

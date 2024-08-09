@@ -13,6 +13,7 @@
             <enum name="add_product_text_color" value="108" />
             <enum name="add_product_label_color" value="109" />
             <enum name="add_product_line_color" value="110" />
+            <enum name="add_product_hint_color" value="111" />
         </attr>
         <attr name="label" format="string" />
         <attr name="labelColor" format="color" />
