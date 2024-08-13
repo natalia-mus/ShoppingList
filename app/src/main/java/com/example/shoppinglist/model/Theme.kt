@@ -20,6 +20,7 @@ data class Theme(
     val addProductTextColorValue: Int,
     val addProductLabelColorValue: Int,
     val addProductLineColorValue: Int,
+    val addProductHintColorValue: String
 )
 
 enum class Icon(val iconId: Int) {

@@ -53,14 +53,30 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         deleteIconColorValue: Int,
         deleteIcon: Icon,
         boldProductName: Boolean,
-        addProductTextColor: Int,
-        addProductLabelColor: Int,
-        addProductLineColor: Int
+        addProductTextColorValue: Int,
+        addProductLabelColorValue: Int,
+        addProductLineColorValue: Int,
+        addProductHintColorValue: String
     ) {
         model.saveTheme(
-            name, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
-            listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape, productItemBackgroundValue,
-            productItemTextColorValue, deleteIconColorValue, deleteIcon, boldProductName, addProductTextColor, addProductLabelColor, addProductLineColor
+            name,
+            listBackgroundImagePortrait,
+            listBackgroundImageLandscape,
+            addProductBackgroundImagePortrait,
+            addProductBackgroundImageLandscape,
+            listBackgroundColorPortrait,
+            listBackgroundColorLandscape,
+            addProductBackgroundColorPortrait,
+            addProductBackgroundColorLandscape,
+            productItemBackgroundValue,
+            productItemTextColorValue,
+            deleteIconColorValue,
+            deleteIcon,
+            boldProductName,
+            addProductTextColorValue,
+            addProductLabelColorValue,
+            addProductLineColorValue,
+            addProductHintColorValue
         )
     }
 

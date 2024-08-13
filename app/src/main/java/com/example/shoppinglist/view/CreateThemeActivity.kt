@@ -284,6 +284,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         return "#$productItemBackgroundAlphaValue$productItemBackgroundColorValue"
     }
 
+    private fun getAddProductHintColorValue(): String {
+        // todo
+        return ""
+    }
+
     private fun setDefaultProductItemBackgroundValue() {
         val defaultProductItemBackgroundValue = presenter.getDefaultProductItemBackgroundValue()
 
@@ -560,7 +565,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             boldProductName,
             getAddProductTextColorValue(),
             getAddProductLabelColorValue(),
-            getAddProductLineColorValue()
+            getAddProductLineColorValue(),
+            getAddProductHintColorValue()
         )
 
         finish()
