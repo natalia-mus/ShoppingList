@@ -35,6 +35,10 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         return getDefaultTheme()?.addProductLineColorValue
     }
 
+    override fun getDefaultAddProductHintColorValue(): String? {
+        return getDefaultTheme()?.addProductHintColorValue
+    }
+
     override fun saveTheme(
         name: String,
         listBackgroundImagePortrait: ByteArray?,
@@ -56,25 +60,9 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         addProductHintColorValue: String
     ) {
         database?.saveTheme(
-            name,
-            false,
-            listBackgroundImagePortrait,
-            listBackgroundImageLandscape,
-            addProductBackgroundImagePortrait,
-            addProductBackgroundImageLandscape,
-            listBackgroundColorPortrait,
-            listBackgroundColorLandscape,
-            addProductBackgroundColorPortrait,
-            addProductBackgroundColorLandscape,
-            productItemBackgroundValue,
-            productItemTextColorValue,
-            deleteIconColorValue,
-            deleteIcon,
-            boldProductName,
-            addProductTextColorValue,
-            addProductLabelColorValue,
-            addProductLineColorValue,
-            addProductHintColorValue
+            name, false, listBackgroundImagePortrait, listBackgroundImageLandscape, addProductBackgroundImagePortrait, addProductBackgroundImageLandscape,
+            listBackgroundColorPortrait, listBackgroundColorLandscape, addProductBackgroundColorPortrait, addProductBackgroundColorLandscape, productItemBackgroundValue,
+            productItemTextColorValue, deleteIconColorValue, deleteIcon, boldProductName, addProductTextColorValue, addProductLabelColorValue, addProductLineColorValue, addProductHintColorValue
         )
     }
 

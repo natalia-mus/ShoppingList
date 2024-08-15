@@ -12,6 +12,7 @@ interface CreateThemeActivityContract {
         fun getDefaultAddProductTextColorValue(): Int?
         fun getDefaultAddProductLabelColorValue(): Int?
         fun getDefaultAddProductLineColorValue(): Int?
+        fun getDefaultAddProductHintColorValue(): String?
 
         fun saveTheme(
             name: String,
@@ -62,6 +63,7 @@ interface CreateThemeActivityContract {
         fun getDefaultAddProductTextColorValue(): Int?
         fun getDefaultAddProductLabelColorValue(): Int?
         fun getDefaultAddProductLineColorValue(): Int?
+        fun getDefaultAddProductHintColorValue(): String?
 
         fun saveTheme(
             name: String,

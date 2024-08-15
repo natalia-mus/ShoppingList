@@ -38,6 +38,10 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         return model.getDefaultAddProductLineColorValue()
     }
 
+    override fun getDefaultAddProductHintColorValue(): String? {
+        return model.getDefaultAddProductHintColorValue()
+    }
+
     override fun saveTheme(
         name: String,
         listBackgroundImagePortrait: ByteArray?,

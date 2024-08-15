@@ -253,7 +253,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         val deleteIconColorValue = resources.getColor(R.color.sea_blue_light, null)
         val addProductTextColorValue = Color.WHITE
         val addProductLabelColorValue = Color.WHITE
-        val addProductLineColorValue = resources.getColor(R.color.transparent_white, null)
+        val addProductLineColorValue = Color.WHITE
         val addProductHintColorValue = resources.getString(R.color.transparent_white, null)
 
 
