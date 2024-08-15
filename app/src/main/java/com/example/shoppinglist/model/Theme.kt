@@ -24,8 +24,8 @@ data class Theme(
 )
 
 enum class Icon(val iconId: Int) {
-    TRASH_BIN(101),
-    CROSS(102);
+    TRASH_BIN(1),
+    CROSS(2);
 
     companion object {
         fun getByIconId(iconId: Int): Icon? {

@@ -2,6 +2,7 @@ package com.example.shoppinglist.view
 
 import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -98,6 +99,10 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
                 addProductNameView.setTextColor(theme.addProductTextColorValue)
                 addProductQuantityView.setTextColor(theme.addProductTextColorValue)
                 addProductPriorityView.setTextColor(theme.addProductTextColorValue)
+
+                addProductNameView.setHintTextColor(Color.parseColor(theme.addProductHintColorValue))
+                addProductQuantityView.setHintTextColor(Color.parseColor(theme.addProductHintColorValue))
+                addProductPriorityView.setHintTextColor(Color.parseColor(theme.addProductHintColorValue))
 
                 val colorStateList = ColorStateList.valueOf(theme.addProductLineColorValue)
                 addProductNameView.backgroundTintList = colorStateList

@@ -30,6 +30,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     companion object {
         private const val DEFAULT_BACKGROUND_ALFA = 0.3f
+        private const val DEFAULT_HINT_ALFA = 0.7f
     }
 
     private lateinit var presenter: CreateThemeActivityContract.CreateThemeActivityPresenter
@@ -136,7 +137,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var addProductTextColorValue: Int? = null
     private var addProductLabelColorValue: Int? = null
     private var addProductLineColorValue: Int? = null
-    private var addProductHintAlphaPercentageValue = DEFAULT_BACKGROUND_ALFA
+    private var addProductHintAlphaPercentageValue = DEFAULT_HINT_ALFA
     private var addProductHintAlphaValue: String? = ""
     private var addProductHintColorValue: String? = ""
 
