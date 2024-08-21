@@ -88,7 +88,11 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         return model.validateFirstStep()
     }
 
-    override fun validateSecondStep(
+    override fun validateSecondStep(): ValidationResult {
+        return model.validateSecondStep()
+    }
+
+    override fun validateThirdStep(
         productListPortraitBackgroundImage: ByteArray?,
         productListLandscapeBackgroundImage: ByteArray?,
         addProductPortraitBackgroundImage: ByteArray?,
@@ -101,9 +105,13 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         productItemTextColorValue: Int,
         deleteIconColorValue: Int,
         deleteIcon: Icon,
-        boldProductName: Boolean
+        boldProductName: Boolean,
+        addProductTextColorValue: Int,
+        addProductLabelColorValue: Int,
+        addProductHintColorValue: String,
+        addProductLineColorValue: Int
     ): ValidationResult {
-        return model.validateSecondStep(
+        return model.validateThirdStep(
             productListPortraitBackgroundImage,
             productListLandscapeBackgroundImage,
             addProductPortraitBackgroundImage,
@@ -116,7 +124,11 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
             productItemTextColorValue,
             deleteIconColorValue,
             deleteIcon,
-            boldProductName
+            boldProductName,
+            addProductTextColorValue,
+            addProductLabelColorValue,
+            addProductHintColorValue,
+            addProductLineColorValue
         )
     }
 

@@ -37,7 +37,9 @@ interface CreateThemeActivityContract {
 
         fun validateFirstStep(): ValidationResult
 
-        fun validateSecondStep(
+        fun validateSecondStep(): ValidationResult
+
+        fun validateThirdStep(
             productListPortraitBackgroundImage: ByteArray?,
             productListLandscapeBackgroundImage: ByteArray?,
             addProductPortraitBackgroundImage: ByteArray?,
@@ -50,7 +52,11 @@ interface CreateThemeActivityContract {
             productItemTextColorValue: Int,
             deleteIconColorValue: Int,
             deleteIcon: Icon,
-            boldProductName: Boolean
+            boldProductName: Boolean,
+            addProductTextColorValue: Int,
+            addProductLabelColorValue: Int,
+            addProductHintColorValue: String,
+            addProductLineColorValue: Int
         ): ValidationResult
 
         fun validateLastStep(themeName: String): ValidationResult
@@ -88,7 +94,9 @@ interface CreateThemeActivityContract {
 
         fun validateFirstStep(): ValidationResult
 
-        fun validateSecondStep(
+        fun validateSecondStep(): ValidationResult
+
+        fun validateThirdStep(
             productListPortraitBackgroundImage: ByteArray?,
             productListLandscapeBackgroundImage: ByteArray?,
             addProductPortraitBackgroundImage: ByteArray?,
@@ -101,7 +109,11 @@ interface CreateThemeActivityContract {
             productItemTextColorValue: Int,
             deleteIconColorValue: Int,
             deleteIcon: Icon,
-            boldProductName: Boolean
+            boldProductName: Boolean,
+            addProductTextColorValue: Int,
+            addProductLabelColorValue: Int,
+            addProductHintColorValue: String,
+            addProductLineColorValue: Int
         ): ValidationResult
 
         fun validateLastStep(themeName: String): ValidationResult

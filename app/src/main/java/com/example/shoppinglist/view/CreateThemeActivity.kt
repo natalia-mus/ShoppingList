@@ -860,7 +860,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private fun validateCurrentStep(): Boolean {
         val validationResult = when (creatorSteps[currentCreatorStep]) {
             R.layout.activity_create_theme_first_step -> presenter.validateFirstStep()
-            R.layout.activity_create_theme_second_step -> presenter.validateSecondStep(
+            R.layout.activity_create_theme_second_step -> presenter.validateSecondStep()
+            R.layout.activity_create_theme_third_step -> presenter.validateThirdStep(
                 productListPortraitBackgroundImage,
                 productListLandscapeBackgroundImage,
                 addProductPortraitBackgroundImage,
@@ -873,9 +874,12 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 getProductItemTextColorValue(),
                 getDeleteIconColorValue(),
                 deleteIcon,
-                boldProductName
+                boldProductName,
+                getAddProductTextColorValue(),
+                getAddProductLabelColorValue(),
+                getAddProductHintColorValue(),
+                getAddProductLineColorValue()
             )
-            //R.layout.activity_create_theme_third_step -> presenter.validateThirdStep()
             R.layout.activity_create_theme_last_step -> {
                 presenter.validateLastStep(name)
             }
