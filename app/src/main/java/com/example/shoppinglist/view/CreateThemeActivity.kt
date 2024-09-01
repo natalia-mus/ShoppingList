@@ -383,15 +383,12 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private fun prepareFirstStep() {
-        nextButton = findViewById(R.id.create_theme_next)
         productListPortraitBackgroundPicker = findViewById(R.id.create_theme_product_list_portrait_background)
         productListLandscapeBackgroundPicker = findViewById(R.id.create_theme_product_list_landscape_background)
         addProductPortraitBackgroundPicker = findViewById(R.id.create_theme_add_product_portrait_background)
         addProductLandscapeBackgroundPicker = findViewById(R.id.create_theme_add_product_landscape_background)
 
-        nextButton.setOnClickListener {
-            nextStep()
-        }
+        prepareStepButtons(false, true)
 
         productListPortraitBackgroundPicker.setOnImageColorSetListener(onImageColorSetListener)
         productListLandscapeBackgroundPicker.setOnImageColorSetListener(onImageColorSetListener)
@@ -427,8 +424,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         productItemBackgroundColorPicker = findViewById(R.id.create_theme_background_color)
         productItemTextColorPicker = findViewById(R.id.create_theme_add_product_text_color)
         deleteIconColorPicker = findViewById(R.id.create_theme_delete_icon_color)
-        previousButton = findViewById(R.id.create_theme_previous)
-        nextButton = findViewById(R.id.create_theme_next)
 
         boldProductNameSwitch.setOnCheckedChangeListener(boldProductNameOnCheckedChangedListener)
 
@@ -450,13 +445,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             boldProductName = !boldProductName
         }
 
-        previousButton.setOnClickListener {
-            previousStep()
-        }
+        prepareStepButtons(true, true)
 
-        nextButton.setOnClickListener {
-            nextStep()
-        }
 
         if (!secondStepInitialized) {
             setSecondStepDefaultColors()
@@ -488,8 +478,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         addProductLineColorPicker = findViewById(R.id.create_theme_add_product_line_color)
         addProductHintColorPicker = findViewById(R.id.create_theme_add_product_hint_color)
         addProductHintTransparencySlider = findViewById(R.id.create_theme_add_product_hint_transparency)
-        previousButton = findViewById(R.id.create_theme_previous)
-        nextButton = findViewById(R.id.create_theme_next)
 
         addProductTextColorPicker.setOnImageColorSetListener(onImageColorSetListener)
         addProductLabelColorPicker.setOnImageColorSetListener(onImageColorSetListener)
@@ -498,13 +486,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         addProductHintTransparencySlider.addOnChangeListener(addProductHintTransparencySliderValueChangedListener)
 
-        previousButton.setOnClickListener {
-            previousStep()
-        }
-
-        nextButton.setOnClickListener {
-            nextStep()
-        }
+        prepareStepButtons(true, true)
 
         val background = findViewById<ScrollView>(R.id.create_theme_third_step)
         setVisualizationBackground(background)
@@ -527,13 +509,10 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
     private fun prepareLastStep() {
         themeName = findViewById(R.id.create_theme_name)
-        previousButton = findViewById(R.id.create_theme_previous)
         saveButton = findViewById(R.id.button_save)
         cancelButton = findViewById(R.id.button_cancel)
 
-        previousButton.setOnClickListener {
-            previousStep()
-        }
+        prepareStepButtons(true, false)
 
         saveButton.setOnClickListener {
             if (validateCurrentStep()) {
@@ -556,6 +535,26 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         })
 
         themeName.setText(name)
+    }
+
+    private fun prepareStepButtons(preparePreviousButton: Boolean, prepareNextButton: Boolean) {
+        previousButton = findViewById(R.id.create_theme_previous)
+        if (preparePreviousButton) {
+            previousButton.setOnClickListener {
+                previousStep()
+            }
+        } else {
+            previousButton.visibility = View.GONE
+        }
+
+        nextButton = findViewById(R.id.create_theme_next)
+        if (prepareNextButton) {
+            nextButton.setOnClickListener {
+                nextStep()
+            }
+        } else {
+            nextButton.visibility = View.GONE
+        }
     }
 
     private fun nextStep() {

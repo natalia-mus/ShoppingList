@@ -90,7 +90,7 @@
             android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttons_section"
+            app:layout_constraintBottom_toTopOf="@+id/create_theme_buttons_section"
             app:layout_constraintTop_toBottomOf="@+id/add_product_quantity_section">
 
             <EditText
@@ -121,7 +121,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
-            android:id="@+id/buttons_section"
+            android:id="@+id/create_theme_buttons_section"
             layout="@layout/buttons_section"
             android:layout_width="match_parent"
             android:layout_height="@dimen/buttons_section_height"

@@ -19,25 +19,21 @@
             android:textSize="20sp"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/create_theme_previous"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="70dp"
-            android:background="@drawable/button_round_background"
-            android:foreground="@drawable/ic_previous"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/create_theme_name" />
+        <include
+            android:id="@+id/create_theme_previous_button"
+            layout="@layout/step_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/create_theme_name" />
 
         <include
-            android:id="@+id/buttons_section"
+            android:id="@+id/create_theme_buttons_section"
             layout="@layout/buttons_section"
             android:layout_width="match_parent"
             android:layout_height="@dimen/buttons_section_height"
             android:layout_marginTop="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/create_theme_previous" />
+            app:layout_constraintTop_toBottomOf="@id/create_theme_previous_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
