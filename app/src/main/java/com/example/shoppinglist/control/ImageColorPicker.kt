@@ -23,7 +23,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.model.ElementType
+import com.example.shoppinglist.model.StyleableElementType
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import yuku.ambilwarna.AmbilWarnaDialog
 
@@ -36,7 +36,7 @@ class ImageColorPicker @JvmOverloads constructor(
     private val attributes = context.obtainStyledAttributes(attrs, R.styleable.ImageColorPicker)
 
     private val copyOptionLabel = attributes.getString(R.styleable.ImageColorPicker_copyOptionLabel)
-    private val elementType = ElementType.getByElementTypeId(attributes.getInt(R.styleable.ImageColorPicker_elementType, ElementType.PRODUCT_ITEM_TEXT_COLOR.elementTypeId))
+    private val styleableElementType = StyleableElementType.getByElementTypeId(attributes.getInt(R.styleable.ImageColorPicker_styleableElementType, StyleableElementType.PRODUCT_ITEM_TEXT_COLOR.elementTypeId))
     private val labelColor = attributes.getColor(R.styleable.ImageColorPicker_labelColor, ResourcesCompat.getColor(resources, R.color.gray, null))
     private val label = attributes.getString(R.styleable.ImageColorPicker_label)
 
@@ -83,7 +83,7 @@ class ImageColorPicker @JvmOverloads constructor(
         thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.round_background, null))
         thumbnail.drawable.setTint(color)
         setBorderVisibility(true)
-        onImageColorSetListener?.onColorSet(elementType, color)
+        onImageColorSetListener?.onColorSet(styleableElementType, color)
         this.color = color
         isValueSet = true
     }
@@ -102,15 +102,15 @@ class ImageColorPicker @JvmOverloads constructor(
     }
 
     private fun canSetImageOrColor(): Boolean {
-        return elementType != null
-                && elementType == ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND
-                || elementType == ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND
-                || elementType == ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND
-                || elementType == ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND
+        return styleableElementType != null
+                && styleableElementType == StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND
+                || styleableElementType == StyleableElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND
+                || styleableElementType == StyleableElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND
+                || styleableElementType == StyleableElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND
     }
 
     private fun copyBackground() {
-        onImageColorSetListener?.onCopyImage(elementType)
+        onImageColorSetListener?.onCopyImage(styleableElementType)
     }
 
     private fun createView() {
@@ -162,10 +162,10 @@ class ImageColorPicker @JvmOverloads constructor(
     }
 
     private fun openGallery() {
-        if (elementType != null) {
+        if (styleableElementType != null) {
             val intent = Intent(context, GalleryActivity::class.java)
             intent.putExtra(GalleryActivity.RESULT_RECEIVER, resultReceiver)
-            intent.putExtra(GalleryActivity.BACKGROUND_TYPE_ID, elementType.elementTypeId)
+            intent.putExtra(GalleryActivity.BACKGROUND_TYPE_ID, styleableElementType.elementTypeId)
             (context as Activity).startActivity(intent)
         }
     }
@@ -189,7 +189,7 @@ class ImageColorPicker @JvmOverloads constructor(
             if (isValueSet) {
                 setOnClickListener {
                     removeBackground()
-                    onImageColorSetListener?.onRemoveImage(elementType)
+                    onImageColorSetListener?.onRemoveImage(styleableElementType)
                     backgroundTypePanel.dismiss()
                 }
             }
@@ -216,8 +216,8 @@ class ImageColorPicker @JvmOverloads constructor(
                 val image = ImageUtils.getImageAsByteArray(context, Uri.parse(imageUri))
                 setSelectedImage(image)
 
-                if (elementType != null) {
-                    onImageColorSetListener?.onImageSet(elementType, image)
+                if (styleableElementType != null) {
+                    onImageColorSetListener?.onImageSet(styleableElementType, image)
                 }
             }
         }
@@ -233,10 +233,10 @@ class ImageColorPicker @JvmOverloads constructor(
 
 
     interface OnImageColorSetListener {
-        fun onCopyImage(elementType: ElementType?)
-        fun onColorSet(elementType: ElementType?, color: Int)
-        fun onImageSet(elementType: ElementType?, image: ByteArray)
-        fun onRemoveImage(elementType: ElementType?)
+        fun onCopyImage(styleableElementType: StyleableElementType?)
+        fun onColorSet(styleableElementType: StyleableElementType?, color: Int)
+        fun onImageSet(styleableElementType: StyleableElementType?, image: ByteArray)
+        fun onRemoveImage(styleableElementType: StyleableElementType?)
     }
 }
 
@@ -253,7 +253,7 @@ class GalleryActivity : Activity() {
         super.onCreate(savedInstanceState)
 
         if (intent.hasExtra(BACKGROUND_TYPE_ID)) {
-            val backgroundTypeId = intent.getIntExtra(BACKGROUND_TYPE_ID, ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND.elementTypeId)
+            val backgroundTypeId = intent.getIntExtra(BACKGROUND_TYPE_ID, StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND.elementTypeId)
 
             if (backgroundTypeId != 0) {
                 val intent = Intent(Intent.ACTION_PICK)

@@ -2,7 +2,7 @@
 <resources>
     <declare-styleable name="ImageColorPicker">
         <attr name="copyOptionLabel" format="string" />
-        <attr name="elementType" format="enum">
+        <attr name="styleableElementType" format="enum">
             <enum name="product_list_portrait_background" value="1" />
             <enum name="product_list_landscape_background" value="2" />
             <enum name="add_product_portrait_background" value="3" />

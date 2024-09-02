@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     app:copyOptionLabel="@string/copy_landscape_background"
-                    app:elementType="product_list_portrait_background"
+                    app:styleableElementType="product_list_portrait_background"
                     app:label="@string/portrait" />
 
             </LinearLayout>
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     app:copyOptionLabel="@string/copy_portrait_background"
-                    app:elementType="product_list_landscape_background"
+                    app:styleableElementType="product_list_landscape_background"
                     app:label="@string/landscape" />
 
             </LinearLayout>
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     app:copyOptionLabel="@string/copy_landscape_background"
-                    app:elementType="add_product_portrait_background"
+                    app:styleableElementType="add_product_portrait_background"
                     app:label="@string/portrait" />
 
             </LinearLayout>
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     app:copyOptionLabel="@string/copy_portrait_background"
-                    app:elementType="add_product_landscape_background"
+                    app:styleableElementType="add_product_landscape_background"
                     app:label="@string/landscape" />
 
             </LinearLayout>

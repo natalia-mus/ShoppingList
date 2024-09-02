@@ -1,6 +1,6 @@
 package com.example.shoppinglist.model
 
-enum class ElementType(val elementTypeId: Int) {
+enum class StyleableElementType(val elementTypeId: Int) {
     PRODUCT_LIST_PORTRAIT_BACKGROUND(1),
     PRODUCT_LIST_LANDSCAPE_BACKGROUND(2),
     ADD_PRODUCT_PORTRAIT_BACKGROUND(3),
@@ -15,7 +15,7 @@ enum class ElementType(val elementTypeId: Int) {
 
 
     companion object {
-        fun getByElementTypeId(elementTypeId: Int): ElementType? {
+        fun getByElementTypeId(elementTypeId: Int): StyleableElementType? {
             for (elementType in values()) {
                 if (elementType.elementTypeId == elementTypeId) {
                     return elementType

@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:elementType="product_item_background_color"
+                    app:styleableElementType="product_item_background_color"
                     app:label="@string/background_color"
                     app:labelColor="@color/white" />
 
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:elementType="product_item_text_color"
+                    app:styleableElementType="product_item_text_color"
                     app:label="@string/text_color"
                     app:labelColor="@color/white" />
 
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:elementType="delete_icon_color"
+                    app:styleableElementType="delete_icon_color"
                     app:label="@string/delete_icon_color"
                     app:labelColor="@color/white" />
 

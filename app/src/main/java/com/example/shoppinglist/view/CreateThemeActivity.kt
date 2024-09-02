@@ -14,13 +14,12 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.alpha
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.control.ImageColorPicker
-import com.example.shoppinglist.model.ElementType
+import com.example.shoppinglist.model.StyleableElementType
 import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.slider.Slider
@@ -72,16 +71,16 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
         @SuppressLint("RestrictedApi")
         override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
-            productItemBackgroundAlphaPercentageValue = value
-            setAlpha(value, ElementType.PRODUCT_ITEM_BACKGROUND_COLOR)
+            productItemBackgroundColor.setAlpha(value)
+            setProductItemBackground()
         }
     }
 
     private val addProductHintTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
         @SuppressLint("RestrictedApi")
         override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
-            addProductHintAlphaPercentageValue = value
-            setAlpha(value, ElementType.ADD_PRODUCT_HINT_COLOR)
+            addProductHintColor.setAlpha(value)
+            setAddProductHintColor()
         }
     }
 
@@ -92,24 +91,24 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     }
 
     private val onImageColorSetListener = object : ImageColorPicker.OnImageColorSetListener {
-        override fun onCopyImage(elementType: ElementType?) {
-            copyBackground(elementType)
+        override fun onCopyImage(styleableElementType: StyleableElementType?) {
+            copyBackground(styleableElementType)
         }
 
-        override fun onColorSet(elementType: ElementType?, color: Int) {
-            setColor(elementType, color)
-            setCopyOptionVisibility(elementType, true)
+        override fun onColorSet(styleableElementType: StyleableElementType?, color: Int) {
+            setColor(styleableElementType, color)
+            setCopyOptionVisibility(styleableElementType, true)
         }
 
-        override fun onImageSet(elementType: ElementType?, image: ByteArray) {
-            if (elementType != null) {
-                setImage(elementType, image)
-                setCopyOptionVisibility(elementType, true)
+        override fun onImageSet(styleableElementType: StyleableElementType?, image: ByteArray) {
+            if (styleableElementType != null) {
+                setImage(styleableElementType, image)
+                setCopyOptionVisibility(styleableElementType, true)
             }
         }
 
-        override fun onRemoveImage(elementType: ElementType?) {
-            removeBackground(elementType)
+        override fun onRemoveImage(styleableElementType: StyleableElementType?) {
+            removeBackground(styleableElementType)
         }
     }
 
@@ -120,26 +119,22 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     private var addProductPortraitBackgroundImage: ByteArray? = null
     private var addProductLandscapeBackgroundImage: ByteArray? = null
 
-    private var productListPortraitBackgroundColor: Int? = null
-    private var productListLandscapeBackgroundColor: Int? = null
-    private var addProductPortraitBackgroundColor: Int? = null
-    private var addProductLandscapeBackgroundColor: Int? = null
+    private var productListPortraitBackgroundColor = com.example.shoppinglist.Color(null)
+    private var productListLandscapeBackgroundColor = com.example.shoppinglist.Color(null)
+    private var addProductPortraitBackgroundColor = com.example.shoppinglist.Color(null)
+    private var addProductLandscapeBackgroundColor = com.example.shoppinglist.Color(null)
 
     private var name = ""
     private var deleteIcon = Icon.TRASH_BIN
     private var boldProductName = true
-    private var productItemBackgroundAlphaPercentageValue = DEFAULT_BACKGROUND_ALFA
-    private var productItemBackgroundAlphaValue: String? = ""
-    private var productItemBackgroundColorValue: String? = ""
-    private var productItemTextColorValue: Int? = null
-    private var deleteIconColorValue: Int? = null
+    private var productItemBackgroundColor = com.example.shoppinglist.Color(null, DEFAULT_BACKGROUND_ALFA)
+    private var productItemTextColor = com.example.shoppinglist.Color(null)
+    private var deleteIconColor = com.example.shoppinglist.Color(null)
 
-    private var addProductTextColorValue: Int? = null
-    private var addProductLabelColorValue: Int? = null
-    private var addProductLineColorValue: Int? = null
-    private var addProductHintAlphaPercentageValue = DEFAULT_HINT_ALFA
-    private var addProductHintAlphaValue: String? = ""
-    private var addProductHintColorValue: String? = ""
+    private var addProductTextColor = com.example.shoppinglist.Color(null)
+    private var addProductLabelColor = com.example.shoppinglist.Color(null)
+    private var addProductLineColor = com.example.shoppinglist.Color(null)
+    private var addProductHintColor = com.example.shoppinglist.Color(null, DEFAULT_HINT_ALFA)
 
     private var currentCreatorStep = 0
     private var secondStepInitialized = false
@@ -168,140 +163,122 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun copyBackground(elementType: ElementType?) {
-        when (elementType) {
-            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                removeBackground(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
+    private fun copyBackground(styleableElementType: StyleableElementType?) {
+        when (styleableElementType) {
+            StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                removeBackground(StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND)
                 if (productListLandscapeBackgroundImage != null) {
-                    setImage(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundImage!!)
+                    setImage(StyleableElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundImage!!)
                     productListPortraitBackgroundPicker.setSelectedImage(productListLandscapeBackgroundImage)
 
-                } else if (productListLandscapeBackgroundColor != null) {
-                    setColor(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundColor)
-                    productListPortraitBackgroundPicker.setSelectedColor(productListLandscapeBackgroundColor!!)
+                } else if (productListLandscapeBackgroundColor.getColorInt() != null) {
+                    setColor(StyleableElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND, productListLandscapeBackgroundColor.getColorInt())
+                    productListPortraitBackgroundPicker.setSelectedColor(productListLandscapeBackgroundColor.getColorInt()!!)
                 }
             }
-            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                removeBackground(ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
+            StyleableElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                removeBackground(StyleableElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND)
                 if (productListPortraitBackgroundImage != null) {
-                    setImage(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundImage!!)
+                    setImage(StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundImage!!)
                     productListLandscapeBackgroundPicker.setSelectedImage(productListPortraitBackgroundImage)
 
-                } else if (productListPortraitBackgroundColor != null) {
-                    setColor(ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundColor)
-                    productListLandscapeBackgroundPicker.setSelectedColor(productListPortraitBackgroundColor!!)
+                } else if (productListPortraitBackgroundColor.getColorInt() != null) {
+                    setColor(StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND, productListPortraitBackgroundColor.getColorInt())
+                    productListLandscapeBackgroundPicker.setSelectedColor(productListPortraitBackgroundColor.getColorInt()!!)
                 }
             }
-            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                removeBackground(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
+            StyleableElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                removeBackground(StyleableElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND)
                 if (addProductLandscapeBackgroundImage != null) {
-                    setImage(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundImage!!)
+                    setImage(StyleableElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundImage!!)
                     addProductPortraitBackgroundPicker.setSelectedImage(addProductLandscapeBackgroundImage)
 
-                } else if (addProductLandscapeBackgroundColor != null) {
-                    setColor(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundColor)
-                    addProductPortraitBackgroundPicker.setSelectedColor(addProductLandscapeBackgroundColor!!)
+                } else if (addProductLandscapeBackgroundColor.getColorInt() != null) {
+                    setColor(StyleableElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND, addProductLandscapeBackgroundColor.getColorInt())
+                    addProductPortraitBackgroundPicker.setSelectedColor(addProductLandscapeBackgroundColor.getColorInt()!!)
                 }
             }
-            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                removeBackground(ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
+            StyleableElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                removeBackground(StyleableElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND)
                 if (addProductPortraitBackgroundImage != null) {
-                    setImage(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundImage!!)
+                    setImage(StyleableElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundImage!!)
                     addProductLandscapeBackgroundPicker.setSelectedImage(addProductPortraitBackgroundImage)
 
-                } else if (addProductPortraitBackgroundColor != null) {
-                    setColor(ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundColor)
-                    addProductLandscapeBackgroundPicker.setSelectedColor(addProductPortraitBackgroundColor!!)
+                } else if (addProductPortraitBackgroundColor.getColorInt() != null) {
+                    setColor(StyleableElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND, addProductPortraitBackgroundColor.getColorInt())
+                    addProductLandscapeBackgroundPicker.setSelectedColor(addProductPortraitBackgroundColor.getColorInt()!!)
                 }
             }
         }
     }
 
     private fun getDeleteIconColorValue(): Int {
-        if (deleteIconColorValue == null) {
+        if (deleteIconColor.getColorInt() == null) {
             setDefaultDeleteIconColor()
         }
-        return deleteIconColorValue!!
+        return deleteIconColor.getColorInt()!!
     }
 
     private fun getProductItemTextColorValue(): Int {
-        if (productItemTextColorValue == null) {
+        if (productItemTextColor.getColorInt() == null) {
             setDefaultProductItemTextColorValue()
         }
-        return productItemTextColorValue!!
+        return productItemTextColor.getColorInt()!!
     }
 
     private fun getAddProductTextColorValue(): Int {
-        if (addProductTextColorValue == null) {
+        if (addProductTextColor.getColorInt() == null) {
             setDefaultAddProductTextColor()
         }
 
-        return addProductTextColorValue!!
+        return addProductTextColor.getColorInt()!!
     }
 
     private fun getAddProductLabelColorValue(): Int {
-        if (addProductLabelColorValue == null) {
+        if (addProductLabelColor.getColorInt() == null) {
             setDefaultAddProductLabelColor()
         }
 
-        return addProductLabelColorValue!!
+        return addProductLabelColor.getColorInt()!!
     }
 
     private fun getAddProductLineColorValue(): Int {
-        if (addProductLineColorValue == null) {
+        if (addProductLineColor.getColorInt() == null) {
             setDefaultAddProductLineColor()
         }
 
-        return addProductLineColorValue!!
+        return addProductLineColor.getColorInt()!!
     }
 
     private fun setAddProductTextColor(color: Int) {
-        addProductTextColorValue = color
+        addProductTextColor.setColor(color)
         addProductText.setTextColor(color)
     }
 
     private fun setAddProductLabelColor(color: Int) {
-        addProductLabelColorValue = color
+        addProductLabelColor.setColor(color)
         addProductLabel.setTextColor(color)
         addProductHintLabel.setTextColor(color)
     }
 
     private fun setAddProductLineColor(color: Int) {
-        addProductLineColorValue = color
+        addProductLineColor.setColor(color)
         val colorStateList = ColorStateList.valueOf(color)
         addProductText.backgroundTintList = colorStateList
         addProductHintText.backgroundTintList = colorStateList
     }
 
     private fun setDeleteIconColor(color: Int) {
-        deleteIconColorValue = color
+        deleteIconColor.setColor(color)
         productItemButtonDelete.background.setTint(color)
     }
 
     private fun setProductItemBackground() {
-        val colorValue = getProductItemBackgroundValue()
-        productItemBackground.background.setTint(Color.parseColor(colorValue))
+        productItemBackground.background.setTint(Color.parseColor(productItemBackgroundColor.getValue()))
     }
 
     private fun setAddProductHintColor() {
-        val colorValue = getAddProductHintColorValue()
-        addProductHintText.setTextColor(Color.parseColor(colorValue))
-    }
-
-    private fun getProductItemBackgroundValue(): String {
-        if (productItemBackgroundAlphaValue == null || productItemBackgroundColorValue == null) {
-            setDefaultProductItemBackgroundValue()
-        }
-
-        return "#$productItemBackgroundAlphaValue$productItemBackgroundColorValue"
-    }
-
-    private fun getAddProductHintColorValue(): String {
-        if (addProductHintAlphaValue == null || addProductHintColorValue == null) {
-            setDefaultAddProductHintColorValue()
-        }
-
-        return "#$addProductHintAlphaValue$addProductHintColorValue"
+        addProductHintText.setTextColor(Color.parseColor(addProductHintColor.getValue()))
     }
 
     private fun setDefaultProductItemBackgroundValue() {
@@ -312,8 +289,6 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             val colorWithoutAlpha = Color.rgb(Color.red(color), Color.green(color), Color.blue(color))
 
             productItemBackgroundColorPicker.setSelectedColor(colorWithoutAlpha)
-            setProductItemBackgroundColor(color)
-            setProductItemBackgroundAlpha(color.alpha)
         }
     }
 
@@ -325,61 +300,16 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             val colorWithoutAlpha = Color.rgb(Color.red(color), Color.green(color), Color.blue(color))
 
             addProductHintColorPicker.setSelectedColor(colorWithoutAlpha)
-            setAddProductHintColor(color)
-            setAddProductHintAlpha(color.alpha)
         }
     }
 
     private fun setProductItemTextColor(color: Int) {
-        productItemTextColorValue = color
+        productItemTextColor.setColor(color)
         productItemNameLabel.setTextColor(color)
         productItemQuantityLabel.setTextColor(color)
         productItemPriorityLabel.setTextColor(color)
         productItemQuantityValue.setTextColor(color)
         productItemPriorityValue.setTextColor(color)
-    }
-
-    private fun setProductItemBackgroundColor(color: Int) {
-        val colorValue = Integer.toHexString(color)
-        val alpha = if (colorValue.length == 8) 2 else 0
-        productItemBackgroundColorValue = colorValue.drop(alpha)
-        setProductItemBackground()
-    }
-
-    private fun setAddProductHintColor(color: Int) {
-        val colorValue = Integer.toHexString(color)
-        val alpha = if (colorValue.length == 8) 2 else 0
-        addProductHintColorValue = colorValue.drop(alpha)
-        setAddProductHintColor()
-    }
-
-    private fun setAlpha(alphaPercentage: Float, elementType: ElementType) {
-        val alpha = (255 * alphaPercentage).toInt()
-
-        when (elementType) {
-            ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> setProductItemBackgroundAlpha(alpha)
-            ElementType.ADD_PRODUCT_HINT_COLOR -> setAddProductHintAlpha(alpha)
-        }
-    }
-
-    private fun setProductItemBackgroundAlpha(alpha: Int) {
-        productItemBackgroundAlphaValue = Integer.toHexString(alpha)
-
-        if (productItemBackgroundAlphaValue?.length == 1) {
-            productItemBackgroundAlphaValue = "0$productItemBackgroundAlphaValue"
-        }
-
-        setProductItemBackground()
-    }
-
-    private fun setAddProductHintAlpha(alpha: Int) {
-        addProductHintAlphaValue = Integer.toHexString(alpha)
-
-        if (addProductHintAlphaValue?.length == 1) {
-            addProductHintAlphaValue = "0$addProductHintAlphaValue"
-        }
-
-        setAddProductHintColor()
     }
 
     private fun prepareFirstStep() {
@@ -397,16 +327,16 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
 
         productListPortraitBackgroundImage?.let { productListPortraitBackgroundPicker.setSelectedImage(it) }
-        productListPortraitBackgroundColor?.let { productListPortraitBackgroundPicker.setSelectedColor(it) }
+        productListPortraitBackgroundColor.getColorInt()?.let { productListPortraitBackgroundPicker.setSelectedColor(it) }
 
         productListLandscapeBackgroundImage?.let { productListLandscapeBackgroundPicker.setSelectedImage(it) }
-        productListLandscapeBackgroundColor?.let { productListLandscapeBackgroundPicker.setSelectedColor(it) }
+        productListLandscapeBackgroundColor.getColorInt()?.let { productListLandscapeBackgroundPicker.setSelectedColor(it) }
 
         addProductPortraitBackgroundImage?.let { addProductPortraitBackgroundPicker.setSelectedImage(it) }
-        addProductPortraitBackgroundColor?.let { addProductPortraitBackgroundPicker.setSelectedColor(it) }
+        addProductPortraitBackgroundColor.getColorInt()?.let { addProductPortraitBackgroundPicker.setSelectedColor(it) }
 
         addProductLandscapeBackgroundImage?.let { addProductLandscapeBackgroundPicker.setSelectedImage(it) }
-        addProductLandscapeBackgroundColor?.let { addProductLandscapeBackgroundPicker.setSelectedColor(it) }
+        addProductLandscapeBackgroundColor.getColorInt()?.let { addProductLandscapeBackgroundPicker.setSelectedColor(it) }
     }
 
     private fun prepareSecondStep() {
@@ -453,16 +383,15 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             secondStepInitialized = true
 
         } else {
-            val color = if (productItemBackgroundColorValue != null) Color.parseColor("#$productItemBackgroundColorValue") else null
-            color?.let { productItemBackgroundColorPicker.setSelectedColor(it) }
+            productItemBackgroundColor.getColorInt()?.let { productItemBackgroundColorPicker.setSelectedColor(it) }
 
-            productItemTextColorValue?.let { productItemTextColorPicker.setSelectedColor(it) }
-            deleteIconColorValue?.let { deleteIconColorPicker.setSelectedColor(it) }
+            productItemTextColor.getColorInt()?.let { productItemTextColorPicker.setSelectedColor(it) }
+            deleteIconColor.getColorInt()?.let { deleteIconColorPicker.setSelectedColor(it) }
             boldProductNameSwitch.isChecked = boldProductName
             selectIcon(deleteIcon)
         }
 
-        backgroundTransparencySlider.value = productItemBackgroundAlphaPercentageValue
+        backgroundTransparencySlider.value = productItemBackgroundColor.getAlphaPercentage()
 
         val background = findViewById<ScrollView>(R.id.create_theme_second_step)
         setVisualizationBackground(background)
@@ -496,15 +425,13 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             thirdStepInitialized = true
 
         } else {
-            addProductTextColorValue?.let { addProductTextColorPicker.setSelectedColor(it) }
-            addProductLabelColorValue?.let { addProductLabelColorPicker.setSelectedColor(it) }
-            addProductLineColorValue?.let { addProductLineColorPicker.setSelectedColor(it) }
-
-            val color = if (addProductHintColorValue != null && addProductHintColorValue!!.isNotEmpty()) Color.parseColor("#$addProductHintColorValue") else null
-            color?.let { addProductHintColorPicker.setSelectedColor(it) }
+            addProductTextColor.getColorInt()?.let { addProductTextColorPicker.setSelectedColor(it) }
+            addProductLabelColor.getColorInt()?.let { addProductLabelColorPicker.setSelectedColor(it) }
+            addProductLineColor.getColorInt()?.let { addProductLineColorPicker.setSelectedColor(it) }
+            addProductHintColor.getColorInt()?.let { addProductHintColorPicker.setSelectedColor(it) }
         }
 
-        addProductHintTransparencySlider.value = addProductHintAlphaPercentageValue
+        addProductHintTransparencySlider.value = addProductHintColor.getAlphaPercentage()
     }
 
     private fun prepareLastStep() {
@@ -576,28 +503,28 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         changeView()
     }
 
-    private fun removeBackground(backgroundType: ElementType?) {
+    private fun removeBackground(backgroundType: StyleableElementType?) {
         when (backgroundType) {
-            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                productListPortraitBackgroundColor = null
+            StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                productListPortraitBackgroundColor.removeColor()
                 productListPortraitBackgroundImage = null
                 productListPortraitBackgroundPicker.removeBackground()
                 productListLandscapeBackgroundPicker.showCopyOption(false)
             }
-            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                productListLandscapeBackgroundColor = null
+            StyleableElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                productListLandscapeBackgroundColor.removeColor()
                 productListLandscapeBackgroundImage = null
                 productListLandscapeBackgroundPicker.removeBackground()
                 productListPortraitBackgroundPicker.showCopyOption(false)
             }
-            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                addProductPortraitBackgroundColor = null
+            StyleableElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                addProductPortraitBackgroundColor.removeColor()
                 addProductPortraitBackgroundImage = null
                 addProductPortraitBackgroundPicker.removeBackground()
                 addProductLandscapeBackgroundPicker.showCopyOption(false)
             }
-            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                addProductLandscapeBackgroundColor = null
+            StyleableElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                addProductLandscapeBackgroundColor.removeColor()
                 addProductLandscapeBackgroundImage = null
                 addProductLandscapeBackgroundPicker.removeBackground()
                 addProductPortraitBackgroundPicker.showCopyOption(false)
@@ -612,11 +539,11 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             productListLandscapeBackgroundImage,
             addProductPortraitBackgroundImage,
             addProductLandscapeBackgroundImage,
-            productListPortraitBackgroundColor,
-            productListLandscapeBackgroundColor,
-            addProductPortraitBackgroundColor,
-            addProductLandscapeBackgroundColor,
-            getProductItemBackgroundValue(),
+            productListPortraitBackgroundColor.getColorInt(),
+            productListLandscapeBackgroundColor.getColorInt(),
+            addProductPortraitBackgroundColor.getColorInt(),
+            addProductLandscapeBackgroundColor.getColorInt(),
+            productItemBackgroundColor.getValue(),
             getProductItemTextColorValue(),
             getDeleteIconColorValue(),
             deleteIcon,
@@ -624,7 +551,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             getAddProductTextColorValue(),
             getAddProductLabelColorValue(),
             getAddProductLineColorValue(),
-            getAddProductHintColorValue()
+            addProductHintColor.getValue()
         )
 
         finish()
@@ -653,60 +580,52 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         iconToSelect.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent_white, null))
         iconToUnselect.background.setTint(ResourcesCompat.getColor(resources, R.color.transparent, null))
         productItemButtonDelete.background = iconDrawable
-        setColor(ElementType.DELETE_ICON_COLOR, deleteIconColorValue)
+        setColor(StyleableElementType.DELETE_ICON_COLOR, deleteIconColor.getColorInt())
     }
 
-    private fun setColor(elementType: ElementType?, color: Int?) {
-        when (elementType) {
-            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
-                productListPortraitBackgroundColor = color
+    private fun setColor(styleableElementType: StyleableElementType?, color: Int?) {
+        when (styleableElementType) {
+            StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+                color?.let { productListPortraitBackgroundColor.setColor(it) }
                 productListPortraitBackgroundImage = null
             }
-            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
-                productListLandscapeBackgroundColor = color
+            StyleableElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+                color?.let { productListLandscapeBackgroundColor.setColor(it) }
                 productListLandscapeBackgroundImage = null
             }
-            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
-                addProductPortraitBackgroundColor = color
+            StyleableElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+                color?.let { addProductPortraitBackgroundColor.setColor(it) }
                 addProductPortraitBackgroundImage = null
             }
-            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
-                addProductLandscapeBackgroundColor = color
+            StyleableElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+                color?.let { addProductLandscapeBackgroundColor.setColor(it) }
                 addProductLandscapeBackgroundImage = null
             }
-            ElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
+            StyleableElementType.PRODUCT_ITEM_BACKGROUND_COLOR -> {
                 if (color != null) {
-                    setProductItemBackgroundColor(color)
+                    productItemBackgroundColor.setColor(color)
+                    setProductItemBackground()
                 }
             }
-            ElementType.PRODUCT_ITEM_TEXT_COLOR -> {
-                if (color != null) {
-                    setProductItemTextColor(color)
-                }
+            StyleableElementType.PRODUCT_ITEM_TEXT_COLOR -> {
+                color?.let { setProductItemTextColor(it) }
             }
-            ElementType.DELETE_ICON_COLOR -> {
-                if (color != null) {
-                    setDeleteIconColor(color)
-                }
+            StyleableElementType.DELETE_ICON_COLOR -> {
+                color?.let { setDeleteIconColor(it) }
             }
-            ElementType.ADD_PRODUCT_TEXT_COLOR -> {
-                if (color != null) {
-                    setAddProductTextColor(color)
-                }
+            StyleableElementType.ADD_PRODUCT_TEXT_COLOR -> {
+                color?.let { setAddProductTextColor(it) }
             }
-            ElementType.ADD_PRODUCT_LABEL_COLOR -> {
-                if (color != null) {
-                    setAddProductLabelColor(color)
-                }
+            StyleableElementType.ADD_PRODUCT_LABEL_COLOR -> {
+                color?.let { setAddProductLabelColor(it) }
             }
-            ElementType.ADD_PRODUCT_LINE_COLOR -> {
-                if (color != null) {
-                    setAddProductLineColor(color)
-                }
+            StyleableElementType.ADD_PRODUCT_LINE_COLOR -> {
+                color?.let { setAddProductLineColor(it) }
             }
-            ElementType.ADD_PRODUCT_HINT_COLOR -> {
+            StyleableElementType.ADD_PRODUCT_HINT_COLOR -> {
                 if (color != null) {
-                    setAddProductHintColor(color)
+                    addProductHintColor.setColor(color)
+                    setAddProductHintColor()
                 }
             }
         }
@@ -717,7 +636,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         defaultProductItemTextColor?.let {
             productItemTextColorPicker.setSelectedColor(it)
-            productItemTextColorValue = it
+            productItemTextColor.setColor(it)
         }
     }
 
@@ -726,7 +645,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         defaultAddProductTextColorValue?.let {
             addProductTextColorPicker.setSelectedColor(it)
-            addProductTextColorValue = it
+            addProductTextColor.setColor(it)
         }
     }
 
@@ -735,7 +654,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         defaultAddProductLabelColorValue?.let {
             addProductLabelColorPicker.setSelectedColor(it)
-            addProductLabelColorValue = it
+            addProductLabelColor.setColor(it)
         }
     }
 
@@ -744,7 +663,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         defaultAddProductLineColorValue?.let {
             addProductLineColorPicker.setSelectedColor(it)
-            addProductLineColorValue = it
+            addProductLineColor.setColor(it)
         }
     }
 
@@ -753,7 +672,7 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
 
         defaultDeleteIconColorValue?.let {
             deleteIconColorPicker.setSelectedColor(it)
-            deleteIconColorValue = it
+            deleteIconColor.setColor(it)
         }
     }
 
@@ -770,23 +689,23 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         setDefaultAddProductLineColor()
     }
 
-    private fun setImage(elementType: ElementType, image: ByteArray) {
-        when (elementType) {
-            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+    private fun setImage(styleableElementType: StyleableElementType, image: ByteArray) {
+        when (styleableElementType) {
+            StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListPortraitBackgroundImage = image
-                productListPortraitBackgroundColor = null
+                productListPortraitBackgroundColor.removeColor()
             }
-            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+            StyleableElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListLandscapeBackgroundImage = image
-                productListLandscapeBackgroundColor = null
+                productListLandscapeBackgroundColor.removeColor()
             }
-            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+            StyleableElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductPortraitBackgroundImage = image
-                addProductPortraitBackgroundColor = null
+                addProductPortraitBackgroundColor.removeColor()
             }
-            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+            StyleableElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductLandscapeBackgroundImage = image
-                addProductLandscapeBackgroundColor = null
+                addProductLandscapeBackgroundColor.removeColor()
             }
         }
     }
@@ -799,18 +718,18 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
     }
 
-    private fun setCopyOptionVisibility(elementType: ElementType?, visible: Boolean) {
-        when (elementType) {
-            ElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
+    private fun setCopyOptionVisibility(styleableElementType: StyleableElementType?, visible: Boolean) {
+        when (styleableElementType) {
+            StyleableElementType.PRODUCT_LIST_PORTRAIT_BACKGROUND -> {
                 productListLandscapeBackgroundPicker.showCopyOption(visible)
             }
-            ElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
+            StyleableElementType.PRODUCT_LIST_LANDSCAPE_BACKGROUND -> {
                 productListPortraitBackgroundPicker.showCopyOption(visible)
             }
-            ElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
+            StyleableElementType.ADD_PRODUCT_PORTRAIT_BACKGROUND -> {
                 addProductLandscapeBackgroundPicker.showCopyOption(visible)
             }
-            ElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
+            StyleableElementType.ADD_PRODUCT_LANDSCAPE_BACKGROUND -> {
                 addProductPortraitBackgroundPicker.showCopyOption(visible)
             }
         }
@@ -825,8 +744,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             if (addProductPortraitBackgroundImage != null) {
                 backgroundImage = addProductPortraitBackgroundImage
 
-            } else if (addProductPortraitBackgroundColor != null) {
-                backgroundColor = addProductPortraitBackgroundColor
+            } else if (addProductPortraitBackgroundColor.getColorInt() != null) {
+                backgroundColor = addProductPortraitBackgroundColor.getColorInt()
 
             } else {
                 backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null))
@@ -836,8 +755,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
             if (addProductLandscapeBackgroundImage != null) {
                 backgroundImage = addProductLandscapeBackgroundImage
 
-            } else if (addProductLandscapeBackgroundColor != null) {
-                backgroundColor = addProductLandscapeBackgroundColor
+            } else if (addProductLandscapeBackgroundColor.getColorInt() != null) {
+                backgroundColor = addProductLandscapeBackgroundColor.getColorInt()
 
             } else {
                 backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null))
@@ -865,18 +784,18 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
                 productListLandscapeBackgroundImage,
                 addProductPortraitBackgroundImage,
                 addProductLandscapeBackgroundImage,
-                productListPortraitBackgroundColor,
-                productListLandscapeBackgroundColor,
-                addProductPortraitBackgroundColor,
-                addProductLandscapeBackgroundColor,
-                getProductItemBackgroundValue(),
+                productListPortraitBackgroundColor.getColorInt(),
+                productListLandscapeBackgroundColor.getColorInt(),
+                addProductPortraitBackgroundColor.getColorInt(),
+                addProductLandscapeBackgroundColor.getColorInt(),
+                productItemBackgroundColor.getValue(),
                 getProductItemTextColorValue(),
                 getDeleteIconColorValue(),
                 deleteIcon,
                 boldProductName,
                 getAddProductTextColorValue(),
                 getAddProductLabelColorValue(),
-                getAddProductHintColorValue(),
+                addProductHintColor.getValue(),
                 getAddProductLineColorValue()
             )
             R.layout.activity_create_theme_last_step -> {
