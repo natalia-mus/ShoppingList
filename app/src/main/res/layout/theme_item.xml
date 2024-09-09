@@ -10,16 +10,25 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/theme_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <LinearLayout
+        android:id="@+id/theme_image_border"
+        android:layout_width="81dp"
+        android:layout_height="81dp"
         android:layout_margin="10dp"
-        android:scaleType="centerCrop"
+        android:background="@color/white"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/theme_grocery_list_portrait" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/theme_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/theme_grocery_list_portrait" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/theme_name"
@@ -31,7 +40,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/theme_image"
+        app:layout_constraintStart_toEndOf="@id/theme_image_border"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/theme_grocery" />
 
