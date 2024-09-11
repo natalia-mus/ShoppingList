@@ -1,7 +1,7 @@
 package com.example.shoppinglist.model
 
+import com.example.shoppinglist.SavingContext
 import com.example.shoppinglist.ValidationResult
-import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.database.DBHelper
 
@@ -13,7 +13,7 @@ class AddProductActivityModel : AddProductActivityContract.AddProductActivityMod
         val validationResult = validateData(name, priority)
 
         if (validationResult == ValidationResult.VALID) {
-            if (savingContext == SavingContext.CREATE)  database?.addProduct(name, quantity, priority.toInt())
+            if (savingContext == SavingContext.CREATE) database?.addProduct(name, quantity, priority.toInt())
             else database?.editProduct(id!!, name, quantity, priority.toInt())
         }
         return validationResult

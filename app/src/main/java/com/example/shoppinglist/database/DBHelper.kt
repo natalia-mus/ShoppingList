@@ -257,7 +257,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         val addProductHintColorValue = resources.getString(R.color.transparent_white, null)
 
 
-        saveTheme(resources.getString(R.string.theme_grocery),
+        saveTheme(
+            resources.getString(R.string.theme_grocery),
             true,
             getImageAsByteArray(R.drawable.theme_grocery_list_portrait),
             getImageAsByteArray(R.drawable.theme_grocery_list_landscape),
@@ -279,7 +280,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             database
         )
 
-        saveTheme(resources.getString(R.string.theme_marketplace),
+        saveTheme(
+            resources.getString(R.string.theme_marketplace),
             true,
             getImageAsByteArray(R.drawable.theme_marketplace_list_portrait),
             getImageAsByteArray(R.drawable.theme_marketplace_list_landscape),
@@ -301,7 +303,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             database
         )
 
-        saveTheme(resources.getString(R.string.theme_fashion),
+        saveTheme(
+            resources.getString(R.string.theme_fashion),
             true,
             getImageAsByteArray(R.drawable.theme_fashion_list_portrait),
             getImageAsByteArray(R.drawable.theme_fashion_list_landscape),
@@ -323,7 +326,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             database
         )
 
-        saveTheme(resources.getString(R.string.theme_christmas),
+        saveTheme(
+            resources.getString(R.string.theme_christmas),
             true,
             getImageAsByteArray(R.drawable.theme_christmas_list_portrait),
             getImageAsByteArray(R.drawable.theme_christmas_list_landscape),

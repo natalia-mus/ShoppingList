@@ -2,12 +2,10 @@ package com.example.shoppinglist.view
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
-import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
+import com.example.shoppinglist.SavingContext
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme

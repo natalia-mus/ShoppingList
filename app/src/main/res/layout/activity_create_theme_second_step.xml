@@ -62,27 +62,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:styleableElementType="product_item_background_color"
                     app:label="@string/background_color"
-                    app:labelColor="@color/white" />
+                    app:labelColor="@color/white"
+                    app:styleableElementType="product_item_background_color" />
 
                 <com.example.shoppinglist.control.ImageColorPicker
                     android:id="@+id/create_theme_add_product_text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:styleableElementType="product_item_text_color"
                     app:label="@string/text_color"
-                    app:labelColor="@color/white" />
+                    app:labelColor="@color/white"
+                    app:styleableElementType="product_item_text_color" />
 
                 <com.example.shoppinglist.control.ImageColorPicker
                     android:id="@+id/create_theme_delete_icon_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:styleableElementType="delete_icon_color"
                     app:label="@string/delete_icon_color"
-                    app:labelColor="@color/white" />
+                    app:labelColor="@color/white"
+                    app:styleableElementType="delete_icon_color" />
 
             </LinearLayout>
 

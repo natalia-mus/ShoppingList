@@ -57,7 +57,7 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
                 showData()
             }
 
-            override fun onDeclineButtonClick() { }
+            override fun onDeclineButtonClick() {}
         }
 
         val dialog = ConfirmationDialog(this, resources.getString(R.string.delete_product_question), confirmationDialogListener)

@@ -1,4 +1,4 @@
-package com.example.shoppinglist.constants
+package com.example.shoppinglist
 
 enum class SavingContext {
     CREATE, EDIT

@@ -19,8 +19,8 @@ import com.example.shoppinglist.R
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.control.ImageColorPicker
-import com.example.shoppinglist.model.StyleableElementType
 import com.example.shoppinglist.model.Icon
+import com.example.shoppinglist.model.StyleableElementType
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.slider.Slider
 import kotlinx.android.synthetic.main.product_item.*
@@ -452,9 +452,9 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
         }
 
         themeName.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) { }
+            override fun afterTextChanged(s: Editable?) {}
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 name = themeName.text.toString()
