@@ -3,21 +3,18 @@ package com.example.shoppinglist
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.constants.Theme
 
 object Settings {
 
     var instance: SharedPreferences? = null
 
-    private fun getSettingsName(context: Context): String {
-        val name = StringBuilder()
-        name.append(context.packageName)
-        name.append(".")
-        name.append(Constants.SETTINGS)
-        return name.toString()
+    fun getThemeId(): Int {
+        return if (instance != null) {
+            instance!!.getInt(Constants.THEME, Constants.DEFAULT_THEME_ID)
+        } else return Constants.DEFAULT_THEME_ID
     }
 
-    fun getInstance(context: Context): SharedPreferences {
+    fun init(context: Context): SharedPreferences {
         if (instance == null) {
             instance = context.applicationContext.getSharedPreferences(
                 getSettingsName(context),
@@ -27,19 +24,15 @@ object Settings {
         return instance as SharedPreferences
     }
 
-    fun getTheme(): Theme {
-        var theme = Theme.GROCERY
-
-        when (instance?.getString(Constants.THEME, Theme.GROCERY.name)) {
-            Theme.GROCERY.name -> theme = Theme.GROCERY
-            Theme.MARKETPLACE.name -> theme = Theme.MARKETPLACE
-            Theme.FASHION.name -> theme = Theme.FASHION
-            Theme.CHRISTMAS.name -> theme = Theme.CHRISTMAS
-        }
-        return theme
+    fun setTheme(themeId: Int) {
+        instance?.edit()?.putInt(Constants.THEME, themeId)?.apply()
     }
 
-    fun setTheme(theme: Theme) {
-        instance?.edit()?.putString(Constants.THEME, theme.name)?.apply()
+    private fun getSettingsName(context: Context): String {
+        val name = StringBuilder()
+        name.append(context.packageName)
+        name.append(".")
+        name.append(Constants.SETTINGS)
+        return name.toString()
     }
 }

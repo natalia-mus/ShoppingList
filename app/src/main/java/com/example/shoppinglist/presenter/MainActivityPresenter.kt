@@ -1,6 +1,5 @@
 package com.example.shoppinglist.presenter
 
-import com.example.shoppinglist.constants.Theme
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.model.MainActivityModel
 
@@ -8,16 +7,11 @@ class MainActivityPresenter(_view: MainActivityContract.MainActivityView) :
     MainActivityContract.MainActivityPresenter {
 
     private val view = _view
-    private val model: MainActivityModel
+    private val model: MainActivityModel = MainActivityModel()
 
     init {
-        view.createDBinstance()
-        model = MainActivityModel()
         view.initSettings()
-        view.setTheme(getTheme())
     }
-
-    private fun getTheme(): Theme = model.getTheme()
 
     override fun fetchData() = model.fetchDataFromDB()
 

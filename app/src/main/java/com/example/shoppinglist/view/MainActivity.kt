@@ -1,25 +1,22 @@
 package com.example.shoppinglist.view
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.Settings
 import com.example.shoppinglist.adapter.OnItemClickAction
 import com.example.shoppinglist.adapter.ProductAdapter
 import com.example.shoppinglist.constants.Constants
-import com.example.shoppinglist.constants.Theme
 import com.example.shoppinglist.contract.MainActivityContract
-import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.model.Product
+import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.MainActivityPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView, OnItemClickAction {
+class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivityView, OnItemClickAction {
 
     private lateinit var presenter: MainActivityPresenter
 
@@ -36,16 +33,12 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
         presenter.showData()
     }
 
-    override fun createDBinstance(): DBHelper {
-        return DBHelper.getInstance(this)
-    }
-
     override fun showData() {
         presenter.fetchData()
         val data = presenter.returnData()
 
         shopping_list.layoutManager = LinearLayoutManager(this)
-        shopping_list.adapter = data?.let { ProductAdapter(this, this, it, this) }
+        shopping_list.adapter = data?.let { ProductAdapter(this, it, this, getAppTheme()) }
     }
 
     override fun deleteItem(id: Int) {
@@ -55,6 +48,20 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onDeleteClicked(productId: Int) {
+        val confirmationDialogListener = object : ConfirmationDialogListener {
+            override fun onConfirmButtonClick() {
+                deleteItem(productId)
+                showData()
+            }
+
+            override fun onDeclineButtonClick() {}
+        }
+
+        val dialog = ConfirmationDialog(this, resources.getString(R.string.delete_product_question), confirmationDialogListener)
+        dialog.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -77,29 +84,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract.MainActivityView,
     }
 
     override fun initSettings() {
-        Settings.getInstance(this)
+        Settings.init(this)
     }
 
-    override fun setTheme(theme: Theme) {
-        val orientation = resources.configuration.orientation
-        when (theme) {
-            Theme.GROCERY -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.grocery_1_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.grocery_1_landscape)
-            }
-            Theme.MARKETPLACE -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.marketplace_1_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.marketplace_1_landscape)
-            }
-            Theme.FASHION -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.fashion_1_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.fashion_1_landscape)
-            }
-            Theme.CHRISTMAS -> {
-                if (orientation == Configuration.ORIENTATION_PORTRAIT)  main_activity_container.setBackgroundResource(R.drawable.christmas_1_portrait)
-                else main_activity_container.setBackgroundResource(R.drawable.christmas_1_landscape)
-            }
-        }
+    override fun provideTheme(theme: Theme?) {
+        setTheme(theme, main_activity_container, this)
     }
 
     private fun openProductWithEditContext(product: Product) {

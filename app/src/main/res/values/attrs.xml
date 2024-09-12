@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ImageColorPicker">
+        <attr name="copyOptionLabel" format="string" />
+        <attr name="styleableElementType" format="enum">
+            <enum name="product_list_portrait_background" value="1" />
+            <enum name="product_list_landscape_background" value="2" />
+            <enum name="add_product_portrait_background" value="3" />
+            <enum name="add_product_landscape_background" value="4" />
+            <enum name="product_item_background_color" value="5" />
+            <enum name="product_item_text_color" value="6" />
+            <enum name="delete_icon_color" value="7" />
+            <enum name="add_product_text_color" value="8" />
+            <enum name="add_product_label_color" value="9" />
+            <enum name="add_product_line_color" value="10" />
+            <enum name="add_product_hint_color" value="11" />
+        </attr>
+        <attr name="label" format="string" />
+        <attr name="labelColor" format="color" />
+    </declare-styleable>
+</resources>

@@ -24,6 +24,11 @@
         <activity
             android:name=".view.ThemesActivity"
             android:label="@string/menu_item_themes" />
+        <activity
+            android:name=".view.CreateThemeActivity"
+            android:label="@string/create_theme" />
+        <activity android:name=".control.GalleryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
 </manifest>

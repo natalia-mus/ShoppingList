@@ -2,20 +2,19 @@ package com.example.shoppinglist.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
-import com.example.shoppinglist.constants.Theme
+import com.example.shoppinglist.adapter.ThemesAdapter
 import com.example.shoppinglist.contract.ThemesActivityContract
+import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.ThemesActivityPresenter
 import kotlinx.android.synthetic.main.activity_themes.*
 
-class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivityView {
+class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivityView, ThemeSelector {
 
     private lateinit var presenter: ThemesActivityContract.ThemesActivityPresenter
-    private lateinit var selectedTheme: Theme
+    private lateinit var themesAdapter: ThemesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,66 +23,57 @@ class ThemesActivity : AppCompatActivity(), ThemesActivityContract.ThemesActivit
         presenter = ThemesActivityPresenter(this)
     }
 
-    override fun initView(actualTheme: Theme) {
-        selectedTheme = actualTheme
-        when (actualTheme) {
-            Theme.GROCERY -> {
-                checkOption(Theme.GROCERY, theme_grocery, theme_name_grocery)
+    override fun onResume() {
+        super.onResume()
+        presenter.onViewResume()
+    }
+
+    override fun initView(themes: ArrayList<Theme>?, actualThemeId: Int) {
+        if (themes != null) {
+            themes_list.layoutManager = LinearLayoutManager(this)
+            themesAdapter = ThemesAdapter(this, themes, actualThemeId, this)
+            themes_list.adapter = themesAdapter
+
+            themes_create_theme.setOnClickListener {
+                val intent = Intent(this, CreateThemeActivity::class.java)
+                startActivity(intent)
             }
-            Theme.MARKETPLACE -> {
-                checkOption(Theme.MARKETPLACE, theme_marketplace, theme_name_marketplace)
-            }
-            Theme.FASHION -> {
-                checkOption(Theme.FASHION, theme_fashion, theme_name_fashion)
-            }
-            Theme.CHRISTMAS -> {
-                checkOption(Theme.CHRISTMAS, theme_christmas, theme_name_christmas)
-            }
-        }
-
-        theme_grocery.setOnClickListener() {
-            checkOption(Theme.GROCERY, theme_grocery, theme_name_grocery)
-        }
-
-        theme_marketplace.setOnClickListener() {
-            checkOption(Theme.MARKETPLACE, theme_marketplace, theme_name_marketplace)
-        }
-
-        theme_fashion.setOnClickListener() {
-            checkOption(Theme.FASHION, theme_fashion, theme_name_fashion)
-        }
-
-        theme_christmas.setOnClickListener() {
-            checkOption(Theme.CHRISTMAS, theme_christmas, theme_name_christmas)
-        }
-
-        themes_button_save.setOnClickListener() {
-            presenter.setTheme(selectedTheme)
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        }
-
-        themes_button_cancel.setOnClickListener() {
-            onBackPressed()
         }
     }
 
-    private fun checkOption(theme: Theme, themeLayout: LinearLayout, themeName: TextView) {
-        uncheckOption(theme_grocery, theme_name_grocery)
-        uncheckOption(theme_marketplace, theme_name_marketplace)
-        uncheckOption(theme_fashion, theme_name_fashion)
-        uncheckOption(theme_christmas, theme_name_christmas)
+    override fun onDeleteThemeClicked(themeId: Int) {
+        val deleteThemeDialogListener = object : ConfirmationDialogListener {
+            override fun onConfirmButtonClick() {
+                deleteTheme(themeId)
+            }
 
-        themeLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background_checked, null)
-        themeName.setTextColor(resources.getColor(R.color.white, null))
-        selectedTheme = theme
+            override fun onDeclineButtonClick() {}
+        }
+
+        val dialog = ConfirmationDialog(this, resources.getString(R.string.delete_theme_question), deleteThemeDialogListener)
+        dialog.show()
     }
 
-    private fun uncheckOption(themeLayout: LinearLayout, themeName: TextView) {
-        themeLayout.background = ResourcesCompat.getDrawable(resources, R.drawable.option_item_background, null)
-        themeName.setTextColor(resources.getColor(R.color.sea_blue_dark, null))
+    override fun onThemeSelected(themeId: Int) {
+        presenter.setTheme(themeId)
     }
 
+    override fun refreshSelection(actualThemeId: Int) {
+        themesAdapter.setSelectedThemeId(actualThemeId)
+    }
+
+    override fun refreshThemesList(themes: ArrayList<Theme>?) {
+        if (themes != null) {
+            themesAdapter.dataSetChanged(themes)
+        }
+    }
+
+    private fun deleteTheme(themeId: Int) {
+        presenter.deleteTheme(themeId)
+    }
+}
+
+interface ThemeSelector {
+    fun onDeleteThemeClicked(themeId: Int)
+    fun onThemeSelected(themeId: Int)
 }
