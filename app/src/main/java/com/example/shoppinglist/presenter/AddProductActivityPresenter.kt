@@ -1,7 +1,7 @@
 package com.example.shoppinglist.presenter
 
+import com.example.shoppinglist.SavingContext
 import com.example.shoppinglist.ValidationResult
-import com.example.shoppinglist.constants.SavingContext
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.AddProductActivityModel
 

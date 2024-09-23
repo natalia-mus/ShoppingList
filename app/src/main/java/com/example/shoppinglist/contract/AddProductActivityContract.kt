@@ -1,7 +1,7 @@
 package com.example.shoppinglist.contract
 
+import com.example.shoppinglist.SavingContext
 import com.example.shoppinglist.ValidationResult
-import com.example.shoppinglist.constants.SavingContext
 
 interface AddProductActivityContract {
 
