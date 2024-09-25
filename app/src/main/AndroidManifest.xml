@@ -11,6 +11,7 @@
         android:theme="@style/Theme.ShoppingList">
         <activity
             android:name=".view.MainActivity"
+            android:exported="true"
             android:label="@string/activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,8 +28,9 @@
         <activity
             android:name=".view.CreateThemeActivity"
             android:label="@string/create_theme" />
-        <activity android:name=".control.GalleryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
+            android:name=".control.GalleryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
