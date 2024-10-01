@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.Settings
@@ -23,6 +24,7 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setToolbar()
 
         presenter = MainActivityPresenter(this)
         presenter.showData()
@@ -95,6 +97,11 @@ class MainActivity : ThemeProvidingActivity(), MainActivityContract.MainActivity
         val intent = Intent(this, AddProductActivity::class.java)
         intent.putExtra(Constants.PRODUCT, product)
         startActivity(intent)
+    }
+
+    private fun setToolbar() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
     }
 
 }
