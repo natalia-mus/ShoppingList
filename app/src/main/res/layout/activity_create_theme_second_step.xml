@@ -178,7 +178,6 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="60dp"
                 android:checked="true"
-                android:theme="@style/Theme.ShoppingList.SwitchCompat"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/create_theme_icons_section" />
 

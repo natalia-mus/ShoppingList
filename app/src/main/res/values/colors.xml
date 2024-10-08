@@ -2,6 +2,7 @@
 <resources>
     <color name="sea_blue_light">#1BA8F0</color>
     <color name="sea_blue_dark">#0F84BF</color>
+    <color name="sea_blue_faded">#95D3F3</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent_black">#4C000000</color>
@@ -9,4 +10,5 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="red">#D60E0E</color>
     <color name="gray">#757575</color>
+    <color name="hint_color">#9E9E9E</color>
 </resources>

@@ -125,6 +125,7 @@
             layout="@layout/buttons_section"
             android:layout_width="match_parent"
             android:layout_height="@dimen/buttons_section_height"
+            android:layout_marginTop="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_product_priority_section" />
 

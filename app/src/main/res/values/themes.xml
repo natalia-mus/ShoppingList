@@ -12,9 +12,35 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="switchStyle">@style/Theme.ShoppingList.SwitchCompat</item>
+        <item name="android:buttonStyle">@style/Theme.ShoppingList.Button</item>
+        <item name="popupTheme">@style/Theme.ShoppingList.PopupTheme</item>
+
+        <item name="backgroundTint">@color/sea_blue_dark</item>
+        <item name="colorOnBackground">@color/sea_blue_dark</item>
+        <item name="colorSurface">@color/sea_blue_dark</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:editTextColor">@color/black</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:colorBackgroundFloating">@color/white</item>
+        <item name="android:itemBackground">@color/white</item>
+        <item name="colorAccent">@color/sea_blue_light</item>
     </style>
 
     <style name="Theme.ShoppingList.SwitchCompat" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorSecondary">@color/sea_blue_dark</item>
+    </style>
+
+    <style name="Theme.ShoppingList.Button" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@color/sea_blue_dark</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Theme.ShoppingList.PopupTheme" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+        <item name="android:overlapAnchor" tools:ignore="NewApi">false</item>
+        <item name="android:textColor">@color/sea_blue_dark</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
