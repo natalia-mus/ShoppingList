@@ -10,12 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingList">
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.ThemeProvidingActivity"
             android:exported="true"
             android:label="@string/activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

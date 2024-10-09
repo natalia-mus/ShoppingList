@@ -18,7 +18,7 @@ interface MainActivityContract {
     }
 
     interface MainActivityView {
-        fun initSettings()
+        //fun initSettings()
         fun showData()
         fun deleteItem(id: Int)
     }
