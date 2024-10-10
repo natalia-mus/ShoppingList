@@ -2,19 +2,17 @@ package com.example.shoppinglist.view
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.SavingContext
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
-import com.example.shoppinglist.presenter.AddProductActivityPresenter
+import com.example.shoppinglist.model.Theme
 import kotlinx.android.synthetic.main.activity_add_product.*
 import kotlinx.android.synthetic.main.buttons_section.*
 
-// class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.AddProductActivityView {
-class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddProductActivityView {
+class AddProductActivity : ToolbarProvidingActivity(), AddProductActivityContract.AddProductActivityView {
 
     private var savingContext = SavingContext.CREATE
     private lateinit var presenter: AddProductActivityContract.AddProductActivityPresenter
@@ -23,8 +21,6 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
-
-        presenter = AddProductActivityPresenter(this)
     }
 
     override fun initView() {
@@ -40,9 +36,9 @@ class AddProductActivity : AppCompatActivity(), AddProductActivityContract.AddPr
         }
     }
 
-//    override fun provideTheme(theme: Theme?) {
-//        setTheme(theme, add_product_activity_container, this)
-//    }
+    override fun provideTheme(theme: Theme?) {
+        setTheme(theme, add_product_activity_container, this)
+    }
 
     private fun checkContext() {
         if (intent.hasExtra(Constants.PRODUCT)) {

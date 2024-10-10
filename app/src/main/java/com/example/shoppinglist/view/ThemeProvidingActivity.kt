@@ -1,15 +1,11 @@
 package com.example.shoppinglist.view
 
-import android.content.res.ColorStateList
+import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
@@ -21,7 +17,7 @@ import com.example.shoppinglist.database.DBHelper
 import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.ThemeProvidingActivityPresenter
 
-class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActivityContract.ThemeProvidingActivityView {
+abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActivityContract.ThemeProvidingActivityView {
 
     private lateinit var presenter: ThemeProvidingActivityContract.ThemeProvidingActivityPresenter
 
@@ -29,7 +25,7 @@ class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActivityContra
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_toolbar_providing)
         setToolbar()
-        setFragment(MainActivity())
+        //setFragment(MainActivity())
         presenter = ThemeProvidingActivityPresenter(this)
     }
 
@@ -44,9 +40,9 @@ class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActivityContra
 
     override fun getAppTheme() = presenter.getTheme()
 
-    //abstract override fun provideTheme(theme: Theme?)
+    abstract override fun provideTheme(theme: Theme?)
 
-    protected fun setTheme(theme: Theme?, destination: View, fragment: Fragment) {
+    protected fun setTheme(theme: Theme?, destination: View, activity: ThemeProvidingActivity) {
         val orientation = resources.configuration.orientation
 
         if (theme != null) {
@@ -54,7 +50,7 @@ class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActivityContra
             var backgroundColor: Int? = null
 
 
-            if (fragment is MainActivity) {
+            if (activity is MainActivity) {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (theme.listBackgroundImagePortrait != null) {
                         backgroundImage = theme.listBackgroundImagePortrait
@@ -154,6 +150,21 @@ class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActivityContra
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_item_add_product -> {
+                val intent = Intent(this, AddProductActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.menu_item_themes -> {
+                val intent = Intent(this, ThemesActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
 }

@@ -2,9 +2,7 @@ package com.example.shoppinglist.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.Settings
@@ -17,15 +15,15 @@ import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.MainActivityPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : Fragment(), MainActivityContract.MainActivityView, OnItemClickAction {
+class MainActivity : ToolbarProvidingActivity(), MainActivityContract.MainActivityView, OnItemClickAction {
 
     private lateinit var presenter: MainActivityPresenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val fragmentView = inflater.inflate(R.layout.activity_main, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         presenter = MainActivityPresenter(this)
         presenter.showData()
-        return fragmentView
     }
 
     override fun onResume() {
@@ -37,10 +35,8 @@ class MainActivity : Fragment(), MainActivityContract.MainActivityView, OnItemCl
         presenter.fetchData()
         val data = presenter.returnData()
 
-//        if (context != null) {
-//            shopping_list.layoutManager = LinearLayoutManager(context)
-//            shopping_list.adapter = data?.let { ProductAdapter(context!!, it, this, getAppTheme()) }
-//        }
+        shopping_list.layoutManager = LinearLayoutManager(this)
+        shopping_list.adapter = data?.let { ProductAdapter(this, it, this, getAppTheme()) }
     }
 
     override fun deleteItem(id: Int) {
@@ -57,18 +53,18 @@ class MainActivity : Fragment(), MainActivityContract.MainActivityView, OnItemCl
             override fun onDeclineButtonClick() {}
         }
 
-        val dialog = context?.let { ConfirmationDialog(it, resources.getString(R.string.delete_product_question), confirmationDialogListener) }
-        dialog?.show()
+        val dialog = ConfirmationDialog(this, resources.getString(R.string.delete_product_question), confirmationDialogListener)
+        dialog.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_item_add_product -> {
-                val intent = Intent(context, AddProductActivity::class.java)
+                val intent = Intent(this, AddProductActivity::class.java)
                 startActivity(intent)
             }
             R.id.menu_item_themes -> {
-                val intent = Intent(context, ThemesActivity::class.java)
+                val intent = Intent(this, ThemesActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -80,16 +76,16 @@ class MainActivity : Fragment(), MainActivityContract.MainActivityView, OnItemCl
         openProductWithEditContext(product)
     }
 
-//    override fun initSettings() {
-//        Settings.init(this)
-//    }
+    override fun initSettings() {
+        Settings.init(this)
+    }
 
-//    override fun provideTheme(theme: Theme?) {
-//        setTheme(theme, main_activity_container, this)
-//    }
+    override fun provideTheme(theme: Theme?) {
+        setTheme(theme, main_activity_container, this)
+    }
 
     private fun openProductWithEditContext(product: Product) {
-        val intent = Intent(context, AddProductActivity::class.java)
+        val intent = Intent(this, AddProductActivity::class.java)
         intent.putExtra(Constants.PRODUCT, product)
         startActivity(intent)
     }
