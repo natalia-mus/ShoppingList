@@ -9,6 +9,7 @@ import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
+import com.example.shoppinglist.presenter.AddProductActivityPresenter
 import kotlinx.android.synthetic.main.activity_add_product.*
 import kotlinx.android.synthetic.main.buttons_section.*
 
@@ -21,6 +22,8 @@ class AddProductActivity : ToolbarProvidingActivity(), AddProductActivityContrac
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
+
+        presenter = AddProductActivityPresenter(this)
     }
 
     override fun initView() {

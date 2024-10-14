@@ -2,7 +2,6 @@ package com.example.shoppinglist.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppinglist.R
 import com.example.shoppinglist.Settings
@@ -22,6 +21,8 @@ class MainActivity : ToolbarProvidingActivity(), MainActivityContract.MainActivi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setToolbar(main_activity)
+
         presenter = MainActivityPresenter(this)
         presenter.showData()
     }
@@ -57,21 +58,6 @@ class MainActivity : ToolbarProvidingActivity(), MainActivityContract.MainActivi
         dialog.show()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_item_add_product -> {
-                val intent = Intent(this, AddProductActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.menu_item_themes -> {
-                val intent = Intent(this, ThemesActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onItemLongClicked(product: Product) {
         openProductWithEditContext(product)
     }
@@ -81,7 +67,7 @@ class MainActivity : ToolbarProvidingActivity(), MainActivityContract.MainActivi
     }
 
     override fun provideTheme(theme: Theme?) {
-        setTheme(theme, main_activity_container, this)
+        setTheme(theme, main_activity_content, this)
     }
 
     private fun openProductWithEditContext(product: Product) {
