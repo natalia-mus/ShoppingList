@@ -14,7 +14,7 @@ import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.MainActivityPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : ToolbarProvidingActivity(), MainActivityContract.MainActivityView, OnItemClickAction {
+class MainActivity : ToolbarProvidingActivity(true), MainActivityContract.MainActivityView, OnItemClickAction {
 
     private lateinit var presenter: MainActivityPresenter
 
@@ -67,7 +67,7 @@ class MainActivity : ToolbarProvidingActivity(), MainActivityContract.MainActivi
     }
 
     override fun provideTheme(theme: Theme?) {
-        setTheme(theme, main_activity_content, this)
+        setTheme(theme, main_activity, this)
     }
 
     private fun openProductWithEditContext(product: Product) {

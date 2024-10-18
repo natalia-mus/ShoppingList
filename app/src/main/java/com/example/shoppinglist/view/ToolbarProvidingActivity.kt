@@ -10,7 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.R
 
-abstract class ToolbarProvidingActivity : ThemeProvidingActivity() {
+abstract class ToolbarProvidingActivity(private val createOptionsMenu: Boolean) : ThemeProvidingActivity() {
 
     fun setToolbar(layout: ViewGroup) {
         val toolbar = Toolbar(this)
@@ -27,8 +27,10 @@ abstract class ToolbarProvidingActivity : ThemeProvidingActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+        return if (createOptionsMenu) {
+            menuInflater.inflate(R.menu.main_menu, menu)
+            super.onCreateOptionsMenu(menu)
+        } else false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
