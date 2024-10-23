@@ -23,9 +23,10 @@ import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.model.StyleableElementType
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.slider.Slider
+import kotlinx.android.synthetic.main.activity_create_theme_first_step.*
 import kotlinx.android.synthetic.main.product_item.*
 
-class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.CreateThemeActivityView {
+class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivityContract.CreateThemeActivityView {
 
     companion object {
         private const val DEFAULT_BACKGROUND_ALFA = 0.3f
@@ -144,6 +145,8 @@ class CreateThemeActivity : AppCompatActivity(), CreateThemeActivityContract.Cre
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_theme_first_step)
+        //setToolbar(create_theme_first_step)
+
         presenter = CreateThemeActivityPresenter(this)
         populateCreatorStepsList()
     }

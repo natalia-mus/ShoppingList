@@ -8,7 +8,6 @@ import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.contract.AddProductActivityContract
 import com.example.shoppinglist.model.Product
-import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.AddProductActivityPresenter
 import kotlinx.android.synthetic.main.activity_add_product.*
 import kotlinx.android.synthetic.main.buttons_section.*
@@ -40,9 +39,9 @@ class AddProductActivity : ToolbarProvidingActivity(false), AddProductActivityCo
         }
     }
 
-    override fun provideTheme(theme: Theme?) {
-        setTheme(theme, add_product_activity, this)
-    }
+//    override fun provideTheme(theme: Theme?) {
+//        setTheme(theme, add_product_activity, this)
+//    }
 
     private fun checkContext() {
         if (intent.hasExtra(Constants.PRODUCT)) {

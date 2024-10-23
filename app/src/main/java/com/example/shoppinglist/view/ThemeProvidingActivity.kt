@@ -24,7 +24,7 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_toolbar_providing)
-        setToolbar()
+        //setToolbar()
         //setFragment(MainActivity())
         presenter = ThemeProvidingActivityPresenter(this)
     }
@@ -40,7 +40,7 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
 
     override fun getAppTheme() = presenter.getTheme()
 
-    abstract override fun provideTheme(theme: Theme?)
+    //abstract override fun provideTheme(theme: Theme?)
 
     protected fun setTheme(theme: Theme?, destination: View, activity: ThemeProvidingActivity) {
         val orientation = resources.configuration.orientation
@@ -135,10 +135,10 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
         }
     }
 
-    private fun setToolbar() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-    }
+//    private fun setToolbar() {
+//        val toolbar: Toolbar = findViewById(R.id.toolbar)
+//        setSupportActionBar(toolbar)
+//    }
 
     private fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
@@ -147,24 +147,24 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.main_menu, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_item_add_product -> {
-                val intent = Intent(this, AddProductActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.menu_item_themes -> {
-                val intent = Intent(this, ThemesActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.menu_item_add_product -> {
+//                val intent = Intent(this, AddProductActivity::class.java)
+//                startActivity(intent)
+//            }
+//            R.id.menu_item_themes -> {
+//                val intent = Intent(this, ThemesActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
+//
+//        return super.onOptionsItemSelected(item)
+//    }
 
 }

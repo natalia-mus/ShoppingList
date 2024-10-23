@@ -10,7 +10,6 @@ import com.example.shoppinglist.adapter.ProductAdapter
 import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.contract.MainActivityContract
 import com.example.shoppinglist.model.Product
-import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.MainActivityPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -66,9 +65,9 @@ class MainActivity : ToolbarProvidingActivity(true), MainActivityContract.MainAc
         Settings.init(this)
     }
 
-    override fun provideTheme(theme: Theme?) {
-        setTheme(theme, main_activity, this)
-    }
+//    override fun provideTheme(theme: Theme?) {
+//        setTheme(theme, main_activity, this)
+//    }
 
     private fun openProductWithEditContext(product: Product) {
         val intent = Intent(this, AddProductActivity::class.java)
