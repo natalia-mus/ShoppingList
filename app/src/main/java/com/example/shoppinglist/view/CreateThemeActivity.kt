@@ -24,6 +24,9 @@ import com.example.shoppinglist.model.StyleableElementType
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.slider.Slider
 import kotlinx.android.synthetic.main.activity_create_theme_first_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_last_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_second_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_third_step.*
 import kotlinx.android.synthetic.main.product_item.*
 
 class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivityContract.CreateThemeActivityView {
@@ -145,7 +148,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_theme_first_step)
-        //setToolbar(create_theme_first_step)
+        setToolbar(create_theme_first_step)
 
         presenter = CreateThemeActivityPresenter(this)
         populateCreatorStepsList()
@@ -316,6 +319,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private fun prepareFirstStep() {
+        setToolbar(create_theme_first_step)
+
         productListPortraitBackgroundPicker = findViewById(R.id.create_theme_product_list_portrait_background)
         productListLandscapeBackgroundPicker = findViewById(R.id.create_theme_product_list_landscape_background)
         addProductPortraitBackgroundPicker = findViewById(R.id.create_theme_add_product_portrait_background)
@@ -343,6 +348,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private fun prepareSecondStep() {
+        setToolbar(create_theme_second_step)
+
         productItemBackground = findViewById(R.id.create_theme_product_item_visualization)
         productItemNameLabel = findViewById(R.id.product_name)
         productItemQuantityLabel = findViewById(R.id.product_quantity_label)
@@ -396,11 +403,13 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
         backgroundTransparencySlider.value = productItemBackgroundColor.getAlphaPercentage()
 
-        val background = findViewById<ScrollView>(R.id.create_theme_second_step)
+        val background = findViewById<ScrollView>(R.id.create_theme_second_step_content)
         setVisualizationBackground(background)
     }
 
     private fun prepareThirdStep() {
+        setToolbar(create_theme_third_step)
+
         addProductText = findViewById(R.id.create_theme_edit_text_visualization_add_product_text)
         addProductLabel = findViewById(R.id.create_theme_edit_text_visualization_add_product_label)
         addProductHintText = findViewById(R.id.create_theme_hint_visualization_add_product_text)
@@ -420,7 +429,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
         prepareStepButtons(true, true)
 
-        val background = findViewById<ScrollView>(R.id.create_theme_third_step)
+        val background = findViewById<ScrollView>(R.id.create_theme_third_step_content)
         setVisualizationBackground(background)
 
         if (!thirdStepInitialized) {
@@ -438,6 +447,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private fun prepareLastStep() {
+        setToolbar(create_theme_last_step)
+
         themeName = findViewById(R.id.create_theme_name)
         saveButton = findViewById(R.id.button_save)
         cancelButton = findViewById(R.id.button_cancel)

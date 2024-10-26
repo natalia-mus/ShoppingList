@@ -1,206 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/create_theme_second_step"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/create_theme_second_step_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
-
-        <include
-            android:id="@+id/create_theme_product_item_visualization"
-            layout="@layout/product_item" />
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/round_background"
-            android:backgroundTint="@color/transparent_black"
-            android:orientation="horizontal"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="20dp"
-            android:weightSum="6"
-            app:layout_constraintTop_toBottomOf="@id/create_theme_product_item_visualization">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:text="@string/background_transparency"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/create_theme_product_background_transparency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="20dp"
-                android:valueFrom="0f"
-                android:valueTo="1f"
-                app:labelBehavior="gone"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/create_theme_colors_section"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                app:layout_constraintTop_toBottomOf="@id/create_theme_product_background_transparency">
-
-                <com.example.shoppinglist.control.ImageColorPicker
-                    android:id="@+id/create_theme_background_color"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:label="@string/background_color"
-                    app:labelColor="@color/white"
-                    app:styleableElementType="product_item_background_color" />
-
-                <com.example.shoppinglist.control.ImageColorPicker
-                    android:id="@+id/create_theme_add_product_text_color"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:label="@string/text_color"
-                    app:labelColor="@color/white"
-                    app:styleableElementType="product_item_text_color" />
-
-                <com.example.shoppinglist.control.ImageColorPicker
-                    android:id="@+id/create_theme_delete_icon_color"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:label="@string/delete_icon_color"
-                    app:labelColor="@color/white"
-                    app:styleableElementType="delete_icon_color" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/create_theme_icons_section_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="60dp"
-                android:text="@string/delete_icon"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/create_theme_colors_section" />
-
-
-            <LinearLayout
-                android:id="@+id/create_theme_icons_section"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                app:layout_constraintTop_toBottomOf="@id/create_theme_icons_section_label">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/create_theme_icon_trash_bin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/round_background"
-                        android:backgroundTint="@color/transparent_white"
-                        android:padding="10dp">
-
-                        <ImageView
-                            android:id="@+id/create_theme_icon_trash_bin_image"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_trash_bin"
-                            app:tint="@color/sea_blue_light" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/create_theme_icon_cross"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/round_background"
-                        android:backgroundTint="@color/transparent"
-                        android:padding="10dp">
-
-                        <ImageView
-                            android:id="@+id/create_theme_icon_cross_image"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="center"
-                            android:layout_margin="1dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_cross"
-                            app:tint="@color/sea_blue_light" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/create_theme_bold_switch"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="60dp"
-                android:checked="true"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/create_theme_icons_section" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:text="@string/bold_product_name"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/create_theme_bold_switch"
-                app:layout_constraintStart_toEndOf="@id/create_theme_bold_switch"
-                app:layout_constraintTop_toTopOf="@id/create_theme_bold_switch" />
+            android:padding="16dp">
 
             <include
-                layout="@layout/step_buttons"
+                android:id="@+id/create_theme_product_item_visualization"
+                layout="@layout/product_item" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/create_theme_bold_switch" />
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/round_background"
+                android:backgroundTint="@color/transparent_black"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp"
+                android:weightSum="6"
+                app:layout_constraintTop_toBottomOf="@id/create_theme_product_item_visualization">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/background_transparency"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/create_theme_product_background_transparency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginTop="20dp"
+                    android:valueFrom="0f"
+                    android:valueTo="1f"
+                    app:labelBehavior="gone"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/create_theme_colors_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    app:layout_constraintTop_toBottomOf="@id/create_theme_product_background_transparency">
+
+                    <com.example.shoppinglist.control.ImageColorPicker
+                        android:id="@+id/create_theme_background_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:label="@string/background_color"
+                        app:labelColor="@color/white"
+                        app:styleableElementType="product_item_background_color" />
+
+                    <com.example.shoppinglist.control.ImageColorPicker
+                        android:id="@+id/create_theme_add_product_text_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:label="@string/text_color"
+                        app:labelColor="@color/white"
+                        app:styleableElementType="product_item_text_color" />
+
+                    <com.example.shoppinglist.control.ImageColorPicker
+                        android:id="@+id/create_theme_delete_icon_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:label="@string/delete_icon_color"
+                        app:labelColor="@color/white"
+                        app:styleableElementType="delete_icon_color" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/create_theme_icons_section_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="60dp"
+                    android:text="@string/delete_icon"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/create_theme_colors_section" />
+
+
+                <LinearLayout
+                    android:id="@+id/create_theme_icons_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    app:layout_constraintTop_toBottomOf="@id/create_theme_icons_section_label">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/create_theme_icon_trash_bin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/round_background"
+                            android:backgroundTint="@color/transparent_white"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:id="@+id/create_theme_icon_trash_bin_image"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="1dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_trash_bin"
+                                app:tint="@color/sea_blue_light" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/create_theme_icon_cross"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/round_background"
+                            android:backgroundTint="@color/transparent"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:id="@+id/create_theme_icon_cross_image"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="1dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_cross"
+                                app:tint="@color/sea_blue_light" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/create_theme_bold_switch"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="60dp"
+                    android:checked="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_theme_icons_section" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:text="@string/bold_product_name"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/create_theme_bold_switch"
+                    app:layout_constraintStart_toEndOf="@id/create_theme_bold_switch"
+                    app:layout_constraintTop_toTopOf="@id/create_theme_bold_switch" />
+
+                <include
+                    layout="@layout/step_buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_theme_bold_switch" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
