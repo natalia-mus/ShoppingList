@@ -20,7 +20,7 @@ class MainActivity : ToolbarProvidingActivity(true), MainActivityContract.MainAc
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setToolbar(main_activity)
+        setToolbar(main_activity, main_activity_content, resources.getString(R.string.activity_main))
 
         presenter = MainActivityPresenter(this)
         presenter.showData()

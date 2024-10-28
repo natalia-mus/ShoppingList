@@ -31,7 +31,7 @@
     <string name="label_color">label color</string>
     <string name="landscape">landscape</string>
     <string name="line_color">line color</string>
-    <string name="menu_item_themes">Themes</string>
+    <string name="themes">Themes</string>
     <string name="no">NO</string>
     <string name="nothing_to_keep">New theme has no changes</string>
     <string name="priority_can_not_be_empty">Priority can not be empty</string>

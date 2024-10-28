@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/create_theme_last_step_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

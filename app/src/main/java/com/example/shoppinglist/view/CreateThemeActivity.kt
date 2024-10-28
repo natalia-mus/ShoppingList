@@ -11,8 +11,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
@@ -70,6 +70,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     private lateinit var addProductLabelColorPicker: ImageColorPicker
     private lateinit var addProductLineColorPicker: ImageColorPicker
     private lateinit var addProductHintColorPicker: ImageColorPicker
+
+    private lateinit var toolbarTitle: String
 
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
@@ -148,7 +150,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_theme_first_step)
-        setToolbar(create_theme_first_step)
+        toolbarTitle = resources.getString(R.string.create_theme)
+        setToolbar(create_theme_first_step, create_theme_first_step_content, toolbarTitle)
 
         presenter = CreateThemeActivityPresenter(this)
         populateCreatorStepsList()
@@ -319,7 +322,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private fun prepareFirstStep() {
-        setToolbar(create_theme_first_step)
+        setToolbar(create_theme_first_step, create_theme_first_step_content, toolbarTitle)
 
         productListPortraitBackgroundPicker = findViewById(R.id.create_theme_product_list_portrait_background)
         productListLandscapeBackgroundPicker = findViewById(R.id.create_theme_product_list_landscape_background)
@@ -348,7 +351,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private fun prepareSecondStep() {
-        setToolbar(create_theme_second_step)
+        setToolbar(create_theme_second_step, create_theme_second_step_content, toolbarTitle)
 
         productItemBackground = findViewById(R.id.create_theme_product_item_visualization)
         productItemNameLabel = findViewById(R.id.product_name)
@@ -403,12 +406,12 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
         backgroundTransparencySlider.value = productItemBackgroundColor.getAlphaPercentage()
 
-        val background = findViewById<ScrollView>(R.id.create_theme_second_step_content)
+        val background = findViewById<ConstraintLayout>(R.id.create_theme_second_step)
         setVisualizationBackground(background)
     }
 
     private fun prepareThirdStep() {
-        setToolbar(create_theme_third_step)
+        setToolbar(create_theme_third_step, create_theme_third_step_content, toolbarTitle)
 
         addProductText = findViewById(R.id.create_theme_edit_text_visualization_add_product_text)
         addProductLabel = findViewById(R.id.create_theme_edit_text_visualization_add_product_label)
@@ -429,7 +432,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
         prepareStepButtons(true, true)
 
-        val background = findViewById<ScrollView>(R.id.create_theme_third_step_content)
+        val background = findViewById<ConstraintLayout>(R.id.create_theme_third_step)
         setVisualizationBackground(background)
 
         if (!thirdStepInitialized) {
@@ -447,7 +450,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private fun prepareLastStep() {
-        setToolbar(create_theme_last_step)
+        setToolbar(create_theme_last_step, create_theme_last_step_content, toolbarTitle)
 
         themeName = findViewById(R.id.create_theme_name)
         saveButton = findViewById(R.id.button_save)

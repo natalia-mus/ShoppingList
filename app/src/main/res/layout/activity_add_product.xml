@@ -7,6 +7,7 @@
     android:background="@drawable/theme_grocery_add_product_portrait">
 
     <ScrollView
+        android:id="@+id/add_product_activity_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

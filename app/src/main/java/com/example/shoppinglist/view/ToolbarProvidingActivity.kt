@@ -6,13 +6,15 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.R
 
 abstract class ToolbarProvidingActivity(private val createOptionsMenu: Boolean) : ThemeProvidingActivity() {
 
-    fun setToolbar(layout: ViewGroup) {
+    fun setToolbar(layout: ViewGroup, contentLayout: ViewGroup, title: String? = null) {
         val toolbar = Toolbar(this)
         LayoutInflater.from(this).inflate(R.layout.toolbar, toolbar)
 
@@ -24,6 +26,12 @@ abstract class ToolbarProvidingActivity(private val createOptionsMenu: Boolean) 
         layout.addView(toolbar)
         setSupportActionBar(toolbar)
         toolbar.background = ResourcesCompat.getDrawable(resources, R.drawable.toolbar_background, null)
+
+        toolbar.findViewById<TextView>(R.id.toolbar_title).text = title ?: resources.getString(R.string.app_name)
+
+        val contentLayoutLayoutParams = contentLayout.layoutParams as ConstraintLayout.LayoutParams
+        contentLayoutLayoutParams.topMargin = actionBarHeight
+        contentLayout.layoutParams = contentLayoutLayoutParams
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

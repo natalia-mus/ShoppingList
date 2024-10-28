@@ -18,7 +18,7 @@ class ThemesActivity : ToolbarProvidingActivity(false), ThemesActivityContract.T
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_themes)
-        setToolbar(themes)
+        setToolbar(themes, themes_content, resources.getString(R.string.themes))
 
         presenter = ThemesActivityPresenter(this)
     }
