@@ -23,10 +23,15 @@ import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.model.StyleableElementType
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.slider.Slider
+import kotlinx.android.synthetic.main.activity_create_theme.*
 import kotlinx.android.synthetic.main.activity_create_theme_first_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_first_step.create_theme_first_step
 import kotlinx.android.synthetic.main.activity_create_theme_last_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_last_step.create_theme_last_step
 import kotlinx.android.synthetic.main.activity_create_theme_second_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_second_step.create_theme_second_step
 import kotlinx.android.synthetic.main.activity_create_theme_third_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_third_step.create_theme_third_step
 import kotlinx.android.synthetic.main.product_item.*
 
 class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivityContract.CreateThemeActivityView {
@@ -146,15 +151,19 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     private var secondStepInitialized = false
     private var thirdStepInitialized = false
 
+    private lateinit var content: ViewFlipper
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_theme_first_step)
+        populateCreatorStepsList()
+        setContentView(R.layout.activity_create_theme)
+        content = findViewById(R.id.create_theme_content)
+
         toolbarTitle = resources.getString(R.string.create_theme)
         setToolbar(create_theme_first_step, create_theme_first_step_content, toolbarTitle)
 
         presenter = CreateThemeActivityPresenter(this)
-        populateCreatorStepsList()
     }
 
     override fun initView() {
@@ -162,8 +171,6 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private fun changeView() {
-        setContentView(creatorSteps[currentCreatorStep])
-
         when (creatorSteps[currentCreatorStep]) {
             R.layout.activity_create_theme_first_step -> prepareFirstStep()
             R.layout.activity_create_theme_second_step -> prepareSecondStep()
@@ -348,6 +355,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
         addProductLandscapeBackgroundImage?.let { addProductLandscapeBackgroundPicker.setSelectedImage(it) }
         addProductLandscapeBackgroundColor.getColorInt()?.let { addProductLandscapeBackgroundPicker.setSelectedColor(it) }
+
+        findViewById<ScrollView>(R.id.create_theme_first_step_content).scrollTo(0, 0)
     }
 
     private fun prepareSecondStep() {
@@ -408,6 +417,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
         val background = findViewById<ConstraintLayout>(R.id.create_theme_second_step)
         setVisualizationBackground(background)
+        findViewById<ScrollView>(R.id.create_theme_second_step_content).scrollTo(0, 0)
     }
 
     private fun prepareThirdStep() {
@@ -447,6 +457,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         }
 
         addProductHintTransparencySlider.value = addProductHintColor.getAlphaPercentage()
+        findViewById<ScrollView>(R.id.create_theme_third_step_content).scrollTo(0, 0)
     }
 
     private fun prepareLastStep() {
@@ -479,31 +490,43 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         })
 
         themeName.setText(name)
+        findViewById<ScrollView>(R.id.create_theme_last_step_content).scrollTo(0, 0)
     }
 
     private fun prepareStepButtons(preparePreviousButton: Boolean, prepareNextButton: Boolean) {
-        previousButton = findViewById(R.id.create_theme_previous)
-        if (preparePreviousButton) {
-            previousButton.setOnClickListener {
-                previousStep()
-            }
-        } else {
-            previousButton.visibility = View.GONE
+        val stepView = when (creatorSteps[currentCreatorStep]) {
+            R.layout.activity_create_theme_first_step -> create_theme_first_step
+            R.layout.activity_create_theme_second_step -> create_theme_second_step
+            R.layout.activity_create_theme_third_step -> create_theme_third_step
+            R.layout.activity_create_theme_last_step -> create_theme_last_step
+            else -> null
         }
 
-        nextButton = findViewById(R.id.create_theme_next)
-        if (prepareNextButton) {
-            nextButton.setOnClickListener {
-                nextStep()
+        if (stepView != null) {
+            previousButton = stepView.findViewById(R.id.create_theme_previous)
+            if (preparePreviousButton) {
+                previousButton.setOnClickListener {
+                    previousStep()
+                }
+            } else {
+                previousButton.visibility = View.GONE
             }
-        } else {
-            nextButton.visibility = View.GONE
+
+            nextButton = stepView.findViewById(R.id.create_theme_next)
+            if (prepareNextButton) {
+                nextButton.setOnClickListener {
+                    nextStep()
+                }
+            } else {
+                nextButton.visibility = View.GONE
+            }
         }
     }
 
     private fun nextStep() {
         if (validateCurrentStep()) {
             currentCreatorStep++
+            content.showNext()
             changeView()
         }
     }
@@ -517,6 +540,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
     private fun previousStep() {
         currentCreatorStep--
+        content.showPrevious()
         changeView()
     }
 
