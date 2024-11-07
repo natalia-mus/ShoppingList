@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -24,14 +25,22 @@ abstract class ToolbarProvidingActivity(private val createOptionsMenu: Boolean) 
         toolbar.layoutParams = android.widget.Toolbar.LayoutParams(android.widget.Toolbar.LayoutParams.MATCH_PARENT, actionBarHeight)
 
         layout.addView(toolbar)
-        setSupportActionBar(toolbar)
         toolbar.background = ResourcesCompat.getDrawable(resources, R.drawable.toolbar_background, null)
 
         toolbar.findViewById<TextView>(R.id.toolbar_title).text = title ?: resources.getString(R.string.app_name)
 
+        if (createOptionsMenu) {
+            val overflowIconWidth = toolbar.overflowIcon?.intrinsicWidth
+            if (overflowIconWidth != null) {
+                toolbar.findViewById<LinearLayout>(R.id.toolbar_content).setPadding(overflowIconWidth * 3, 0, 0, 0)
+            }
+        }
+
         val contentLayoutLayoutParams = contentLayout.layoutParams as ConstraintLayout.LayoutParams
         contentLayoutLayoutParams.topMargin = actionBarHeight
         contentLayout.layoutParams = contentLayoutLayoutParams
+
+        setSupportActionBar(toolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
