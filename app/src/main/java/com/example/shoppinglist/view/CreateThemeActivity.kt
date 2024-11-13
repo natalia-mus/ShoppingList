@@ -21,6 +21,7 @@ import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.control.ImageColorPicker
 import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.model.StyleableElementType
+import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.slider.Slider
 import kotlinx.android.synthetic.main.activity_create_theme.*
@@ -165,6 +166,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
         presenter = CreateThemeActivityPresenter(this)
     }
+
+    override fun provideTheme(theme: Theme?) {}
 
     override fun initView() {
         prepareFirstStep()
@@ -374,7 +377,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         boldProductNameSwitch = findViewById(R.id.create_theme_bold_switch)
         backgroundTransparencySlider = findViewById(R.id.create_theme_product_background_transparency)
         productItemBackgroundColorPicker = findViewById(R.id.create_theme_background_color)
-        productItemTextColorPicker = findViewById(R.id.create_theme_add_product_text_color)
+        productItemTextColorPicker = findViewById(R.id.create_theme_product_text_color)
         deleteIconColorPicker = findViewById(R.id.create_theme_delete_icon_color)
 
         boldProductNameSwitch.setOnCheckedChangeListener(boldProductNameOnCheckedChangedListener)

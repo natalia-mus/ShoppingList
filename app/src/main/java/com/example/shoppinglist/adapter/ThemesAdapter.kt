@@ -59,6 +59,10 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
 
     @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun setImage(imageView: ImageView, position: Int) {
+        val defaultThumbnail = ResourcesCompat.getDrawable(context.resources, R.drawable.theme_grocery_list_portrait, null)
+        imageView.setImageDrawable(null)
+        imageView.background = defaultThumbnail
+
         val theme = themes[position]
         // find first existing background in theme
         val thumbnail = if (theme.listBackgroundImagePortrait != null) {
@@ -72,12 +76,11 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
                 } else theme.addProductBackgroundColorPortrait
                     ?: if (theme.addProductBackgroundImageLandscape != null) {
                         ImageUtils.getImageAsBitmap(theme.addProductBackgroundImageLandscape)
-                    } else theme.addProductBackgroundColorLandscape ?:
-                    ResourcesCompat.getDrawable(context.resources, R.drawable.theme_grocery_list_portrait, null)    // default background
+                    } else theme.addProductBackgroundColorLandscape ?: defaultThumbnail
 
         when (thumbnail) {
             is Bitmap -> imageView.setImageBitmap(thumbnail)
-            is Int -> imageView.setBackgroundColor(thumbnail)
+            is Int -> imageView.background.setTint(thumbnail)
             is Drawable -> imageView.setImageDrawable(thumbnail)
         }
     }

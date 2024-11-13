@@ -28,6 +28,8 @@ class ThemesActivity : ToolbarProvidingActivity(false), ThemesActivityContract.T
         presenter.onViewResume()
     }
 
+    override fun provideTheme(theme: Theme?) {}
+
     override fun initView(themes: ArrayList<Theme>?, actualThemeId: Int) {
         if (themes != null) {
             themes_list.layoutManager = LinearLayoutManager(this)
