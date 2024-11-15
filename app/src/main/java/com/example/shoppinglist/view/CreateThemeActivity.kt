@@ -124,8 +124,6 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         }
     }
 
-    private val creatorSteps = ArrayList<Int>()
-
     private var productListPortraitBackgroundImage: ByteArray? = null
     private var productListLandscapeBackgroundImage: ByteArray? = null
     private var addProductPortraitBackgroundImage: ByteArray? = null
@@ -157,7 +155,6 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        populateCreatorStepsList()
         setContentView(R.layout.activity_create_theme)
         content = findViewById(R.id.create_theme_content)
 
@@ -174,11 +171,11 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private fun changeView() {
-        when (creatorSteps[currentCreatorStep]) {
-            R.layout.activity_create_theme_first_step -> prepareFirstStep()
-            R.layout.activity_create_theme_second_step -> prepareSecondStep()
-            R.layout.activity_create_theme_third_step -> prepareThirdStep()
-            R.layout.activity_create_theme_last_step -> prepareLastStep()
+        when (currentCreatorStep) {
+            CreatorSteps.FIRST_STEP.value -> prepareFirstStep()
+            CreatorSteps.SECOND_STEP.value -> prepareSecondStep()
+            CreatorSteps.THIRD_STEP.value -> prepareThirdStep()
+            CreatorSteps.LAST_STEP.value -> prepareLastStep()
         }
     }
 
@@ -497,11 +494,11 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private fun prepareStepButtons(preparePreviousButton: Boolean, prepareNextButton: Boolean) {
-        val stepView = when (creatorSteps[currentCreatorStep]) {
-            R.layout.activity_create_theme_first_step -> create_theme_first_step
-            R.layout.activity_create_theme_second_step -> create_theme_second_step
-            R.layout.activity_create_theme_third_step -> create_theme_third_step
-            R.layout.activity_create_theme_last_step -> create_theme_last_step
+        val stepView = when (currentCreatorStep) {
+            CreatorSteps.FIRST_STEP.value -> create_theme_first_step
+            CreatorSteps.SECOND_STEP.value -> create_theme_second_step
+            CreatorSteps.THIRD_STEP.value -> create_theme_third_step
+            CreatorSteps.LAST_STEP.value -> create_theme_last_step
             else -> null
         }
 
@@ -532,13 +529,6 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
             content.showNext()
             changeView()
         }
-    }
-
-    private fun populateCreatorStepsList() {
-        creatorSteps.add(0, R.layout.activity_create_theme_first_step)
-        creatorSteps.add(1, R.layout.activity_create_theme_second_step)
-        creatorSteps.add(2, R.layout.activity_create_theme_third_step)
-        creatorSteps.add(3, R.layout.activity_create_theme_last_step)
     }
 
     private fun previousStep() {
@@ -785,25 +775,49 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         var backgroundColor: Int? = null
 
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            if (addProductPortraitBackgroundImage != null) {
-                backgroundImage = addProductPortraitBackgroundImage
+            if (currentCreatorStep == CreatorSteps.SECOND_STEP.value) {
+                if (productListPortraitBackgroundImage != null) {
+                    backgroundImage = productListPortraitBackgroundImage
 
-            } else if (addProductPortraitBackgroundColor.getColorInt() != null) {
-                backgroundColor = addProductPortraitBackgroundColor.getColorInt()
+                } else if (productListPortraitBackgroundColor.getColorInt() != null) {
+                    backgroundColor = productListPortraitBackgroundColor.getColorInt()
 
-            } else {
-                backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null))
+                } else {
+                    backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null))
+                }
+            } else if (currentCreatorStep == CreatorSteps.THIRD_STEP.value) {
+                if (addProductPortraitBackgroundImage != null) {
+                    backgroundImage = addProductPortraitBackgroundImage
+
+                } else if (addProductPortraitBackgroundColor.getColorInt() != null) {
+                    backgroundColor = addProductPortraitBackgroundColor.getColorInt()
+
+                } else {
+                    backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_portrait, null))
+                }
             }
 
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            if (addProductLandscapeBackgroundImage != null) {
-                backgroundImage = addProductLandscapeBackgroundImage
+            if (currentCreatorStep == CreatorSteps.SECOND_STEP.value) {
+                if (productListLandscapeBackgroundImage != null) {
+                    backgroundImage = productListLandscapeBackgroundImage
 
-            } else if (addProductLandscapeBackgroundColor.getColorInt() != null) {
-                backgroundColor = addProductLandscapeBackgroundColor.getColorInt()
+                } else if (productListLandscapeBackgroundColor.getColorInt() != null) {
+                    backgroundColor = productListLandscapeBackgroundColor.getColorInt()
 
-            } else {
-                backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null))
+                } else {
+                    backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_landscape, null))
+                }
+            } else if (currentCreatorStep == CreatorSteps.THIRD_STEP.value) {
+                if (addProductLandscapeBackgroundImage != null) {
+                    backgroundImage = addProductLandscapeBackgroundImage
+
+                } else if (addProductLandscapeBackgroundColor.getColorInt() != null) {
+                    backgroundColor = addProductLandscapeBackgroundColor.getColorInt()
+
+                } else {
+                    backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_add_product_landscape, null))
+                }
             }
         }
 
@@ -820,10 +834,10 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
      * @return true if validation success, false otherwise
      */
     private fun validateCurrentStep(): Boolean {
-        val validationResult = when (creatorSteps[currentCreatorStep]) {
-            R.layout.activity_create_theme_first_step -> presenter.validateFirstStep()
-            R.layout.activity_create_theme_second_step -> presenter.validateSecondStep()
-            R.layout.activity_create_theme_third_step -> presenter.validateThirdStep(
+        val validationResult = when (currentCreatorStep) {
+            CreatorSteps.FIRST_STEP.value -> presenter.validateFirstStep()
+            CreatorSteps.SECOND_STEP.value -> presenter.validateSecondStep()
+            CreatorSteps.THIRD_STEP.value -> presenter.validateThirdStep(
                 productListPortraitBackgroundImage,
                 productListLandscapeBackgroundImage,
                 addProductPortraitBackgroundImage,
@@ -842,7 +856,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
                 addProductHintColor.getValue(),
                 getAddProductLineColorValue()
             )
-            R.layout.activity_create_theme_last_step -> {
+            CreatorSteps.LAST_STEP.value -> {
                 presenter.validateLastStep(name)
             }
             else -> true
@@ -859,5 +873,12 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
             }
             else -> true
         }
+    }
+
+    private enum class CreatorSteps(val value: Int) {
+        FIRST_STEP(0),
+        SECOND_STEP(1),
+        THIRD_STEP(2),
+        LAST_STEP(3)
     }
 }
