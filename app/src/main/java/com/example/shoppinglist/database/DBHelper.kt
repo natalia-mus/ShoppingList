@@ -1,14 +1,18 @@
 package com.example.shoppinglist.database
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Color
+import android.util.Log
 import androidx.core.content.contentValuesOf
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.database.getBlobOrNull
 import androidx.core.database.getIntOrNull
+import androidx.core.database.getStringOrNull
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.model.Icon
@@ -148,13 +152,17 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
 
         if (cursor.moveToFirst()) {
             do {
-                val id = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ID))
-                val name = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_NAME))
-                val quantity = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_QUANTITY))
-                val priority = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_PRIORITY))
+                val id = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ID))
+                val name = cursor.getStringOrNull(cursor.getColumnIndex(TableInfo.COLUMN_NAME))
+                val quantity = cursor.getStringOrNull(cursor.getColumnIndex(TableInfo.COLUMN_QUANTITY))
+                val priority = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_PRIORITY))
 
-                val product = Product(id, name, quantity, priority)
-                products.add(product)
+                if (id != null && name != null && quantity != null && priority != null) {
+                    val product = Product(id, name, quantity, priority)
+                    products.add(product)
+                } else {
+                    Log.e("DBHelper - getAllProducts()", "Getting product did not succeed")
+                }
             } while (cursor.moveToNext())
         }
 
@@ -171,7 +179,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         if (cursor.moveToFirst()) {
             do {
                 val theme = parseTheme(cursor)
-                themes.add(theme)
+                theme?.let { themes.add(it) }
             } while (cursor.moveToNext())
         }
 
@@ -247,6 +255,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         }
     }
 
+    @SuppressLint("ResourceType")
     private fun createThemes(database: SQLiteDatabase) {
         val productItemBackgroundValue = resources.getString(R.color.transparent_black, null)
         val productItemTextColorValue = Color.WHITE
@@ -361,55 +370,63 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         return ImageUtils.getImageAsByteArray(drawable)
     }
 
-    private fun parseTheme(cursor: Cursor): Theme {
-        val id = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ID))
-        val name = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_NAME))
-        val builtInTheme = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_BUILT_IN_THEME)) != 0
+    private fun parseTheme(cursor: Cursor): Theme? {
+        val id = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ID))
+        val name = cursor.getStringOrNull(cursor.getColumnIndex(TableInfo.COLUMN_NAME))
+        val builtInTheme = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_BUILT_IN_THEME)) != 0
 
-        val listBackgroundImagePortrait = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_IMAGE_PORTRAIT))
-        val listBackgroundImageLandscape = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_IMAGE_LANDSCAPE))
-        val addProductBackgroundImagePortrait = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_IMAGE_PORTRAIT))
-        val addProductBackgroundImageLandscape = cursor.getBlob(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_IMAGE_LANDSCAPE))
+        val listBackgroundImagePortrait = cursor.getBlobOrNull(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_IMAGE_PORTRAIT))
+        val listBackgroundImageLandscape = cursor.getBlobOrNull(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_IMAGE_LANDSCAPE))
+        val addProductBackgroundImagePortrait = cursor.getBlobOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_IMAGE_PORTRAIT))
+        val addProductBackgroundImageLandscape = cursor.getBlobOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_IMAGE_LANDSCAPE))
 
         val listBackgroundColorPortrait = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_COLOR_PORTRAIT))
         val listBackgroundColorLandscape = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_LIST_BACKGROUND_COLOR_LANDSCAPE))
         val addProductBackgroundColorPortrait = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT))
         val addProductBackgroundColorLandscape = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE))
 
-        val productItemBackgroundValue = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE))
-        val productItemTextColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE))
-        val deleteIconColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_DELETE_ICON_COLOR_VALUE))
-        val deleteIcon = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_DELETE_ICON))
-        val boldProductName = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_BOLD_PRODUCT_NAME))
+        val productItemBackgroundValue = cursor.getStringOrNull(cursor.getColumnIndex(TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE))
+        val productItemTextColorValue = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE))
+        val deleteIconColorValue = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_DELETE_ICON_COLOR_VALUE))
+        val deleteIcon = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_DELETE_ICON))
+        val boldProductName = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_BOLD_PRODUCT_NAME))
 
-        val addProductTextColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_TEXT_COLOR_VALUE))
-        val addProductLabelColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_LABEL_COLOR_VALUE))
-        val addProductLineColorValue = cursor.getInt(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR_VALUE))
-        val addProductHintColorValue = cursor.getString(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE))
+        val addProductTextColorValue = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_TEXT_COLOR_VALUE))
+        val addProductLabelColorValue = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_LABEL_COLOR_VALUE))
+        val addProductLineColorValue = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR_VALUE))
+        val addProductHintColorValue = cursor.getStringOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE))
 
 
-        return Theme(
-            id,
-            name,
-            builtInTheme,
-            listBackgroundImagePortrait,
-            listBackgroundImageLandscape,
-            addProductBackgroundImagePortrait,
-            addProductBackgroundImageLandscape,
-            listBackgroundColorPortrait,
-            listBackgroundColorLandscape,
-            addProductBackgroundColorPortrait,
-            addProductBackgroundColorLandscape,
-            productItemBackgroundValue,
-            productItemTextColorValue,
-            deleteIconColorValue,
-            Icon.getByIconId(deleteIcon)!!,
-            boldProductName != 0,
-            addProductTextColorValue,
-            addProductLabelColorValue,
-            addProductLineColorValue,
-            addProductHintColorValue
-        )
+        if (id != null && name != null
+            && productItemBackgroundValue != null && productItemTextColorValue != null && deleteIconColorValue != null && deleteIcon != null
+            && addProductTextColorValue != null && addProductLabelColorValue != null && addProductLineColorValue != null && addProductHintColorValue != null
+        ) {
+            return Theme(
+                id,
+                name,
+                builtInTheme,
+                listBackgroundImagePortrait,
+                listBackgroundImageLandscape,
+                addProductBackgroundImagePortrait,
+                addProductBackgroundImageLandscape,
+                listBackgroundColorPortrait,
+                listBackgroundColorLandscape,
+                addProductBackgroundColorPortrait,
+                addProductBackgroundColorLandscape,
+                productItemBackgroundValue,
+                productItemTextColorValue,
+                deleteIconColorValue,
+                Icon.getByIconId(deleteIcon)!!,
+                boldProductName != 0,
+                addProductTextColorValue,
+                addProductLabelColorValue,
+                addProductLineColorValue,
+                addProductHintColorValue
+            )
+        } else {
+            Log.e("DBHelper - parseTheme()", "Theme parsing did not succeed")
+            return null
+        }
     }
 
 }
