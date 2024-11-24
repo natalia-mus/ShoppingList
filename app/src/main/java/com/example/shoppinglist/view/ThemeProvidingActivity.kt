@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.contract.ThemeProvidingActivityContract
@@ -22,6 +23,9 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_toolbar_providing)
+        //setToolbar()
+        //setFragment(MainActivity())
         presenter = ThemeProvidingActivityPresenter(this)
     }
 
@@ -69,7 +73,8 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
                     }
                 }
 
-            } else if (activity is AddProductActivity) {
+            }
+            else if (activity is AddProductActivity) {
                 if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                     if (theme.addProductBackgroundImagePortrait != null) {
                         backgroundImage = theme.addProductBackgroundImagePortrait
@@ -129,5 +134,37 @@ abstract class ThemeProvidingActivity : AppCompatActivity(), ThemeProvidingActiv
 
         }
     }
+
+//    private fun setToolbar() {
+//        val toolbar: Toolbar = findViewById(R.id.toolbar)
+//        setSupportActionBar(toolbar)
+//    }
+
+    private fun setFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment, fragment)
+            commit()
+        }
+    }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.main_menu, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.menu_item_add_product -> {
+//                val intent = Intent(this, AddProductActivity::class.java)
+//                startActivity(intent)
+//            }
+//            R.id.menu_item_themes -> {
+//                val intent = Intent(this, ThemesActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
+//
+//        return super.onOptionsItemSelected(item)
+//    }
 
 }

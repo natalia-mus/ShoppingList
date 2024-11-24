@@ -15,7 +15,6 @@
             android:label="@string/activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -24,7 +23,7 @@
             android:label="@string/activity_add_product" />
         <activity
             android:name=".view.ThemesActivity"
-            android:label="@string/menu_item_themes" />
+            android:label="@string/themes" />
         <activity
             android:name=".view.CreateThemeActivity"
             android:label="@string/create_theme" />

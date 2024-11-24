@@ -92,7 +92,7 @@ class ImageColorPicker @JvmOverloads constructor(
         if (background != null) {
             thumbnail.setImageDrawable(null)
             val drawable = ImageUtils.getImageAsDrawable(context, background)
-            thumbnail.background = drawable
+            thumbnail.setImageDrawable(drawable)
             isValueSet = true
         }
     }
@@ -122,7 +122,7 @@ class ImageColorPicker @JvmOverloads constructor(
 
         thumbnail = ImageView(context)
         thumbnail.layoutParams = LayoutParams(getDP(80), getDP(80))
-        thumbnail.scaleType = ImageView.ScaleType.FIT_XY
+        thumbnail.scaleType = ImageView.ScaleType.CENTER_CROP
         thumbnail.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_create_theme, null))
 
         border.addView(thumbnail)

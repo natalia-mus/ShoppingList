@@ -1,137 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/create_theme_first_step"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/create_theme_first_step_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/create_theme_product_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/product_list_background"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-            android:id="@+id/create_theme_product_list_backgrounds"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintTop_toBottomOf="@+id/create_theme_product_list">
+            android:padding="16dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/create_theme_product_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:text="@string/product_list_background"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <com.example.shoppinglist.control.ImageColorPicker
-                    android:id="@+id/create_theme_product_list_portrait_background"
+            <LinearLayout
+                android:id="@+id/create_theme_product_list_backgrounds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintTop_toBottomOf="@+id/create_theme_product_list">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:copyOptionLabel="@string/copy_landscape_background"
-                    app:label="@string/portrait"
-                    app:styleableElementType="product_list_portrait_background" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.example.shoppinglist.control.ImageColorPicker
+                        android:id="@+id/create_theme_product_list_portrait_background"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:copyOptionLabel="@string/copy_landscape_background"
+                        app:label="@string/portrait"
+                        app:styleableElementType="product_list_portrait_background" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.example.shoppinglist.control.ImageColorPicker
+                        android:id="@+id/create_theme_product_list_landscape_background"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:copyOptionLabel="@string/copy_portrait_background"
+                        app:label="@string/landscape"
+                        app:styleableElementType="product_list_landscape_background" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/create_theme_add_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_marginTop="60dp"
+                android:text="@string/add_product_background"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/create_theme_product_list_backgrounds" />
 
-                <com.example.shoppinglist.control.ImageColorPicker
-                    android:id="@+id/create_theme_product_list_landscape_background"
+            <LinearLayout
+                android:id="@+id/create_theme_add_product_backgrounds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintTop_toBottomOf="@+id/create_theme_add_product">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:copyOptionLabel="@string/copy_portrait_background"
-                    app:label="@string/landscape"
-                    app:styleableElementType="product_list_landscape_background" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.example.shoppinglist.control.ImageColorPicker
+                        android:id="@+id/create_theme_add_product_portrait_background"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:copyOptionLabel="@string/copy_landscape_background"
+                        app:label="@string/portrait"
+                        app:styleableElementType="add_product_portrait_background" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.example.shoppinglist.control.ImageColorPicker
+                        android:id="@+id/create_theme_add_product_landscape_background"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:copyOptionLabel="@string/copy_portrait_background"
+                        app:label="@string/landscape"
+                        app:styleableElementType="add_product_landscape_background" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/create_theme_add_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:text="@string/add_product_background"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/create_theme_product_list_backgrounds" />
-
-        <LinearLayout
-            android:id="@+id/create_theme_add_product_backgrounds"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintTop_toBottomOf="@+id/create_theme_add_product">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <include
+                layout="@layout/step_buttons"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_theme_add_product_backgrounds" />
 
-                <com.example.shoppinglist.control.ImageColorPicker
-                    android:id="@+id/create_theme_add_product_portrait_background"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:copyOptionLabel="@string/copy_landscape_background"
-                    app:label="@string/portrait"
-                    app:styleableElementType="add_product_portrait_background" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
+    </ScrollView>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.example.shoppinglist.control.ImageColorPicker
-                    android:id="@+id/create_theme_add_product_landscape_background"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:copyOptionLabel="@string/copy_portrait_background"
-                    app:label="@string/landscape"
-                    app:styleableElementType="add_product_landscape_background" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <include
-            layout="@layout/step_buttons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/create_theme_add_product_backgrounds" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

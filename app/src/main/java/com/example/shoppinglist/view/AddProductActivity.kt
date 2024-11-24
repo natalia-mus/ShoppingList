@@ -13,7 +13,7 @@ import com.example.shoppinglist.presenter.AddProductActivityPresenter
 import kotlinx.android.synthetic.main.activity_add_product.*
 import kotlinx.android.synthetic.main.buttons_section.*
 
-class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.AddProductActivityView {
+class AddProductActivity : ToolbarProvidingActivity(false), AddProductActivityContract.AddProductActivityView {
 
     private var savingContext = SavingContext.CREATE
     private lateinit var presenter: AddProductActivityContract.AddProductActivityPresenter
@@ -22,6 +22,7 @@ class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_product)
+        setToolbar(add_product_activity, add_product_activity_content, resources.getString(R.string.activity_add_product))
 
         presenter = AddProductActivityPresenter(this)
     }
@@ -40,7 +41,7 @@ class AddProductActivity : ThemeProvidingActivity(), AddProductActivityContract.
     }
 
     override fun provideTheme(theme: Theme?) {
-        setTheme(theme, add_product_activity_container, this)
+        setTheme(theme, add_product_activity, this)
     }
 
     private fun checkContext() {

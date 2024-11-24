@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/create_theme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ViewFlipper
+        android:id="@+id/create_theme_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/create_theme_first_step"
+            layout="@layout/activity_create_theme_first_step" />
+
+        <include
+            android:id="@+id/create_theme_second_step"
+            layout="@layout/activity_create_theme_second_step" />
+
+        <include
+            android:id="@+id/create_theme_third_step"
+            layout="@layout/activity_create_theme_third_step" />
+
+        <include
+            android:id="@+id/create_theme_last_step"
+            layout="@layout/activity_create_theme_last_step" />
+
+    </ViewFlipper>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
