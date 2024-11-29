@@ -24,6 +24,7 @@ object TableInfo {
     const val DATABASE_VERSION = 8
     const val TABLE_NAME_PRODUCTS = "shopping_list"
     const val TABLE_NAME_THEMES = "themes"
+    const val TABLE_NAME_COLOR_SETS = "color_sets"
     const val COLUMN_ID = "id"
     const val COLUMN_NAME = "name"
     const val COLUMN_BUILT_IN_THEME = "builtInTheme"
@@ -46,6 +47,8 @@ object TableInfo {
     const val COLUMN_ADD_PRODUCT_LABEL_COLOR_VALUE = "addProductLabelColorValue"
     const val COLUMN_ADD_PRODUCT_LINE_COLOR_VALUE = "addProductLineColorValue"
     const val COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE = "addProductHintColorValue"
+    const val COLUMN_PRIMARY_COLOR_VALUE = "primaryColorValue"
+    const val COLUMN_SECONDARY_COLOR_VALUE = "secondaryColorValue"
 }
 
 object BasicSQLCommands {
@@ -255,8 +258,18 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         }
     }
 
+    private fun createColorSets(database: SQLiteDatabase) {
+        saveColorSet(
+            resources.getString(R.string.color_set_sea),
+            resources.getColor(R.color.sea_blue_dark, null),
+            resources.getColor(R.color.sea_blue_light, null),
+            database
+        )
+    }
+
     @SuppressLint("ResourceType")
     private fun createThemes(database: SQLiteDatabase) {
+        createColorSets(database)
         val productItemBackgroundValue = resources.getString(R.color.transparent_black, null)
         val productItemTextColorValue = Color.WHITE
         val deleteIconColorValue = resources.getColor(R.color.sea_blue_light, null)
@@ -427,6 +440,16 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             Log.e("DBHelper - parseTheme()", "Theme parsing did not succeed")
             return null
         }
+    }
+
+    private fun saveColorSet(name: String, primaryColorValue: Int, secondaryColorValue: Int, database: SQLiteDatabase) {
+        val colorSet = ContentValues()
+
+        colorSet.put(TableInfo.COLUMN_NAME, name)
+        colorSet.put(TableInfo.COLUMN_PRIMARY_COLOR_VALUE, primaryColorValue)
+        colorSet.put(TableInfo.COLUMN_SECONDARY_COLOR_VALUE, secondaryColorValue)
+
+        database.insert(TableInfo.TABLE_NAME_COLOR_SETS, null, colorSet)
     }
 
 }
