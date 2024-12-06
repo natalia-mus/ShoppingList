@@ -60,7 +60,8 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         addProductTextColorValue: Int,
         addProductLabelColorValue: Int,
         addProductLineColorValue: Int,
-        addProductHintColorValue: String
+        addProductHintColorValue: String,
+        colorSetId: Int
     ) {
         model.saveTheme(
             name,
@@ -80,7 +81,8 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
             addProductTextColorValue,
             addProductLabelColorValue,
             addProductLineColorValue,
-            addProductHintColorValue
+            addProductHintColorValue,
+            colorSetId,
         )
     }
 

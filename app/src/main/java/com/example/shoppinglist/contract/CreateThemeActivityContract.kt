@@ -32,7 +32,8 @@ interface CreateThemeActivityContract {
             addProductTextColorValue: Int,
             addProductLabelColorValue: Int,
             addProductLineColorValue: Int,
-            addProductHintColorValue: String
+            addProductHintColorValue: String,
+            colorSetId: Int
         )
 
         fun validateFirstStep(): ValidationResult
@@ -89,7 +90,8 @@ interface CreateThemeActivityContract {
             addProductTextColorValue: Int,
             addProductLabelColorValue: Int,
             addProductLineColorValue: Int,
-            addProductHintColorValue: String
+            addProductHintColorValue: String,
+            colorSetId: Int
         )
 
         fun validateFirstStep(): ValidationResult

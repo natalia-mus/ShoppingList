@@ -1,6 +1,6 @@
 package com.example.shoppinglist.presenter
 
-import com.example.shoppinglist.constants.Constants
+import com.example.shoppinglist.ThemeConstants
 import com.example.shoppinglist.contract.ThemesActivityContract
 import com.example.shoppinglist.model.ThemesActivityModel
 
@@ -18,7 +18,7 @@ class ThemesActivityPresenter(_view: ThemesActivityContract.ThemesActivityView) 
 
     override fun deleteTheme(themeId: Int) {
         if (themeId == model.getActualThemeId()) {
-            setTheme(Constants.DEFAULT_THEME_ID)
+            setTheme(ThemeConstants.DEFAULT_THEME_ID)
         }
         model.deleteTheme(themeId)
         onViewResume()

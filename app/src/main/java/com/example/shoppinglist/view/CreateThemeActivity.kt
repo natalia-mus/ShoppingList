@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
+import com.example.shoppinglist.ThemeConstants
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.control.ImageColorPicker
@@ -585,7 +586,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
             getAddProductTextColorValue(),
             getAddProductLabelColorValue(),
             getAddProductLineColorValue(),
-            addProductHintColor.getValue()
+            addProductHintColor.getValue(),
+            ThemeConstants.COLOR_SET_SEA_ID     // todo
         )
 
         finish()

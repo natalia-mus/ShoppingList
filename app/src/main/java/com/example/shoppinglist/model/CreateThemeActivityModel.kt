@@ -1,7 +1,7 @@
 package com.example.shoppinglist.model
 
+import com.example.shoppinglist.ThemeConstants
 import com.example.shoppinglist.ValidationResult
-import com.example.shoppinglist.constants.Constants
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.database.DBHelper
 
@@ -57,7 +57,8 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         addProductTextColorValue: Int,
         addProductLabelColorValue: Int,
         addProductLineColorValue: Int,
-        addProductHintColorValue: String
+        addProductHintColorValue: String,
+        colorSetId: Int
     ) {
         database?.saveTheme(
             name,
@@ -78,7 +79,9 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
             addProductTextColorValue,
             addProductLabelColorValue,
             addProductLineColorValue,
-            addProductHintColorValue
+            addProductHintColorValue,
+            colorSetId,
+            null
         )
     }
 
@@ -141,7 +144,7 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
 
     private fun getDefaultTheme(): Theme? {
         if (defaultTheme == null) {
-            defaultTheme = database?.getTheme(Constants.DEFAULT_THEME_ID)
+            defaultTheme = database?.getTheme(ThemeConstants.DEFAULT_THEME_ID)
         }
         return defaultTheme
     }

@@ -15,6 +15,7 @@ import androidx.core.database.getIntOrNull
 import androidx.core.database.getStringOrNull
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
+import com.example.shoppinglist.ThemeConstants
 import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
@@ -47,6 +48,7 @@ object TableInfo {
     const val COLUMN_ADD_PRODUCT_LABEL_COLOR_VALUE = "addProductLabelColorValue"
     const val COLUMN_ADD_PRODUCT_LINE_COLOR_VALUE = "addProductLineColorValue"
     const val COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE = "addProductHintColorValue"
+    const val COLUMN_COLOR_SET_ID = "colorSetId"
     const val COLUMN_PRIMARY_COLOR_VALUE = "primaryColorValue"
     const val COLUMN_SECONDARY_COLOR_VALUE = "secondaryColorValue"
 }
@@ -80,7 +82,16 @@ object BasicSQLCommands {
             "${TableInfo.COLUMN_ADD_PRODUCT_TEXT_COLOR_VALUE} INTEGER, " +
             "${TableInfo.COLUMN_ADD_PRODUCT_LABEL_COLOR_VALUE} INTEGER, " +
             "${TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR_VALUE} INTEGER, " +
-            "${TableInfo.COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE} TEXT" +
+            "${TableInfo.COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE} TEXT, " +
+            "${TableInfo.COLUMN_COLOR_SET_ID} INTEGER" +
+            ")"
+
+    const val CREATE_TABLE_COLOR_SETS = "CREATE TABLE ${TableInfo.TABLE_NAME_COLOR_SETS} " +
+            "(" +
+            "${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, " +
+            "${TableInfo.COLUMN_NAME} TEXT NOT NULL, " +
+            "${TableInfo.COLUMN_PRIMARY_COLOR_VALUE} INTEGER, " +
+            "${TableInfo.COLUMN_SECONDARY_COLOR_VALUE} INTEGER" +
             ")"
 
     const val DELETE_TABLE = "DROP TABLE "
@@ -109,6 +120,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(BasicSQLCommands.CREATE_TABLE_PRODUCTS)
+        db?.execSQL(BasicSQLCommands.CREATE_TABLE_COLOR_SETS)
         db?.execSQL(BasicSQLCommands.CREATE_TABLE_THEMES)
         db?.let { createThemes(it) }
     }
@@ -116,6 +128,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL(BasicSQLCommands.DELETE_TABLE + TableInfo.TABLE_NAME_PRODUCTS)
         db?.execSQL(BasicSQLCommands.DELETE_TABLE + TableInfo.TABLE_NAME_THEMES)
+        db?.execSQL(BasicSQLCommands.DELETE_TABLE + TableInfo.TABLE_NAME_COLOR_SETS)
         onCreate(db)
     }
 
@@ -224,10 +237,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         addProductLabelColorValue: Int,
         addProductLineColorValue: Int,
         addProductHintColorValue: String,
-        database: SQLiteDatabase? = null
+        colorSetId: Int,
+        database: SQLiteDatabase? = null,
+        id: Int? = null
     ) {
         val theme = ContentValues()
 
+        id?.let{ theme.put(TableInfo.COLUMN_ID, it) }
         theme.put(TableInfo.COLUMN_NAME, name)
         theme.put(TableInfo.COLUMN_BUILT_IN_THEME, builtInTheme)
         theme.put(TableInfo.COLUMN_LIST_BACKGROUND_IMAGE_PORTRAIT, listBackgroundImagePortrait)
@@ -250,6 +266,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         theme.put(TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR_VALUE, addProductLineColorValue)
         theme.put(TableInfo.COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE, addProductHintColorValue)
 
+        theme.put(TableInfo.COLUMN_COLOR_SET_ID, colorSetId)
+
         val db = database ?: this.writableDatabase
         db.insert(TableInfo.TABLE_NAME_THEMES, null, theme)
 
@@ -263,7 +281,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             resources.getString(R.string.color_set_sea),
             resources.getColor(R.color.sea_blue_dark, null),
             resources.getColor(R.color.sea_blue_light, null),
-            database
+            database,
+            ThemeConstants.COLOR_SET_SEA_ID
         )
     }
 
@@ -299,7 +318,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             addProductLabelColorValue,
             addProductLineColorValue,
             addProductHintColorValue,
-            database
+            ThemeConstants.COLOR_SET_SEA_ID,
+            database,
+            ThemeConstants.THEME_GROCERY_ID
         )
 
         saveTheme(
@@ -322,7 +343,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             addProductLabelColorValue,
             addProductLineColorValue,
             addProductHintColorValue,
-            database
+            ThemeConstants.COLOR_SET_SEA_ID,
+            database,
+            ThemeConstants.THEME_MARKETPLACE_ID
         )
 
         saveTheme(
@@ -345,7 +368,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             addProductLabelColorValue,
             addProductLineColorValue,
             addProductHintColorValue,
-            database
+            ThemeConstants.COLOR_SET_SEA_ID,
+            database,
+            ThemeConstants.THEME_FASHION_ID
         )
 
         saveTheme(
@@ -368,7 +393,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             addProductLabelColorValue,
             addProductLineColorValue,
             addProductHintColorValue,
-            database
+            ThemeConstants.COLOR_SET_SEA_ID,
+            database,
+            ThemeConstants.THEME_CHRISTMAS_ID
         )
     }
 
@@ -409,10 +436,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         val addProductLineColorValue = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR_VALUE))
         val addProductHintColorValue = cursor.getStringOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE))
 
+        val colorSetId = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_COLOR_SET_ID))
+
 
         if (id != null && name != null
             && productItemBackgroundValue != null && productItemTextColorValue != null && deleteIconColorValue != null && deleteIcon != null
             && addProductTextColorValue != null && addProductLabelColorValue != null && addProductLineColorValue != null && addProductHintColorValue != null
+            && colorSetId != null
         ) {
             return Theme(
                 id,
@@ -434,7 +464,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
                 addProductTextColorValue,
                 addProductLabelColorValue,
                 addProductLineColorValue,
-                addProductHintColorValue
+                addProductHintColorValue,
+                colorSetId
             )
         } else {
             Log.e("DBHelper - parseTheme()", "Theme parsing did not succeed")
@@ -442,9 +473,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         }
     }
 
-    private fun saveColorSet(name: String, primaryColorValue: Int, secondaryColorValue: Int, database: SQLiteDatabase) {
+    private fun saveColorSet(name: String, primaryColorValue: Int, secondaryColorValue: Int, database: SQLiteDatabase, id: Int? = null) {
         val colorSet = ContentValues()
 
+        id?.let { colorSet.put(TableInfo.COLUMN_ID, it) }
         colorSet.put(TableInfo.COLUMN_NAME, name)
         colorSet.put(TableInfo.COLUMN_PRIMARY_COLOR_VALUE, primaryColorValue)
         colorSet.put(TableInfo.COLUMN_SECONDARY_COLOR_VALUE, secondaryColorValue)

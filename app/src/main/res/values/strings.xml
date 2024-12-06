@@ -13,7 +13,7 @@
     <string name="bold_product_name">bold product name</string>
     <string name="cancel">cancel</string>
     <string name="color">color</string>
-    <string name="color_set_sea">sea</string>
+    <string name="color_set_sea">Sea</string>
     <string name="copy_landscape_background">copy landscape background</string>
     <string name="copy_portrait_background">copy portrait background</string>
     <string name="create_theme">Create theme</string>
@@ -45,6 +45,7 @@
     <string name="save">save</string>
     <string name="select_background_color">select background color:</string>
     <string name="select_background_type">select background type:</string>
+    <string name="select_main_color">Select main color</string>
     <string name="text">text</string>
     <string name="text_color">text color</string>
     <string name="theme_christmas">Christmas</string>
