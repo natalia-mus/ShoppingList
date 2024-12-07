@@ -278,11 +278,11 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
 
     private fun createColorSets(database: SQLiteDatabase) {
         saveColorSet(
+            ThemeConstants.COLOR_SET_SEA_ID,
             resources.getString(R.string.color_set_sea),
             resources.getColor(R.color.sea_blue_dark, null),
             resources.getColor(R.color.sea_blue_light, null),
-            database,
-            ThemeConstants.COLOR_SET_SEA_ID
+            database
         )
     }
 
@@ -473,10 +473,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         }
     }
 
-    private fun saveColorSet(name: String, primaryColorValue: Int, secondaryColorValue: Int, database: SQLiteDatabase, id: Int? = null) {
+    private fun saveColorSet(id: Int, name: String, primaryColorValue: Int, secondaryColorValue: Int, database: SQLiteDatabase) {
         val colorSet = ContentValues()
 
-        id?.let { colorSet.put(TableInfo.COLUMN_ID, it) }
+        colorSet.put(TableInfo.COLUMN_ID, id)
         colorSet.put(TableInfo.COLUMN_NAME, name)
         colorSet.put(TableInfo.COLUMN_PRIMARY_COLOR_VALUE, primaryColorValue)
         colorSet.put(TableInfo.COLUMN_SECONDARY_COLOR_VALUE, secondaryColorValue)
