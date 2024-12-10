@@ -284,6 +284,22 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
             resources.getColor(R.color.sea_blue_light, null),
             database
         )
+
+        saveColorSet(
+            ThemeConstants.COLOR_SET_MAGNOLIA_ID,
+            resources.getString(R.string.color_set_magnolia),
+            resources.getColor(R.color.magnolia_primary, null),
+            resources.getColor(R.color.magnolia_secondary, null),
+            database
+        )
+
+        saveColorSet(
+            ThemeConstants.COLOR_SET_FRESH_ID,
+            resources.getString(R.string.color_set_fresh),
+            resources.getColor(R.color.fresh_primary, null),
+            resources.getColor(R.color.fresh_secondary, null),
+            database
+        )
     }
 
     @SuppressLint("ResourceType")

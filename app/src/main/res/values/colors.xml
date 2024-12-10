@@ -10,4 +10,8 @@
     <color name="red">#D60E0E</color>
     <color name="gray">#757575</color>
     <color name="hint_color">#9E9E9E</color>
+    <color name="magnolia_primary">#DD58B1</color>
+    <color name="magnolia_secondary">#8C2B6C</color>
+    <color name="fresh_primary">#7CB342</color>
+    <color name="fresh_secondary">#C0CA33</color>
 </resources>
