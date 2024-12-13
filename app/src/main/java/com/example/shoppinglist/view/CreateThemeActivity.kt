@@ -14,6 +14,7 @@ import android.widget.*
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ThemeConstants
@@ -34,6 +35,8 @@ import kotlinx.android.synthetic.main.activity_create_theme_second_step.*
 import kotlinx.android.synthetic.main.activity_create_theme_second_step.create_theme_second_step
 import kotlinx.android.synthetic.main.activity_create_theme_third_step.*
 import kotlinx.android.synthetic.main.activity_create_theme_third_step.create_theme_third_step
+import kotlinx.android.synthetic.main.activity_create_theme_fourth_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_fourth_step.create_theme_fourth_step
 import kotlinx.android.synthetic.main.product_item.*
 
 class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivityContract.CreateThemeActivityView {
@@ -77,6 +80,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     private lateinit var addProductLabelColorPicker: ImageColorPicker
     private lateinit var addProductLineColorPicker: ImageColorPicker
     private lateinit var addProductHintColorPicker: ImageColorPicker
+    private lateinit var colorStepsRecyclerView: RecyclerView
 
     private lateinit var toolbarTitle: String
 
@@ -176,6 +180,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
             CreatorSteps.FIRST_STEP.value -> prepareFirstStep()
             CreatorSteps.SECOND_STEP.value -> prepareSecondStep()
             CreatorSteps.THIRD_STEP.value -> prepareThirdStep()
+            CreatorSteps.FOURTH_STEP.value -> prepareFourthStep()
             CreatorSteps.LAST_STEP.value -> prepareLastStep()
         }
     }
@@ -461,6 +466,15 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         findViewById<ScrollView>(R.id.create_theme_third_step_content).scrollTo(0, 0)
     }
 
+    private fun prepareFourthStep() {
+        setToolbar(create_theme_fourth_step, create_theme_fourth_step_content, toolbarTitle)
+
+        colorStepsRecyclerView = findViewById(R.id.create_theme_color_sets)
+
+        prepareStepButtons(true, true)
+        findViewById<ScrollView>(R.id.create_theme_third_step_content).scrollTo(0, 0)
+    }
+
     private fun prepareLastStep() {
         setToolbar(create_theme_last_step, create_theme_last_step_content, toolbarTitle)
 
@@ -499,6 +513,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
             CreatorSteps.FIRST_STEP.value -> create_theme_first_step
             CreatorSteps.SECOND_STEP.value -> create_theme_second_step
             CreatorSteps.THIRD_STEP.value -> create_theme_third_step
+            CreatorSteps.FOURTH_STEP.value -> create_theme_fourth_step
             CreatorSteps.LAST_STEP.value -> create_theme_last_step
             else -> null
         }
@@ -858,6 +873,10 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
                 addProductHintColor.getValue(),
                 getAddProductLineColorValue()
             )
+            CreatorSteps.FOURTH_STEP.value -> {
+                // todo
+                true
+            }
             CreatorSteps.LAST_STEP.value -> {
                 presenter.validateLastStep(name)
             }
@@ -881,6 +900,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         FIRST_STEP(0),
         SECOND_STEP(1),
         THIRD_STEP(2),
-        LAST_STEP(3)
+        FOURTH_STEP(3),
+        LAST_STEP(4)
     }
 }

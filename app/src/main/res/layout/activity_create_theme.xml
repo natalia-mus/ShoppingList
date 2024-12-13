@@ -22,6 +22,10 @@
             layout="@layout/activity_create_theme_third_step" />
 
         <include
+            android:id="@+id/create_theme_fourth_step"
+            layout="@layout/activity_create_theme_fourth_step" />
+
+        <include
             android:id="@+id/create_theme_last_step"
             layout="@layout/activity_create_theme_last_step" />
 
