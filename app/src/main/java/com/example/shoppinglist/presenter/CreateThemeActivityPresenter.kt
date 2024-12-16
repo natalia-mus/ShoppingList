@@ -2,6 +2,7 @@ package com.example.shoppinglist.presenter
 
 import com.example.shoppinglist.ValidationResult
 import com.example.shoppinglist.contract.CreateThemeActivityContract
+import com.example.shoppinglist.model.ColorSet
 import com.example.shoppinglist.model.CreateThemeActivityModel
 import com.example.shoppinglist.model.Icon
 
@@ -12,6 +13,10 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
 
     init {
         view.initView()
+    }
+
+    override fun getColorSets(): List<ColorSet> {
+        return model.getColorSets()
     }
 
     override fun getDefaultDeleteIconColorValue(): Int? {
@@ -82,7 +87,7 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
             addProductLabelColorValue,
             addProductLineColorValue,
             addProductHintColorValue,
-            colorSetId,
+            colorSetId
         )
     }
 

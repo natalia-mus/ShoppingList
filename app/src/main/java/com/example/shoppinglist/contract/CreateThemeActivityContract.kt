@@ -1,11 +1,13 @@
 package com.example.shoppinglist.contract
 
 import com.example.shoppinglist.ValidationResult
+import com.example.shoppinglist.model.ColorSet
 import com.example.shoppinglist.model.Icon
 
 interface CreateThemeActivityContract {
 
     interface CreateThemeActivityModel {
+        fun getColorSets(): List<ColorSet>
         fun getDefaultDeleteIconColorValue(): Int?
         fun getDefaultProductItemBackgroundValue(): String?
         fun getDefaultProductItemTextColorValue(): Int?
@@ -64,6 +66,7 @@ interface CreateThemeActivityContract {
     }
 
     interface CreateThemeActivityPresenter {
+        fun getColorSets(): List<ColorSet>
         fun getDefaultDeleteIconColorValue(): Int?
         fun getDefaultProductItemBackgroundValue(): String?
         fun getDefaultProductItemTextColorValue(): Int?

@@ -14,13 +14,16 @@ import android.widget.*
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ThemeConstants
 import com.example.shoppinglist.ValidationResult
+import com.example.shoppinglist.adapter.ColorSetsAdapter
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.control.ImageColorPicker
+import com.example.shoppinglist.model.ColorSet
 import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.model.StyleableElementType
 import com.example.shoppinglist.model.Theme
@@ -29,14 +32,14 @@ import com.google.android.material.slider.Slider
 import kotlinx.android.synthetic.main.activity_create_theme.*
 import kotlinx.android.synthetic.main.activity_create_theme_first_step.*
 import kotlinx.android.synthetic.main.activity_create_theme_first_step.create_theme_first_step
+import kotlinx.android.synthetic.main.activity_create_theme_fourth_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_fourth_step.create_theme_fourth_step
 import kotlinx.android.synthetic.main.activity_create_theme_last_step.*
 import kotlinx.android.synthetic.main.activity_create_theme_last_step.create_theme_last_step
 import kotlinx.android.synthetic.main.activity_create_theme_second_step.*
 import kotlinx.android.synthetic.main.activity_create_theme_second_step.create_theme_second_step
 import kotlinx.android.synthetic.main.activity_create_theme_third_step.*
 import kotlinx.android.synthetic.main.activity_create_theme_third_step.create_theme_third_step
-import kotlinx.android.synthetic.main.activity_create_theme_fourth_step.*
-import kotlinx.android.synthetic.main.activity_create_theme_fourth_step.create_theme_fourth_step
 import kotlinx.android.synthetic.main.product_item.*
 
 class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivityContract.CreateThemeActivityView {
@@ -83,6 +86,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     private lateinit var colorStepsRecyclerView: RecyclerView
 
     private lateinit var toolbarTitle: String
+
+    private var colorSets: ArrayList<ColorSet> = ArrayList()
 
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
@@ -472,7 +477,19 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         colorStepsRecyclerView = findViewById(R.id.create_theme_color_sets)
 
         prepareStepButtons(true, true)
+
+        colorStepsRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        colorStepsRecyclerView.adapter = ColorSetsAdapter(this, getColorSets())
+
         findViewById<ScrollView>(R.id.create_theme_third_step_content).scrollTo(0, 0)
+    }
+
+    private fun getColorSets(): ArrayList<ColorSet> {
+        if (colorSets.isEmpty()) {
+            colorSets.addAll(presenter.getColorSets())
+        }
+
+        return colorSets
     }
 
     private fun prepareLastStep() {

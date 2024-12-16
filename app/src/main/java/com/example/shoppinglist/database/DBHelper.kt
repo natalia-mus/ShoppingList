@@ -16,6 +16,7 @@ import androidx.core.database.getStringOrNull
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ThemeConstants
+import com.example.shoppinglist.model.ColorSet
 import com.example.shoppinglist.model.Icon
 import com.example.shoppinglist.model.Product
 import com.example.shoppinglist.model.Theme
@@ -99,6 +100,8 @@ object BasicSQLCommands {
     const val GET_ALL_PRODUCTS = "SELECT * FROM ${TableInfo.TABLE_NAME_PRODUCTS} ORDER BY ${TableInfo.COLUMN_PRIORITY}"
 
     const val GET_ALL_THEMES = "SELECT * FROM ${TableInfo.TABLE_NAME_THEMES}"
+
+    const val GET_COLOR_SETS = "SELECT * FROM ${TableInfo.TABLE_NAME_COLOR_SETS}"
 
     const val GET_THEME = "SELECT * FROM ${TableInfo.TABLE_NAME_THEMES} WHERE ${TableInfo.COLUMN_ID} = "
 }
@@ -202,6 +205,23 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         cursor.close()
         db.close()
         return themes
+    }
+
+    fun getColorSets(): List<ColorSet> {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(BasicSQLCommands.GET_COLOR_SETS, null)
+        val colorSets = mutableListOf<ColorSet>()
+
+        if (cursor.moveToFirst()) {
+            do {
+                val colorSet = parseColorSet(cursor)
+                colorSet?.let { colorSets.add(it) }
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return colorSets
     }
 
     fun getTheme(themeId: Int): Theme? {
@@ -424,6 +444,20 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
     private fun getImageAsByteArray(imageId: Int): ByteArray {
         val drawable = ResourcesCompat.getDrawable(resources, imageId, null)
         return ImageUtils.getImageAsByteArray(drawable)
+    }
+
+    private fun parseColorSet(cursor: Cursor): ColorSet? {
+        val id = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_ID))
+        val name = cursor.getStringOrNull(cursor.getColumnIndex(TableInfo.COLUMN_NAME))
+        val primaryColorValue = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_PRIMARY_COLOR_VALUE))
+        val secondaryColorValue = cursor.getIntOrNull(cursor.getColumnIndex(TableInfo.COLUMN_SECONDARY_COLOR_VALUE))
+
+        return if (id != null && name != null && primaryColorValue != null && secondaryColorValue != null) {
+            ColorSet(id, name, primaryColorValue, secondaryColorValue)
+        } else {
+            Log.e("DBHelper - parseColorSet()", "Color set parsing did not succeed")
+            null
+        }
     }
 
     private fun parseTheme(cursor: Cursor): Theme? {

@@ -9,7 +9,17 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
 
     private val database = DBHelper.getInstance()
 
+    private val colorSets = ArrayList<ColorSet>()
+
     private var defaultTheme: Theme? = null
+
+
+    override fun getColorSets(): List<ColorSet> {
+        if (colorSets.isEmpty()) {
+            database?.getColorSets()?.let { colorSets.addAll(it) }
+        }
+        return colorSets
+    }
 
     override fun getDefaultDeleteIconColorValue(): Int? {
         return getDefaultTheme()?.deleteIconColorValue
@@ -80,8 +90,7 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
             addProductLabelColorValue,
             addProductLineColorValue,
             addProductHintColorValue,
-            colorSetId,
-            null
+            colorSetId
         )
     }
 
