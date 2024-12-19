@@ -12,4 +12,5 @@ object ThemeConstants {
     const val COLOR_SET_FRESH_ID = 3
 
     const val DEFAULT_THEME_ID = THEME_GROCERY_ID
+    const val DEFAULT_COLOR_SET_ID = COLOR_SET_SEA_ID
 }

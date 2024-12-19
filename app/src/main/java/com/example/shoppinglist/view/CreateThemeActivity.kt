@@ -20,6 +20,7 @@ import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ThemeConstants
 import com.example.shoppinglist.ValidationResult
+import com.example.shoppinglist.adapter.ColorSetSelector
 import com.example.shoppinglist.adapter.ColorSetsAdapter
 import com.example.shoppinglist.contract.CreateThemeActivityContract
 import com.example.shoppinglist.control.ImageColorPicker
@@ -42,7 +43,7 @@ import kotlinx.android.synthetic.main.activity_create_theme_third_step.*
 import kotlinx.android.synthetic.main.activity_create_theme_third_step.create_theme_third_step
 import kotlinx.android.synthetic.main.product_item.*
 
-class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivityContract.CreateThemeActivityView {
+class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivityContract.CreateThemeActivityView, ColorSetSelector {
 
     companion object {
         private const val DEFAULT_BACKGROUND_ALFA = 0.3f
@@ -89,6 +90,10 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
     private var colorSets: ArrayList<ColorSet> = ArrayList()
 
+
+    override fun onColorSetSelected(colorSetId: Int) {
+        // todo
+    }
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
         @SuppressLint("RestrictedApi")
@@ -479,7 +484,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         prepareStepButtons(true, true)
 
         colorStepsRecyclerView.layoutManager = GridLayoutManager(this, 2)
-        colorStepsRecyclerView.adapter = ColorSetsAdapter(this, getColorSets())
+        colorStepsRecyclerView.adapter = ColorSetsAdapter(this, getColorSets(), this)
+
 
         findViewById<ScrollView>(R.id.create_theme_third_step_content).scrollTo(0, 0)
     }

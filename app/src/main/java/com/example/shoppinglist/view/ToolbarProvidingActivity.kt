@@ -15,7 +15,7 @@ import com.example.shoppinglist.R
 
 abstract class ToolbarProvidingActivity(private val createOptionsMenu: Boolean) : ThemeProvidingActivity() {
 
-    fun setToolbar(layout: ViewGroup, contentLayout: ViewGroup, title: String? = null) {
+    fun setToolbar(layout: ViewGroup, contentLayout: ViewGroup?, title: String? = null) {
         val toolbar = Toolbar(this)
         LayoutInflater.from(this).inflate(R.layout.toolbar, toolbar)
 
@@ -36,9 +36,11 @@ abstract class ToolbarProvidingActivity(private val createOptionsMenu: Boolean) 
             }
         }
 
-        val contentLayoutLayoutParams = contentLayout.layoutParams as ConstraintLayout.LayoutParams
-        contentLayoutLayoutParams.topMargin = actionBarHeight
-        contentLayout.layoutParams = contentLayoutLayoutParams
+        if (contentLayout != null) {
+            val contentLayoutLayoutParams = contentLayout.layoutParams as ConstraintLayout.LayoutParams
+            contentLayoutLayoutParams.topMargin = actionBarHeight
+            contentLayout.layoutParams = contentLayoutLayoutParams
+        }
 
         setSupportActionBar(toolbar)
     }
