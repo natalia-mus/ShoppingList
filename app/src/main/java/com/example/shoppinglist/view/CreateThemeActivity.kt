@@ -92,7 +92,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
 
     override fun onColorSetSelected(colorSetId: Int) {
-        // todo
+        this.colorSetId = colorSetId
     }
 
     private val backgroundTransparencySliderValueChangedListener = object : Slider.OnChangeListener {
@@ -160,6 +160,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     private var addProductLabelColor = com.example.shoppinglist.Color(null)
     private var addProductLineColor = com.example.shoppinglist.Color(null)
     private var addProductHintColor = com.example.shoppinglist.Color(null, DEFAULT_HINT_ALFA)
+
+    private var colorSetId = ThemeConstants.DEFAULT_COLOR_SET_ID
 
     private var currentCreatorStep = 0
     private var secondStepInitialized = false
@@ -625,7 +627,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
             getAddProductLabelColorValue(),
             getAddProductLineColorValue(),
             addProductHintColor.getValue(),
-            ThemeConstants.COLOR_SET_SEA_ID     // todo
+            colorSetId
         )
 
         finish()
