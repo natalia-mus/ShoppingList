@@ -10,24 +10,24 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/create_theme_first_step"
-            layout="@layout/activity_create_theme_first_step" />
+            android:id="@+id/create_theme_color_set_step"
+            layout="@layout/activity_create_theme_color_set_step" />
 
         <include
-            android:id="@+id/create_theme_second_step"
-            layout="@layout/activity_create_theme_second_step" />
+            android:id="@+id/create_theme_backgrounds_step"
+            layout="@layout/activity_create_theme_backgrounds_step" />
 
         <include
-            android:id="@+id/create_theme_third_step"
-            layout="@layout/activity_create_theme_third_step" />
+            android:id="@+id/create_theme_product_list_item_step"
+            layout="@layout/activity_create_theme_product_list_item_step" />
 
         <include
-            android:id="@+id/create_theme_fourth_step"
-            layout="@layout/activity_create_theme_fourth_step" />
+            android:id="@+id/create_theme_add_product_step"
+            layout="@layout/activity_create_theme_add_product_step" />
 
         <include
-            android:id="@+id/create_theme_last_step"
-            layout="@layout/activity_create_theme_last_step" />
+            android:id="@+id/create_theme_theme_name_step"
+            layout="@layout/activity_create_theme_theme_name_step" />
 
     </ViewFlipper>
 

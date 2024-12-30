@@ -12,6 +12,7 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
     private val model = CreateThemeActivityModel()
 
     init {
+        view.provideColorSets(getColorSets())
         view.initView()
     }
 
@@ -91,15 +92,15 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         )
     }
 
-    override fun validateFirstStep(): ValidationResult {
-        return model.validateFirstStep()
+    override fun validateBackgroundsStep(): ValidationResult {
+        return model.validateBackgroundsStep()
     }
 
-    override fun validateSecondStep(): ValidationResult {
-        return model.validateSecondStep()
+    override fun validateProductListItemStep(): ValidationResult {
+        return model.validateProductListItemStep()
     }
 
-    override fun validateThirdStep(
+    override fun validateAddProductStep(
         productListPortraitBackgroundImage: ByteArray?,
         productListLandscapeBackgroundImage: ByteArray?,
         addProductPortraitBackgroundImage: ByteArray?,
@@ -118,7 +119,7 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         addProductHintColorValue: String,
         addProductLineColorValue: Int
     ): ValidationResult {
-        return model.validateThirdStep(
+        return model.validateAddProductStep(
             productListPortraitBackgroundImage,
             productListLandscapeBackgroundImage,
             addProductPortraitBackgroundImage,
@@ -139,7 +140,7 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         )
     }
 
-    override fun validateLastStep(themeName: String): ValidationResult {
-        return model.validateLastStep(themeName)
+    override fun validateThemeNameStep(themeName: String): ValidationResult {
+        return model.validateThemeNameStep(themeName)
     }
 }

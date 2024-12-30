@@ -31,16 +31,16 @@ import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.presenter.CreateThemeActivityPresenter
 import com.google.android.material.slider.Slider
 import kotlinx.android.synthetic.main.activity_create_theme.*
-import kotlinx.android.synthetic.main.activity_create_theme_first_step.*
-import kotlinx.android.synthetic.main.activity_create_theme_first_step.create_theme_first_step
-import kotlinx.android.synthetic.main.activity_create_theme_fourth_step.*
-import kotlinx.android.synthetic.main.activity_create_theme_fourth_step.create_theme_fourth_step
-import kotlinx.android.synthetic.main.activity_create_theme_last_step.*
-import kotlinx.android.synthetic.main.activity_create_theme_last_step.create_theme_last_step
-import kotlinx.android.synthetic.main.activity_create_theme_second_step.*
-import kotlinx.android.synthetic.main.activity_create_theme_second_step.create_theme_second_step
-import kotlinx.android.synthetic.main.activity_create_theme_third_step.*
-import kotlinx.android.synthetic.main.activity_create_theme_third_step.create_theme_third_step
+import kotlinx.android.synthetic.main.activity_create_theme_add_product_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_add_product_step.create_theme_add_product_step
+import kotlinx.android.synthetic.main.activity_create_theme_backgrounds_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_backgrounds_step.create_theme_backgrounds_step
+import kotlinx.android.synthetic.main.activity_create_theme_color_set_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_color_set_step.create_theme_color_set_step
+import kotlinx.android.synthetic.main.activity_create_theme_product_list_item_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_product_list_item_step.create_theme_product_list_item_step
+import kotlinx.android.synthetic.main.activity_create_theme_theme_name_step.*
+import kotlinx.android.synthetic.main.activity_create_theme_theme_name_step.create_theme_theme_name_step
 import kotlinx.android.synthetic.main.product_item.*
 
 class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivityContract.CreateThemeActivityView, ColorSetSelector {
@@ -164,8 +164,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     private var colorSetId = ThemeConstants.DEFAULT_COLOR_SET_ID
 
     private var currentCreatorStep = 0
-    private var secondStepInitialized = false
-    private var thirdStepInitialized = false
+    private var productListItemStepInitialized = false
+    private var addProductStepInitialized = false
 
     private lateinit var content: ViewFlipper
 
@@ -176,7 +176,6 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         content = findViewById(R.id.create_theme_content)
 
         toolbarTitle = resources.getString(R.string.create_theme)
-        setToolbar(create_theme_first_step, create_theme_first_step_content, toolbarTitle)
 
         presenter = CreateThemeActivityPresenter(this)
     }
@@ -184,16 +183,20 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     override fun provideTheme(theme: Theme?) {}
 
     override fun initView() {
-        prepareFirstStep()
+        changeView()
+    }
+
+    override fun provideColorSets(colorSets: List<ColorSet>) {
+        this.colorSets = colorSets as ArrayList<ColorSet>
     }
 
     private fun changeView() {
         when (currentCreatorStep) {
-            CreatorSteps.FIRST_STEP.value -> prepareFirstStep()
-            CreatorSteps.SECOND_STEP.value -> prepareSecondStep()
-            CreatorSteps.THIRD_STEP.value -> prepareThirdStep()
-            CreatorSteps.FOURTH_STEP.value -> prepareFourthStep()
-            CreatorSteps.LAST_STEP.value -> prepareLastStep()
+            CreatorSteps.COLOR_SET_STEP.value -> prepareColorSetStep()
+            CreatorSteps.BACKGROUNDS_STEP.value -> prepareBackgroundsStep()
+            CreatorSteps.PRODUCT_LIST_ITEM_STEP.value -> prepareProductListItemStep()
+            CreatorSteps.ADD_PRODUCT_STEP.value -> prepareAddProductStep()
+            CreatorSteps.THEME_NAME_STEP.value -> prepareThemeNameStep()
         }
     }
 
@@ -346,8 +349,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         productItemPriorityValue.setTextColor(color)
     }
 
-    private fun prepareFirstStep() {
-        setToolbar(create_theme_first_step, create_theme_first_step_content, toolbarTitle)
+    private fun prepareBackgroundsStep() {
+        setToolbar(create_theme_backgrounds_step, create_theme_backgrounds_step_content, toolbarTitle)
 
         productListPortraitBackgroundPicker = findViewById(R.id.create_theme_product_list_portrait_background)
         productListLandscapeBackgroundPicker = findViewById(R.id.create_theme_product_list_landscape_background)
@@ -374,11 +377,11 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         addProductLandscapeBackgroundImage?.let { addProductLandscapeBackgroundPicker.setSelectedImage(it) }
         addProductLandscapeBackgroundColor.getColorInt()?.let { addProductLandscapeBackgroundPicker.setSelectedColor(it) }
 
-        findViewById<ScrollView>(R.id.create_theme_first_step_content).scrollTo(0, 0)
+        findViewById<ScrollView>(R.id.create_theme_backgrounds_step_content).scrollTo(0, 0)
     }
 
-    private fun prepareSecondStep() {
-        setToolbar(create_theme_second_step, create_theme_second_step_content, toolbarTitle)
+    private fun prepareProductListItemStep() {
+        setToolbar(create_theme_product_list_item_step, create_theme_product_list_item_step_content, toolbarTitle)
 
         productItemBackground = findViewById(R.id.create_theme_product_item_visualization)
         productItemNameLabel = findViewById(R.id.product_name)
@@ -418,9 +421,9 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         prepareStepButtons(true, true)
 
 
-        if (!secondStepInitialized) {
-            setSecondStepDefaultColors()
-            secondStepInitialized = true
+        if (!productListItemStepInitialized) {
+            setProductListItemStepDefaultColors()
+            productListItemStepInitialized = true
 
         } else {
             productItemBackgroundColor.getColorInt()?.let { productItemBackgroundColorPicker.setSelectedColor(it) }
@@ -433,13 +436,13 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
         backgroundTransparencySlider.value = productItemBackgroundColor.getAlphaPercentage()
 
-        val background = findViewById<ConstraintLayout>(R.id.create_theme_second_step)
+        val background = findViewById<ConstraintLayout>(R.id.create_theme_product_list_item_step)
         setVisualizationBackground(background)
-        findViewById<ScrollView>(R.id.create_theme_second_step_content).scrollTo(0, 0)
+        findViewById<ScrollView>(R.id.create_theme_product_list_item_step_content).scrollTo(0, 0)
     }
 
-    private fun prepareThirdStep() {
-        setToolbar(create_theme_third_step, create_theme_third_step_content, toolbarTitle)
+    private fun prepareAddProductStep() {
+        setToolbar(create_theme_add_product_step, create_theme_add_product_step_content, toolbarTitle)
 
         addProductText = findViewById(R.id.create_theme_edit_text_visualization_add_product_text)
         addProductLabel = findViewById(R.id.create_theme_edit_text_visualization_add_product_label)
@@ -460,12 +463,12 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
 
         prepareStepButtons(true, true)
 
-        val background = findViewById<ConstraintLayout>(R.id.create_theme_third_step)
+        val background = findViewById<ConstraintLayout>(R.id.create_theme_add_product_step)
         setVisualizationBackground(background)
 
-        if (!thirdStepInitialized) {
-            setThirdStepDefaultColors()
-            thirdStepInitialized = true
+        if (!addProductStepInitialized) {
+            setAddProductStepDefaultColors()
+            addProductStepInitialized = true
 
         } else {
             addProductTextColor.getColorInt()?.let { addProductTextColorPicker.setSelectedColor(it) }
@@ -475,11 +478,11 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         }
 
         addProductHintTransparencySlider.value = addProductHintColor.getAlphaPercentage()
-        findViewById<ScrollView>(R.id.create_theme_third_step_content).scrollTo(0, 0)
+        findViewById<ScrollView>(R.id.create_theme_add_product_step_content).scrollTo(0, 0)
     }
 
-    private fun prepareFourthStep() {
-        setToolbar(create_theme_fourth_step, create_theme_fourth_step_content, toolbarTitle)
+    private fun prepareColorSetStep() {
+        setToolbar(create_theme_color_set_step, create_theme_color_set_step_content, toolbarTitle)
 
         colorStepsRecyclerView = findViewById(R.id.create_theme_color_sets)
 
@@ -489,7 +492,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         colorStepsRecyclerView.adapter = ColorSetsAdapter(this, getColorSets(), this)
 
 
-        findViewById<ScrollView>(R.id.create_theme_third_step_content).scrollTo(0, 0)
+        findViewById<ScrollView>(R.id.create_theme_add_product_step_content).scrollTo(0, 0)
     }
 
     private fun getColorSets(): ArrayList<ColorSet> {
@@ -500,8 +503,8 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         return colorSets
     }
 
-    private fun prepareLastStep() {
-        setToolbar(create_theme_last_step, create_theme_last_step_content, toolbarTitle)
+    private fun prepareThemeNameStep() {
+        setToolbar(create_theme_theme_name_step, create_theme_theme_name_step_content, toolbarTitle)
 
         themeName = findViewById(R.id.create_theme_name)
         saveButton = findViewById(R.id.button_save)
@@ -530,16 +533,16 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         })
 
         themeName.setText(name)
-        findViewById<ScrollView>(R.id.create_theme_last_step_content).scrollTo(0, 0)
+        findViewById<ScrollView>(R.id.create_theme_theme_name_step_content).scrollTo(0, 0)
     }
 
     private fun prepareStepButtons(preparePreviousButton: Boolean, prepareNextButton: Boolean) {
         val stepView = when (currentCreatorStep) {
-            CreatorSteps.FIRST_STEP.value -> create_theme_first_step
-            CreatorSteps.SECOND_STEP.value -> create_theme_second_step
-            CreatorSteps.THIRD_STEP.value -> create_theme_third_step
-            CreatorSteps.FOURTH_STEP.value -> create_theme_fourth_step
-            CreatorSteps.LAST_STEP.value -> create_theme_last_step
+            CreatorSteps.BACKGROUNDS_STEP.value -> create_theme_backgrounds_step
+            CreatorSteps.PRODUCT_LIST_ITEM_STEP.value -> create_theme_product_list_item_step
+            CreatorSteps.ADD_PRODUCT_STEP.value -> create_theme_add_product_step
+            CreatorSteps.COLOR_SET_STEP.value -> create_theme_color_set_step
+            CreatorSteps.THEME_NAME_STEP.value -> create_theme_theme_name_step
             else -> null
         }
 
@@ -752,13 +755,13 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         }
     }
 
-    private fun setSecondStepDefaultColors() {
+    private fun setProductListItemStepDefaultColors() {
         setDefaultProductItemBackgroundValue()
         setDefaultProductItemTextColorValue()
         setDefaultDeleteIconColor()
     }
 
-    private fun setThirdStepDefaultColors() {
+    private fun setAddProductStepDefaultColors() {
         setDefaultAddProductTextColor()
         setDefaultAddProductLabelColor()
         setDefaultAddProductHintColorValue()
@@ -817,7 +820,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
         var backgroundColor: Int? = null
 
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            if (currentCreatorStep == CreatorSteps.SECOND_STEP.value) {
+            if (currentCreatorStep == CreatorSteps.PRODUCT_LIST_ITEM_STEP.value) {
                 if (productListPortraitBackgroundImage != null) {
                     backgroundImage = productListPortraitBackgroundImage
 
@@ -827,7 +830,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
                 } else {
                     backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_portrait, null))
                 }
-            } else if (currentCreatorStep == CreatorSteps.THIRD_STEP.value) {
+            } else if (currentCreatorStep == CreatorSteps.ADD_PRODUCT_STEP.value) {
                 if (addProductPortraitBackgroundImage != null) {
                     backgroundImage = addProductPortraitBackgroundImage
 
@@ -840,7 +843,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
             }
 
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            if (currentCreatorStep == CreatorSteps.SECOND_STEP.value) {
+            if (currentCreatorStep == CreatorSteps.PRODUCT_LIST_ITEM_STEP.value) {
                 if (productListLandscapeBackgroundImage != null) {
                     backgroundImage = productListLandscapeBackgroundImage
 
@@ -850,7 +853,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
                 } else {
                     backgroundImage = ImageUtils.getImageAsByteArray(ResourcesCompat.getDrawable(resources, R.drawable.theme_grocery_list_landscape, null))
                 }
-            } else if (currentCreatorStep == CreatorSteps.THIRD_STEP.value) {
+            } else if (currentCreatorStep == CreatorSteps.ADD_PRODUCT_STEP.value) {
                 if (addProductLandscapeBackgroundImage != null) {
                     backgroundImage = addProductLandscapeBackgroundImage
 
@@ -877,9 +880,9 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
      */
     private fun validateCurrentStep(): Boolean {
         val validationResult = when (currentCreatorStep) {
-            CreatorSteps.FIRST_STEP.value -> presenter.validateFirstStep()
-            CreatorSteps.SECOND_STEP.value -> presenter.validateSecondStep()
-            CreatorSteps.THIRD_STEP.value -> presenter.validateThirdStep(
+            CreatorSteps.BACKGROUNDS_STEP.value -> presenter.validateBackgroundsStep()
+            CreatorSteps.PRODUCT_LIST_ITEM_STEP.value -> presenter.validateProductListItemStep()
+            CreatorSteps.ADD_PRODUCT_STEP.value -> presenter.validateAddProductStep(
                 productListPortraitBackgroundImage,
                 productListLandscapeBackgroundImage,
                 addProductPortraitBackgroundImage,
@@ -898,12 +901,11 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
                 addProductHintColor.getValue(),
                 getAddProductLineColorValue()
             )
-            CreatorSteps.FOURTH_STEP.value -> {
-                // todo
+            CreatorSteps.COLOR_SET_STEP.value -> {
                 true
             }
-            CreatorSteps.LAST_STEP.value -> {
-                presenter.validateLastStep(name)
+            CreatorSteps.THEME_NAME_STEP.value -> {
+                presenter.validateThemeNameStep(name)
             }
             else -> true
         }
@@ -922,10 +924,10 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
     }
 
     private enum class CreatorSteps(val value: Int) {
-        FIRST_STEP(0),
-        SECOND_STEP(1),
-        THIRD_STEP(2),
-        FOURTH_STEP(3),
-        LAST_STEP(4)
+        COLOR_SET_STEP(0),
+        BACKGROUNDS_STEP(1),
+        PRODUCT_LIST_ITEM_STEP(2),
+        ADD_PRODUCT_STEP(3),
+        THEME_NAME_STEP(4)
     }
 }

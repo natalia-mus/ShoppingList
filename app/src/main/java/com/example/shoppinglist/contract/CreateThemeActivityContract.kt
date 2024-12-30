@@ -38,11 +38,11 @@ interface CreateThemeActivityContract {
             colorSetId: Int
         )
 
-        fun validateFirstStep(): ValidationResult
+        fun validateBackgroundsStep(): ValidationResult
 
-        fun validateSecondStep(): ValidationResult
+        fun validateProductListItemStep(): ValidationResult
 
-        fun validateThirdStep(
+        fun validateAddProductStep(
             productListPortraitBackgroundImage: ByteArray?,
             productListLandscapeBackgroundImage: ByteArray?,
             addProductPortraitBackgroundImage: ByteArray?,
@@ -62,7 +62,7 @@ interface CreateThemeActivityContract {
             addProductLineColorValue: Int
         ): ValidationResult
 
-        fun validateLastStep(themeName: String): ValidationResult
+        fun validateThemeNameStep(themeName: String): ValidationResult
     }
 
     interface CreateThemeActivityPresenter {
@@ -97,11 +97,11 @@ interface CreateThemeActivityContract {
             colorSetId: Int
         )
 
-        fun validateFirstStep(): ValidationResult
+        fun validateBackgroundsStep(): ValidationResult
 
-        fun validateSecondStep(): ValidationResult
+        fun validateProductListItemStep(): ValidationResult
 
-        fun validateThirdStep(
+        fun validateAddProductStep(
             productListPortraitBackgroundImage: ByteArray?,
             productListLandscapeBackgroundImage: ByteArray?,
             addProductPortraitBackgroundImage: ByteArray?,
@@ -121,10 +121,11 @@ interface CreateThemeActivityContract {
             addProductLineColorValue: Int
         ): ValidationResult
 
-        fun validateLastStep(themeName: String): ValidationResult
+        fun validateThemeNameStep(themeName: String): ValidationResult
     }
 
     interface CreateThemeActivityView {
         fun initView()
+        fun provideColorSets(colorSets: List<ColorSet>)
     }
 }

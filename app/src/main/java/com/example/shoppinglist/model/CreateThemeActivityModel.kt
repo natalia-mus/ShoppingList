@@ -94,15 +94,15 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         )
     }
 
-    override fun validateFirstStep(): ValidationResult {
+    override fun validateBackgroundsStep(): ValidationResult {
         return ValidationResult.VALID       // first step is always valid
     }
 
-    override fun validateSecondStep(): ValidationResult {
+    override fun validateProductListItemStep(): ValidationResult {
         return ValidationResult.VALID       // second step is always valid
     }
 
-    override fun validateThirdStep(
+    override fun validateAddProductStep(
         productListPortraitBackgroundImage: ByteArray?,
         productListLandscapeBackgroundImage: ByteArray?,
         addProductPortraitBackgroundImage: ByteArray?,
@@ -145,7 +145,7 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         return if (differsFromDefaultTheme) ValidationResult.VALID else ValidationResult.NOTHING_TO_KEEP
     }
 
-    override fun validateLastStep(themeName: String): ValidationResult {
+    override fun validateThemeNameStep(themeName: String): ValidationResult {
         return if (themeName.isEmpty()) {
             ValidationResult.EMPTY_NAME
         } else return ValidationResult.VALID
