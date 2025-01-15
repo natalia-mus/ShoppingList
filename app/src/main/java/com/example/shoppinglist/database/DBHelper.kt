@@ -57,14 +57,14 @@ object TableInfo {
 object BasicSQLCommands {
 
     const val CREATE_TABLE_PRODUCTS = "CREATE TABLE ${TableInfo.TABLE_NAME_PRODUCTS} " +
-            "(${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, " +
+            "(${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY NOT NULL, " +
             "${TableInfo.COLUMN_NAME} TEXT NOT NULL, " +
-            "${TableInfo.COLUMN_QUANTITY} TEXT, " +
+            "${TableInfo.COLUMN_QUANTITY} TEXT NOT NULL, " +
             "${TableInfo.COLUMN_PRIORITY} INT NOT NULL)"
 
     const val CREATE_TABLE_THEMES = "CREATE TABLE ${TableInfo.TABLE_NAME_THEMES} " +
             "(" +
-            "${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, " +
+            "${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY NOT NULL, " +
             "${TableInfo.COLUMN_NAME} TEXT NOT NULL, " +
             "${TableInfo.COLUMN_BUILT_IN_THEME} INTEGER NOT NULL, " +
             "${TableInfo.COLUMN_LIST_BACKGROUND_IMAGE_PORTRAIT} BLOB, " +
@@ -75,24 +75,24 @@ object BasicSQLCommands {
             "${TableInfo.COLUMN_LIST_BACKGROUND_COLOR_LANDSCAPE} INTEGER, " +
             "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_PORTRAIT} INTEGER, " +
             "${TableInfo.COLUMN_ADD_PRODUCT_BACKGROUND_COLOR_LANDSCAPE} INTEGER, " +
-            "${TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE} TEXT, " +
-            "${TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE} INTEGER, " +
-            "${TableInfo.COLUMN_DELETE_ICON_COLOR_VALUE} INTEGER, " +
-            "${TableInfo.COLUMN_DELETE_ICON} INTEGER, " +
-            "${TableInfo.COLUMN_BOLD_PRODUCT_NAME} INTEGER, " +
-            "${TableInfo.COLUMN_ADD_PRODUCT_TEXT_COLOR_VALUE} INTEGER, " +
-            "${TableInfo.COLUMN_ADD_PRODUCT_LABEL_COLOR_VALUE} INTEGER, " +
-            "${TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR_VALUE} INTEGER, " +
-            "${TableInfo.COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE} TEXT, " +
-            "${TableInfo.COLUMN_COLOR_SET_ID} INTEGER" +
+            "${TableInfo.COLUMN_PRODUCT_ITEM_BACKGROUND_VALUE} TEXT NOT NULL, " +
+            "${TableInfo.COLUMN_PRODUCT_ITEM_TEXT_COLOR_VALUE} INTEGER NOT NULL, " +
+            "${TableInfo.COLUMN_DELETE_ICON_COLOR_VALUE} INTEGER NOT NULL, " +
+            "${TableInfo.COLUMN_DELETE_ICON} INTEGER NOT NULL, " +
+            "${TableInfo.COLUMN_BOLD_PRODUCT_NAME} INTEGER NOT NULL, " +
+            "${TableInfo.COLUMN_ADD_PRODUCT_TEXT_COLOR_VALUE} INTEGER NOT NULL, " +
+            "${TableInfo.COLUMN_ADD_PRODUCT_LABEL_COLOR_VALUE} INTEGER NOT NULL, " +
+            "${TableInfo.COLUMN_ADD_PRODUCT_LINE_COLOR_VALUE} INTEGER NOT NULL, " +
+            "${TableInfo.COLUMN_ADD_PRODUCT_HINT_COLOR_VALUE} TEXT NOT NULL, " +
+            "${TableInfo.COLUMN_COLOR_SET_ID} INTEGER NOT NULL" +
             ")"
 
     const val CREATE_TABLE_COLOR_SETS = "CREATE TABLE ${TableInfo.TABLE_NAME_COLOR_SETS} " +
             "(" +
-            "${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY, " +
+            "${TableInfo.COLUMN_ID} INTEGER PRIMARY KEY NOT NULL, " +
             "${TableInfo.COLUMN_NAME} TEXT NOT NULL, " +
-            "${TableInfo.COLUMN_PRIMARY_COLOR_VALUE} INTEGER, " +
-            "${TableInfo.COLUMN_SECONDARY_COLOR_VALUE} INTEGER" +
+            "${TableInfo.COLUMN_PRIMARY_COLOR_VALUE} INTEGER NOT NULL, " +
+            "${TableInfo.COLUMN_SECONDARY_COLOR_VALUE} INTEGER NOT NULL" +
             ")"
 
     const val DELETE_TABLE = "DROP TABLE "

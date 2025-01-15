@@ -880,9 +880,7 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
      */
     private fun validateCurrentStep(): Boolean {
         val validationResult = when (currentCreatorStep) {
-            CreatorSteps.BACKGROUNDS_STEP.value -> presenter.validateBackgroundsStep()
-            CreatorSteps.PRODUCT_LIST_ITEM_STEP.value -> presenter.validateProductListItemStep()
-            CreatorSteps.ADD_PRODUCT_STEP.value -> presenter.validateAddProductStep(
+            CreatorSteps.ADD_PRODUCT_STEP.value -> presenter.validatePenultimateStep(
                 productListPortraitBackgroundImage,
                 productListLandscapeBackgroundImage,
                 addProductPortraitBackgroundImage,
@@ -899,11 +897,9 @@ class CreateThemeActivity : ToolbarProvidingActivity(false), CreateThemeActivity
                 getAddProductTextColorValue(),
                 getAddProductLabelColorValue(),
                 addProductHintColor.getValue(),
-                getAddProductLineColorValue()
+                getAddProductLineColorValue(),
+                colorSetId
             )
-            CreatorSteps.COLOR_SET_STEP.value -> {
-                true
-            }
             CreatorSteps.THEME_NAME_STEP.value -> {
                 presenter.validateThemeNameStep(name)
             }

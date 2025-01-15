@@ -94,15 +94,7 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         )
     }
 
-    override fun validateBackgroundsStep(): ValidationResult {
-        return ValidationResult.VALID       // first step is always valid
-    }
-
-    override fun validateProductListItemStep(): ValidationResult {
-        return ValidationResult.VALID       // second step is always valid
-    }
-
-    override fun validateAddProductStep(
+    override fun validatePenultimateStep(
         productListPortraitBackgroundImage: ByteArray?,
         productListLandscapeBackgroundImage: ByteArray?,
         addProductPortraitBackgroundImage: ByteArray?,
@@ -119,7 +111,8 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
         addProductTextColorValue: Int,
         addProductLabelColorValue: Int,
         addProductHintColorValue: String,
-        addProductLineColorValue: Int
+        addProductLineColorValue: Int,
+        colorSetId: Int
     ): ValidationResult {
         val defaultTheme = getDefaultTheme()
 
@@ -140,7 +133,8 @@ class CreateThemeActivityModel : CreateThemeActivityContract.CreateThemeActivity
                 || addProductTextColorValue != defaultTheme.addProductTextColorValue
                 || addProductLabelColorValue != defaultTheme.addProductLabelColorValue
                 || addProductHintColorValue != defaultTheme.addProductHintColorValue
-                || addProductLineColorValue != defaultTheme.addProductLineColorValue)
+                || addProductLineColorValue != defaultTheme.addProductLineColorValue
+                || colorSetId != defaultTheme.colorSetId)
 
         return if (differsFromDefaultTheme) ValidationResult.VALID else ValidationResult.NOTHING_TO_KEEP
     }

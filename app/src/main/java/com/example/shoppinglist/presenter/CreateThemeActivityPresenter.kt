@@ -92,15 +92,7 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         )
     }
 
-    override fun validateBackgroundsStep(): ValidationResult {
-        return model.validateBackgroundsStep()
-    }
-
-    override fun validateProductListItemStep(): ValidationResult {
-        return model.validateProductListItemStep()
-    }
-
-    override fun validateAddProductStep(
+    override fun validatePenultimateStep(
         productListPortraitBackgroundImage: ByteArray?,
         productListLandscapeBackgroundImage: ByteArray?,
         addProductPortraitBackgroundImage: ByteArray?,
@@ -117,9 +109,10 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
         addProductTextColorValue: Int,
         addProductLabelColorValue: Int,
         addProductHintColorValue: String,
-        addProductLineColorValue: Int
+        addProductLineColorValue: Int,
+        colorSetId: Int
     ): ValidationResult {
-        return model.validateAddProductStep(
+        return model.validatePenultimateStep(
             productListPortraitBackgroundImage,
             productListLandscapeBackgroundImage,
             addProductPortraitBackgroundImage,
@@ -136,7 +129,8 @@ class CreateThemeActivityPresenter(_view: CreateThemeActivityContract.CreateThem
             addProductTextColorValue,
             addProductLabelColorValue,
             addProductHintColorValue,
-            addProductLineColorValue
+            addProductLineColorValue,
+            colorSetId
         )
     }
 
