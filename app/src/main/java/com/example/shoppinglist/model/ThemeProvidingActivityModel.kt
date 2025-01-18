@@ -6,9 +6,15 @@ import com.example.shoppinglist.database.DBHelper
 
 class ThemeProvidingActivityModel : ThemeProvidingActivityContract.ThemeProvidingActivityModel {
 
+    override fun getColorSet(): ColorSet? {
+        val theme = getTheme()
+        return if (theme != null) {
+            DBHelper.getInstance()?.getColorSet(theme.colorSetId)
+        } else null
+    }
+
     override fun getTheme(): Theme? {
-        val database = DBHelper.getInstance()
         val themeId = Settings.getThemeId()
-        return database?.getTheme(themeId)
+        return DBHelper.getInstance()?.getTheme(themeId)
     }
 }

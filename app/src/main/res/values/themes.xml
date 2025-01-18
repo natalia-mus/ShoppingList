@@ -36,7 +36,7 @@
     <style name="Theme.ShoppingList.PopupTheme" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="overlapAnchor">false</item>
         <item name="android:overlapAnchor" tools:ignore="NewApi">false</item>
-        <item name="android:textColor">@color/sea_blue_dark</item>
+        <item name="android:textColor">@color/menu_item_black</item>
         <item name="android:textStyle">bold</item>
     </style>
 </resources>

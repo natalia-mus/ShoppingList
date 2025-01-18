@@ -101,6 +101,8 @@ object BasicSQLCommands {
 
     const val GET_ALL_THEMES = "SELECT * FROM ${TableInfo.TABLE_NAME_THEMES}"
 
+    const val GET_COLOR_SET = "SELECT * FROM ${TableInfo.TABLE_NAME_COLOR_SETS} WHERE ${TableInfo.COLUMN_ID} = "
+
     const val GET_COLOR_SETS = "SELECT * FROM ${TableInfo.TABLE_NAME_COLOR_SETS}"
 
     const val GET_THEME = "SELECT * FROM ${TableInfo.TABLE_NAME_THEMES} WHERE ${TableInfo.COLUMN_ID} = "
@@ -205,6 +207,19 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, TableInfo.DATABASE_
         cursor.close()
         db.close()
         return themes
+    }
+
+    fun getColorSet(colorSetId: Int): ColorSet? {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(BasicSQLCommands.GET_COLOR_SET + colorSetId, null)
+
+        return if (cursor.moveToFirst()) {
+            val colorSet = parseColorSet(cursor)
+            cursor.close()
+            db.close()
+            colorSet
+
+        } else return null
     }
 
     fun getColorSets(): List<ColorSet> {

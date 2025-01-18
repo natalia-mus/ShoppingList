@@ -1,6 +1,7 @@
 package com.example.shoppinglist.presenter
 
 import com.example.shoppinglist.contract.ThemeProvidingActivityContract
+import com.example.shoppinglist.model.ColorSet
 import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.model.ThemeProvidingActivityModel
 
@@ -12,6 +13,8 @@ class ThemeProvidingActivityPresenter(_view: ThemeProvidingActivityContract.Them
     init {
         view.createDBInstance()
     }
+
+    override fun getColorSet(): ColorSet? = model.getColorSet()
 
     override fun getTheme(): Theme? = model.getTheme()
 

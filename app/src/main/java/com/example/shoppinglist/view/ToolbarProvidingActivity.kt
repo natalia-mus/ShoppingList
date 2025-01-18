@@ -1,6 +1,7 @@
 package com.example.shoppinglist.view
 
 import android.content.Intent
+import android.graphics.Color
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.Menu
@@ -15,24 +16,28 @@ import com.example.shoppinglist.R
 
 abstract class ToolbarProvidingActivity(private val createOptionsMenu: Boolean) : ThemeProvidingActivity() {
 
+    private var toolbar: Toolbar? = null
+
     fun setToolbar(layout: ViewGroup, contentLayout: ViewGroup?, title: String? = null) {
-        val toolbar = Toolbar(this)
+        toolbar = Toolbar(this)
         LayoutInflater.from(this).inflate(R.layout.toolbar, toolbar)
 
         val typedValue = TypedValue()
         this.theme.resolveAttribute(R.attr.actionBarSize, typedValue, true)
         val actionBarHeight = TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
-        toolbar.layoutParams = android.widget.Toolbar.LayoutParams(android.widget.Toolbar.LayoutParams.MATCH_PARENT, actionBarHeight)
+        toolbar!!.layoutParams = android.widget.Toolbar.LayoutParams(android.widget.Toolbar.LayoutParams.MATCH_PARENT, actionBarHeight)
 
         layout.addView(toolbar)
-        toolbar.background = ResourcesCompat.getDrawable(resources, R.drawable.toolbar_background, null)
+        toolbar!!.background = ResourcesCompat.getDrawable(resources, R.drawable.toolbar_background, null)
 
-        toolbar.findViewById<TextView>(R.id.toolbar_title).text = title ?: resources.getString(R.string.app_name)
+        val titleTextView = toolbar!!.findViewById<TextView>(R.id.toolbar_title)
+        titleTextView.text = title ?: resources.getString(R.string.app_name)
+
 
         if (createOptionsMenu) {
-            val overflowIconWidth = toolbar.overflowIcon?.intrinsicWidth
+            val overflowIconWidth = toolbar!!.overflowIcon?.intrinsicWidth
             if (overflowIconWidth != null) {
-                toolbar.findViewById<LinearLayout>(R.id.toolbar_content).setPadding(overflowIconWidth * 3, 0, 0, 0)
+                toolbar!!.findViewById<LinearLayout>(R.id.toolbar_content).setPadding(overflowIconWidth * 3, 0, 0, 0)
             }
         }
 
@@ -42,12 +47,22 @@ abstract class ToolbarProvidingActivity(private val createOptionsMenu: Boolean) 
             contentLayout.layoutParams = contentLayoutLayoutParams
         }
 
+
+        val colorSet = getColorSet()
+        if (colorSet != null) {
+            window.statusBarColor = colorSet.primaryColorValue
+            toolbar!!.background.setTint(colorSet.primaryColorValue)
+            titleTextView.setTextColor(Color.WHITE)             // todo
+            toolbar!!.overflowIcon?.setTint(Color.WHITE)        // todo
+        }
+
         setSupportActionBar(toolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return if (createOptionsMenu) {
             menuInflater.inflate(R.menu.main_menu, menu)
+            applyColorSetToMenuItems()
             super.onCreateOptionsMenu(menu)
         } else false
     }
@@ -65,5 +80,11 @@ abstract class ToolbarProvidingActivity(private val createOptionsMenu: Boolean) 
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun applyColorSetToMenuItems() {
+        if (toolbar != null) {
+            toolbar!!.menu?.findItem(R.id.menu_item_add_product)?.icon?.setTint(Color.WHITE)     // todo
+        }
     }
 }
