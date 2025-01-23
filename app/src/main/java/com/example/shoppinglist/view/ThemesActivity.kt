@@ -33,7 +33,7 @@ class ThemesActivity : ToolbarProvidingActivity(false), ThemesActivityContract.T
     override fun initView(themes: ArrayList<Theme>?, actualThemeId: Int) {
         if (themes != null) {
             themes_list.layoutManager = LinearLayoutManager(this)
-            themesAdapter = ThemesAdapter(this, themes, actualThemeId, this)
+            themesAdapter = ThemesAdapter(this, themes, actualThemeId, this, getColorSet())
             themes_list.adapter = themesAdapter
 
             themes_create_theme.setOnClickListener {

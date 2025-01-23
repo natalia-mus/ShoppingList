@@ -25,6 +25,7 @@
         <item name="android:colorBackgroundFloating">@color/white</item>
         <item name="android:itemBackground">@color/white</item>
         <item name="colorAccent">@color/sea_blue_light</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
     </style>
 
     <style name="Theme.ShoppingList.Button" parent="@android:style/Widget.Button">

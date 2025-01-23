@@ -2,6 +2,7 @@ package com.example.shoppinglist.adapter
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,18 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.shoppinglist.ImageUtils
 import com.example.shoppinglist.R
+import com.example.shoppinglist.model.ColorSet
 import com.example.shoppinglist.model.Theme
 import com.example.shoppinglist.view.ThemeSelector
 import kotlinx.android.synthetic.main.theme_item.view.*
 
-class ThemesAdapter(private val context: Context, private var themes: ArrayList<Theme>, private var selectedThemeId: Int, private val themeSelector: ThemeSelector) :
+class ThemesAdapter(
+    private val context: Context,
+    private var themes: ArrayList<Theme>,
+    private var selectedThemeId: Int,
+    private val themeSelector: ThemeSelector,
+    private val colorSet: ColorSet?
+) :
     RecyclerView.Adapter<ThemesAdapter.ThemesAdapterViewHolder>() {
 
     private val viewHolders = ArrayList<ThemesAdapterViewHolder>()
@@ -37,11 +45,11 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
         setImage(holder.themeImage, position)
 
         if (theme.id == selectedThemeId) {
-            refreshSelection(holder.themeItem)
+            refreshSelection(holder)
         }
 
         holder.themeItem.setOnClickListener {
-            refreshSelection(holder.themeItem)
+            refreshSelection(holder)
             themeSelector.onThemeSelected(theme.id)
         }
 
@@ -97,18 +105,26 @@ class ThemesAdapter(private val context: Context, private var themes: ArrayList<
 
         for (viewHolder in viewHolders) {
             if (viewHolder.adapterPosition == selectedThemeId) {
-                refreshSelection(viewHolder.themeItem)
+                refreshSelection(viewHolder)
                 break
             }
         }
     }
 
-    private fun refreshSelection(themeItem: ConstraintLayout) {
+    private fun refreshSelection(item: ThemesAdapterViewHolder) {
         for (viewHolder in viewHolders) {
             viewHolder.themeItem.isSelected = false
+            if (colorSet != null) {
+                viewHolder.themeItem.background.setTint(Color.WHITE)
+                viewHolder.themeName.setTextColor(colorSet.primaryColorValue)
+            }
         }
 
-        themeItem.isSelected = true
+        item.themeItem.isSelected = true
+        if (colorSet != null) {
+            item.themeItem.background.setTint(colorSet.secondaryColorValue)
+            item.themeName.setTextColor(Color.WHITE)
+        }
     }
 
 
